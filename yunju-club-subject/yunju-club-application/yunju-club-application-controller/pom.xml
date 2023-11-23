@@ -3,32 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>yunju-club-subject</artifactId>
+        <artifactId>yunju-club-application</artifactId>
         <groupId>com.zsyunju</groupId>
         <version>1.0.0</version>
     </parent>
-    <description>卓晟云聚社区刷题模块starter</description>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yunju-club-starter</artifactId>
+    <artifactId>yunju-club-application-controller</artifactId>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.4.2</version>
         </dependency>
-
-        <!--   应用层依赖     -->
+        <!--   基础设施层依赖     -->
         <dependency>
             <groupId>com.zsyunju</groupId>
-            <artifactId>yunju-club-application-controller</artifactId>
+            <artifactId>yunju-club-infra</artifactId>
             <version>1.0.0</version>
         </dependency>
+
     </dependencies>
 
 </project>
