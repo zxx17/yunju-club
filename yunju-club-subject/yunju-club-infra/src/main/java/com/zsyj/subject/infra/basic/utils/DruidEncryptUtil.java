@@ -46,5 +46,4 @@ public class DruidEncryptUtil {
         return ConfigTools.decrypt(publicKey, encryptText);
     }
 
-
 }

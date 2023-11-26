@@ -1,8 +1,7 @@
-package com.zsyj.subject.infra.basic.entity;
+package com.zsyj.subject.domian.entity;
 
 import lombok.Data;
 
-import java.util.Date;
 import java.io.Serializable;
 
 /**
@@ -13,7 +12,7 @@ import java.io.Serializable;
  */
 
 @Data
-public class SubjectCategory implements Serializable {
+public class SubjectCategoryBO implements Serializable {
 
     /**
      * 主键
@@ -35,23 +34,6 @@ public class SubjectCategory implements Serializable {
      * 父级id
      */
     private Integer parentId;
-    /**
-     * 创建人
-     */
-    private String createBy;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
-     * 更新人
-     */
-    private String updateBy;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
 
 }
 

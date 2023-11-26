@@ -8,12 +8,16 @@
         <result property="categoryType" column="category_type" jdbcType="INTEGER"/>
         <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>
         <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="SubjectCategoryMap">
         select
-          id, category_name, category_type, image_url, parent_id
+          id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time
         from subject_category
         where id = #{id}
     </select>
@@ -21,7 +25,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SubjectCategoryMap">
         select
-          id, category_name, category_type, image_url, parent_id
+          id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time
         from subject_category
         <where>
             <if test="id != null">
@@ -38,6 +42,18 @@
             </if>
             <if test="parentId != null">
                 and parent_id = #{parentId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
             </if>
         </where>
         limit #{pageable.offset}, #{pageable.pageSize}
@@ -63,34 +79,50 @@
             <if test="parentId != null">
                 and parent_id = #{parentId}
             </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_category(category_name, category_type, image_url, parent_id)
-        values (#{categoryName}, #{categoryType}, #{imageUrl}, #{parentId})
+        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time)
+        values (#{categoryName}, #{categoryType}, #{imageUrl}, #{parentId}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_category(category_name, category_type, image_url, parent_id)
+        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId})
+        (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_category(category_name, category_type, image_url, parent_id)
+        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId})
+            (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
         </foreach>
         on duplicate key update
         category_name = values(category_name),
         category_type = values(category_type),
         image_url = values(image_url),
-        parent_id = values(parent_id)
+        parent_id = values(parent_id),
+        create_by = values(create_by),
+        create_time = values(create_time),
+        update_by = values(update_by),
+        update_time = values(update_time)
     </insert>
 
     <!--通过主键修改数据-->
@@ -108,6 +140,18 @@
             </if>
             <if test="parentId != null">
                 parent_id = #{parentId},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
             </if>
         </set>
         where id = #{id}

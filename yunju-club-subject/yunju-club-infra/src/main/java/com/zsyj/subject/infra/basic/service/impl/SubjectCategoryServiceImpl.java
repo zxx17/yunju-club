@@ -1,8 +1,11 @@
 package com.zsyj.subject.infra.basic.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 import com.zsyj.subject.infra.basic.mapper.SubjectCategoryDao;
 import com.zsyj.subject.infra.basic.service.SubjectCategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
@@ -12,8 +15,9 @@ import javax.annotation.Resource;
  * 题目分类表(SubjectCategory)表服务实现类
  *
  * @author makejava
- * @since 2023-11-23 17:12:52
+ * @since 2023-11-24 11:21:42
  */
+@Slf4j
 @Service("subjectCategoryService")
 public class SubjectCategoryServiceImpl implements SubjectCategoryService {
     @Resource
@@ -30,6 +34,7 @@ public class SubjectCategoryServiceImpl implements SubjectCategoryService {
         return this.subjectCategoryDao.queryById(id);
     }
 
+
     /**
      * 新增数据
      *
@@ -38,6 +43,9 @@ public class SubjectCategoryServiceImpl implements SubjectCategoryService {
      */
     @Override
     public SubjectCategory insert(SubjectCategory subjectCategory) {
+        if (log.isInfoEnabled()){
+            log.info("SubjectCategoryServiceImpl.insert.subjectCategory{}", JSONObject.toJSONString(subjectCategory));
+        }
         this.subjectCategoryDao.insert(subjectCategory);
         return subjectCategory;
     }

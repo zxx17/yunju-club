@@ -41,6 +41,12 @@
             <artifactId>mybatis-plus-boot-starter-test</artifactId>
             <version>3.4.0</version>
         </dependency>
+        <!-- 公共层依赖 -->
+        <dependency>
+            <groupId>com.zsyunju</groupId>
+            <artifactId>yunju-club-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
     </dependencies>
 

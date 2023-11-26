@@ -1,15 +1,16 @@
 package com.zsyj.subject.infra.basic.mapper;
 
 import com.zsyj.subject.infra.basic.entity.SubjectCategory;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.awt.print.Pageable;
 import java.util.List;
 
 /**
  * 题目分类表(SubjectCategory)表数据库访问层
  *
  * @author makejava
- * @since 2023-11-23 17:12:50
+ * @since 2023-11-24 11:21:39
  */
 public interface SubjectCategoryDao {
 
@@ -21,7 +22,14 @@ public interface SubjectCategoryDao {
      */
     SubjectCategory queryById(Integer id);
 
-
+    /**
+     * 查询指定行数据
+     *
+     * @param subjectCategory 查询条件
+     * @param pageable         分页对象
+     * @return 对象列表
+     */
+    List<SubjectCategory> queryAllByLimit(SubjectCategory subjectCategory, @Param("pageable") Pageable pageable);
 
     /**
      * 统计总行数

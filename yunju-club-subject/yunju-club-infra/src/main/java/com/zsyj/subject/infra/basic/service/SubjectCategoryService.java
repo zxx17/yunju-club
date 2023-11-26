@@ -1,5 +1,6 @@
 package com.zsyj.subject.infra.basic.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 
 
@@ -7,7 +8,7 @@ import com.zsyj.subject.infra.basic.entity.SubjectCategory;
  * 题目分类表(SubjectCategory)表服务接口
  *
  * @author makejava
- * @since 2023-11-23 17:12:52
+ * @since 2023-11-24 11:21:42
  */
 public interface SubjectCategoryService {
 

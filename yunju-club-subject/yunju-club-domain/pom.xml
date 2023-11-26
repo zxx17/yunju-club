@@ -16,4 +16,15 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <dependencies>
+
+        <!-- 引入基础设施层   -->
+        <dependency>
+            <groupId>com.zsyunju</groupId>
+            <artifactId>yunju-club-infra</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+    </dependencies>
+
 </project>

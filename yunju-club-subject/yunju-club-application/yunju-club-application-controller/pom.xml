@@ -29,7 +29,12 @@
             <artifactId>yunju-club-infra</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <!--   领域层层依赖     -->
+        <dependency>
+            <groupId>com.zsyunju</groupId>
+            <artifactId>yunju-club-domain</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
