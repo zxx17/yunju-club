@@ -1,40 +1,29 @@
 package com.zsyj.subject.infra.basic.entity;
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.Date;
 import java.io.Serializable;
 
 /**
- * 题目分类表(SubjectCategory)实体类
+ * 题目标签表(SubjectLabel)实体类
  *
  * @author makejava
- * @since 2023-11-24 11:21:40
+ * @since 2023-11-27 19:22:45
  */
-
 @Data
-public class SubjectCategory implements Serializable {
+public class SubjectLabel implements Serializable {
 
-    /**
-     * 主键
-     */
     private Integer id;
     /**
-     * 分类名称
+     * 标签名称
      */
-    private String categoryName;
+    private String labelName;
     /**
-     * 分类类型
+     * 排序
      */
-    private Integer categoryType;
-    /**
-     * 分类图片url
-     */
-    private String imageUrl;
-    /**
-     * 父级id
-     */
-    private Integer parentId;
+    private Integer sortNum;
     /**
      * 创建人
      */
@@ -51,10 +40,11 @@ public class SubjectCategory implements Serializable {
      * 更新时间
      */
     private Date updateTime;
-
     /**
-     * 是否删除 0未删除 | 1已删除
+     * 是否删除 0未删除|1已删除
      */
     private Integer isDeleted;
+
+
 }
 

@@ -1,7 +1,6 @@
 package com.zsyj.subject.domian.service;
 
 import com.zsyj.subject.domian.entity.SubjectCategoryBO;
-import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 
 import java.util.List;
 
@@ -16,7 +15,30 @@ import java.util.List;
 
 public interface ISubjectCategoryDomainService {
 
+    /**
+     * 新增分类
+     * @param subjectCategoryBO bo
+     */
     void add(SubjectCategoryBO subjectCategoryBO);
 
+    /**
+     * 查询分类
+     * @param subjectCategoryBO bo
+     * @return list
+     */
     List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO);
+
+    /**
+     * 更新分类
+     * @param subjectCategoryBO bo
+     * @return boolean
+     */
+    Boolean update(SubjectCategoryBO subjectCategoryBO);
+
+    /**
+     * 删除分类
+     * @param subjectCategoryBO bo
+     * @return boolean
+     */
+    Boolean delete(SubjectCategoryBO subjectCategoryBO);
 }

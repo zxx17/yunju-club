@@ -12,6 +12,7 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
@@ -112,6 +113,9 @@
             <if test="parentId != null">
                 and parent_id = #{parentId}
             </if>
+            <if test="categoryType != null">
+                and category_type = #{categoryType}
+            </if>
             and is_deleted = 0
         </where>
     </select>
@@ -119,9 +123,9 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time,
-                                     update_by, update_time)
+                                     update_by, update_time, is_deleted)
         values (#{categoryName}, #{categoryType}, #{imageUrl}, #{parentId}, #{createBy}, #{createTime}, #{updateBy},
-                #{updateTime})
+                #{updateTime}, #{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
@@ -180,6 +184,9 @@
             </if>
             <if test="updateTime != null">
                 update_time = #{updateTime},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted}
             </if>
         </set>
         where id = #{id}

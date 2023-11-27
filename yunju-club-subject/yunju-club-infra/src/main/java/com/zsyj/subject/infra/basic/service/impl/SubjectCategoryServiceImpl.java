@@ -1,7 +1,6 @@
 package com.zsyj.subject.infra.basic.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 import com.zsyj.subject.infra.basic.mapper.SubjectCategoryDao;
 import com.zsyj.subject.infra.basic.service.SubjectCategoryService;
@@ -58,9 +57,8 @@ public class SubjectCategoryServiceImpl implements SubjectCategoryService {
      * @return 实例对象
      */
     @Override
-    public SubjectCategory update(SubjectCategory subjectCategory) {
-        this.subjectCategoryDao.update(subjectCategory);
-        return this.queryById(subjectCategory.getId());
+    public int update(SubjectCategory subjectCategory) {
+        return this.subjectCategoryDao.update(subjectCategory);
     }
 
     /**
