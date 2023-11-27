@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Xinxuan Zhuo
@@ -29,7 +30,7 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
 
     @Override
     public void add(SubjectCategoryBO subjectCategoryBO) {
-        if (log.isInfoEnabled()){
+        if (log.isInfoEnabled()) {
             log.info("SubjectCategoryDomainServiceImpl.add.bo{}", JSONObject.toJSONString(subjectCategoryBO));
         }
         SubjectCategory subjectCategory = SubjectCategoryBOConverter.INSTANCE
@@ -38,4 +39,13 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
     }
 
 
+    @Override
+    public List<SubjectCategoryBO> queryPrimaryCategory() {
+        List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryPrimaryCategory();
+        List<SubjectCategoryBO> subjectCategoryBOList = SubjectCategoryBOConverter.INSTANCE.convertToSubjectCategoryBO(subjectCategoryList);
+        if(log.isInfoEnabled()){
+            log.info("SubjectCategoryDomainServiceImpl.queryPrimaryCategory.subjectCategoryBOList:{}",subjectCategoryBOList);
+        }
+        return subjectCategoryBOList;
+    }
 }

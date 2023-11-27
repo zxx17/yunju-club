@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Xinxuan Zhuo
@@ -30,10 +31,10 @@ public class SubjectCategoryController {
     private ISubjectCategoryDomainService subjectCategoryDomainService;
 
     @PostMapping("/add")
-    public Result<Object> add(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+    public Result<Object> add(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
         try {
             // tips: log.isInfoEnabled(){doPrint} 高并发场景下的日志优化
-            if (log.isInfoEnabled()){
+            if (log.isInfoEnabled()) {
                 log.info("SubjectCategoryController.add.dto{}", JSONObject.toJSONString(subjectCategoryDTO));
             }
             Preconditions.checkNotNull(subjectCategoryDTO.getCategoryType(), "分类类型不能为空");
@@ -43,11 +44,26 @@ public class SubjectCategoryController {
             SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDTOToSubjectCategoryBO(subjectCategoryDTO);
             subjectCategoryDomainService.add(subjectCategoryBO);
             return Result.ok(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("SubjectCategoryController.add.error{}", e.getMessage());
             return Result.fail(e.getMessage());
         }
     }
 
+
+    @GetMapping("/queryPrimaryCategory")
+    public Result<Object> queryPrimaryCategory() {
+        try {
+            List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryPrimaryCategory();
+            List<SubjectCategoryDTO> subjectCategoryDTOList =   SubjectCategoryDTOConverter.INSTANCE.convertBOToSubjectCategoryDTO(subjectCategoryBOList);
+            if (log.isInfoEnabled()) {
+                log.info("SubjectCategoryController.queryPrimaryCategory.subjectCategoryDTOList:{}",subjectCategoryDTOList);
+            }
+            return Result.ok(subjectCategoryDTOList);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.queryPrimaryCategory.error{}", e.getMessage());
+            return Result.fail("查询失败");
+        }
+    }
 
 }
