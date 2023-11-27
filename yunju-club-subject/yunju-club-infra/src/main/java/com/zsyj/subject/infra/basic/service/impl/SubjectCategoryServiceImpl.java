@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 题目分类表(SubjectCategory)表服务实现类
@@ -71,5 +72,10 @@ public class SubjectCategoryServiceImpl implements SubjectCategoryService {
     @Override
     public boolean deleteById(Integer id) {
         return this.subjectCategoryDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public List<SubjectCategory> queryCategory(SubjectCategory subjectCategory) {
+        return this.subjectCategoryDao.queryCategory(subjectCategory);
     }
 }

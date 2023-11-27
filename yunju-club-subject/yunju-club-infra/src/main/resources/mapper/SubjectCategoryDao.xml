@@ -16,8 +16,15 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="SubjectCategoryMap">
-        select
-          id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time
+        select id,
+               category_name,
+               category_type,
+               image_url,
+               parent_id,
+               create_by,
+               create_time,
+               update_by,
+               update_time
         from subject_category
         where id = #{id}
     </select>
@@ -25,7 +32,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SubjectCategoryMap">
         select
-          id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time
+        id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time
         from subject_category
         <where>
             <if test="id != null">
@@ -94,25 +101,46 @@
         </where>
     </select>
 
+    <select id="queryCategory"
+            resultMap="SubjectCategoryMap"
+            parameterType="com.zsyj.subject.infra.basic.entity.SubjectCategory">
+        select * from subject_category
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            and is_deleted = 0
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time)
-        values (#{categoryName}, #{categoryType}, #{imageUrl}, #{parentId}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
+        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time,
+                                     update_by, update_time)
+        values (#{categoryName}, #{categoryType}, #{imageUrl}, #{parentId}, #{createBy}, #{createTime}, #{updateBy},
+                #{updateTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time)
+        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time,
+        update_by, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
+            (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time)
+        insert into subject_category(category_name, category_type, image_url, parent_id, create_by, create_time,
+        update_by, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
+            (#{entity.categoryName}, #{entity.categoryType}, #{entity.imageUrl}, #{entity.parentId}, #{entity.createBy},
+            #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})
         </foreach>
         on duplicate key update
         category_name = values(category_name),
@@ -159,7 +187,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from subject_category where id = #{id}
+        delete
+        from subject_category
+        where id = #{id}
     </delete>
 
 </mapper>

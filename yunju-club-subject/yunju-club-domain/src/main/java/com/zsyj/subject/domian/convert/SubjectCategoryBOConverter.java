@@ -5,6 +5,8 @@ import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author Xinxuan Zhuo
  * @version 2023/11/24
@@ -19,4 +21,6 @@ public interface SubjectCategoryBOConverter {
     SubjectCategoryBOConverter INSTANCE = Mappers.getMapper(SubjectCategoryBOConverter.class);
 
     SubjectCategory convertBOToSubjectCategory(SubjectCategoryBO subjectCategoryBO);
+
+    List<SubjectCategoryBO> convertToSubjectCategoryBO(List<SubjectCategory> subjectCategoryList);
 }
