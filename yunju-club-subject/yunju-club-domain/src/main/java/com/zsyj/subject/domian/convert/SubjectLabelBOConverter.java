@@ -1,13 +1,10 @@
 package com.zsyj.subject.domian.convert;
 
-import com.zsyj.subject.domian.entity.SubjectCategoryBO;
 import com.zsyj.subject.domian.entity.SubjectLabelBO;
-import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
 
 /**
  * @author Xinxuan Zhuo

@@ -2,6 +2,8 @@ package com.zsyj.subject.infra.basic.service;
 
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 
+import java.util.List;
+
 /**
  * 题目标签表(SubjectLabel)表服务接口
  *
@@ -42,4 +44,10 @@ public interface SubjectLabelService {
      */
     boolean deleteById(Integer id);
 
+    /**
+     * 根据标签id批量查询标签
+     * @param labelIds labelId
+     * @return list List<SubjectLabel>
+     */
+    List<SubjectLabel> querySubjectLabelById(List<Integer> labelIds);
 }

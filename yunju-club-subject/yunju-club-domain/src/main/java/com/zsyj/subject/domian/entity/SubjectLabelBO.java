@@ -16,6 +16,10 @@ public class SubjectLabelBO implements Serializable {
 
     private Integer id;
     /**
+     * 分类id
+     */
+    private Integer categoryId;
+    /**
      * 标签名称
      */
     private String labelName;

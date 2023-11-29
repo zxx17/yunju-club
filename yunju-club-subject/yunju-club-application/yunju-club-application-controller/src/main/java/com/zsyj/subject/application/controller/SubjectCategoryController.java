@@ -73,7 +73,7 @@ public class SubjectCategoryController {
     /**
      * 查询分类大类
      *
-     * @return json
+     * @return json result List<SubjectCategoryDTO>
      */
     @GetMapping("/queryPrimaryCategory")
     public Result<Object> queryPrimaryCategory() {
@@ -81,7 +81,7 @@ public class SubjectCategoryController {
             SubjectCategoryBO subjectCategoryBO = new SubjectCategoryBO();
             subjectCategoryBO.setCategoryType(CATEGORY_TYPE_BIG);
             List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
-            List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.convertBOToSubjectCategoryDTO(subjectCategoryBOList);
+            List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.convertBOToSubjectCategoryDTOList(subjectCategoryBOList);
             if (log.isInfoEnabled()) {
                 log.info("SubjectCategoryController.queryPrimaryCategory.subjectCategoryDTOList:{}", subjectCategoryDTOList);
             }
@@ -97,7 +97,7 @@ public class SubjectCategoryController {
      * 查询分类小类
      *
      * @param subjectCategoryDTO dto
-     * @return json
+     * @return json result List<SubjectCategoryDTO>
      */
     @PostMapping("/queryCategoryByPrimary")
     public Result<Object> queryCategoryByPrimary(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
@@ -110,7 +110,7 @@ public class SubjectCategoryController {
                     .convertDTOToSubjectCategoryBO(subjectCategoryDTO);
             List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
             List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE
-                    .convertBOToSubjectCategoryDTO(subjectCategoryBOList);
+                    .convertBOToSubjectCategoryDTOList(subjectCategoryBOList);
             return Result.ok(subjectCategoryDTOList);
         } catch (Exception e) {
             log.error("SubjectCategoryController.queryCategoryByPrimary.error{}", e.getMessage());

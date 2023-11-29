@@ -15,10 +15,17 @@ import java.io.Serializable;
 public class SubjectLabelDTO implements Serializable {
 
     private Integer id;
+
+    /**
+     * 分类id
+     */
+    private Integer categoryId;
+
     /**
      * 标签名称
      */
     private String labelName;
+
     /**
      * 排序
      */

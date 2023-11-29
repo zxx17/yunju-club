@@ -10,12 +10,16 @@ import com.zsyj.subject.domian.service.ISubjectLabelDomainService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+import java.util.List;
+
 import static com.zsyj.subject.common.enums.NotifyEnum.INSERT_FAIL;
+import static com.zsyj.subject.common.enums.NotifyEnum.QUERY_FAIL;
 
 @Slf4j
 @RestController
@@ -74,6 +78,32 @@ public class SubjectLabelController {
         } catch (Exception e) {
             log.error("SubjectLabelController.deleteLabel.error{}", e.getMessage());
             return Result.fail(INSERT_FAIL + e.getMessage());
+        }
+    }
+
+
+    /**
+     * 根据分类id查询标签
+     *
+     * @param subjectLabelDTO dto 分类id
+     * @return json result List<SubjectLabelDTO>
+     */
+    @PostMapping("/queryLabelByCategoryId")
+    public Result<Object> queryLabelByCategoryId(@RequestBody SubjectLabelDTO subjectLabelDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectLabelController.queryLabelByCategoryId.dto{}", JSONObject.toJSONString(subjectLabelDTO));
+            }
+            Preconditions.checkNotNull(subjectLabelDTO.getCategoryId(), "分类id不能为空");
+            SubjectLabelBO subjectLabelBO = SubjectLabelDTOConverter.INSTANCE
+                    .convertDTOToSubjectLabelBO(subjectLabelDTO);
+            List<SubjectLabelBO> subjectLabelBOList = subjectLabelDomainService.queryLabelByCategoryId(subjectLabelBO);
+            List<SubjectLabelDTO> subjectLabelDTOList = SubjectLabelDTOConverter.INSTANCE
+                    .convertBOToSubjectLabelDTOList(subjectLabelBOList);
+            return Result.ok(subjectLabelDTOList);
+        } catch (Exception e) {
+            log.error("SubjectLabelController.queryLabelByCategoryId.error{}", e.getMessage());
+            return Result.fail(QUERY_FAIL + e.getMessage());
         }
     }
 

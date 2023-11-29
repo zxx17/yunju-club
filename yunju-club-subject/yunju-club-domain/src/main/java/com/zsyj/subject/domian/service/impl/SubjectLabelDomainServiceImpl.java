@@ -5,11 +5,19 @@ import com.zsyj.subject.domian.convert.SubjectLabelBOConverter;
 import com.zsyj.subject.domian.entity.SubjectLabelBO;
 import com.zsyj.subject.domian.service.ISubjectLabelDomainService;
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
+import com.zsyj.subject.infra.basic.entity.SubjectMapping;
 import com.zsyj.subject.infra.basic.service.SubjectLabelService;
+import com.zsyj.subject.infra.basic.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.zsyj.subject.common.enums.DeletedFlagEnum.IS_DELETED;
 import static com.zsyj.subject.common.enums.DeletedFlagEnum.UN_DELETE;
@@ -20,6 +28,9 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
 
     @Resource
     private SubjectLabelService subjectLabelService;
+
+    @Resource
+    private SubjectMappingService subjectMappingService;
 
 
     @Override
@@ -57,4 +68,36 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
         return isUpdate > 0;
     }
 
+
+    /**
+     * 根据分类id查询标签
+     *
+     * @param subjectLabelBO bo 分类id
+     * @return json result List<SubjectLabelDTO>
+     */
+    @Override
+    public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
+        if (log.isInfoEnabled()) {
+            log.info("SubjectLabelDomainServiceImpl.queryLabelByCategoryId.bo{}", JSONObject.toJSONString(subjectLabelBO));
+        }
+        Integer categoryId = subjectLabelBO.getCategoryId();
+        SubjectMapping subjectMapping = new SubjectMapping();
+        subjectMapping.setCategoryId(categoryId);
+        subjectMapping.setIsDeleted(UN_DELETE.getFlag());
+        List<SubjectMapping> subjectMappingList = subjectMappingService.queryLabelByCategoryId(subjectMapping);
+        if (CollectionUtils.isEmpty(subjectMappingList)) {
+            return Collections.emptyList();
+        }
+        List<Integer> labelIds = subjectMappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+        List<SubjectLabel> subjectLabelList = subjectLabelService.querySubjectLabelById(labelIds);
+        List<SubjectLabelBO> subjectLabelBOList = new LinkedList<>();
+        subjectLabelList.forEach(label -> {
+            SubjectLabelBO bo = new SubjectLabelBO();
+            bo.setCategoryId(categoryId);
+            bo.setLabelName(label.getLabelName());
+            bo.setSortNum(label.getSortNum());
+            bo.setId(label.getId());
+        });
+        return subjectLabelBOList;
+    }
 }
