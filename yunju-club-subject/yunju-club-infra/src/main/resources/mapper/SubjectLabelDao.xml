@@ -16,7 +16,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="SubjectLabelMap">
         select
-idlabel_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted
+id,label_name,sort_num,create_by,create_time,update_by,update_time,is_deleted
         from subject_label
         where id = #{id}
     </select>
@@ -24,7 +24,7 @@ idlabel_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SubjectLabelMap">
         select
-idlabel_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted
+id,label_name,sort_num,create_by,create_time,update_by,update_time,is_deleted
         from subject_label
         <where>
             <if test="id != null">
@@ -89,26 +89,26 @@ idlabel_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_label(label_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted)
-        values (#{labelName}#{sortNum}#{createBy}#{createTime}#{updateBy}#{updateTime}#{isDeleted})
+        insert into subject_label(label_name,sort_num,create_by,create_time,update_by,update_time,is_deleted)
+        values (#{labelName},#{sortNum},#{createBy},#{createTime},#{updateBy},#{updateTime},#{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_label(label_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted)
+        insert into subject_label(label_name,sort_num,create_by,create_time,update_by,update_time,is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.labelName}#{entity.sortNum}#{entity.createBy}#{entity.createTime}#{entity.updateBy}#{entity.updateTime}#{entity.isDeleted})
+        (#{entity.labelName},#{entity.sortNum},#{entity.createBy},#{entity.createTime},#{entity.updateBy},#{entity.updateTime},#{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_label(label_namesort_numcreate_bycreate_timeupdate_byupdate_timeis_deleted)
+        insert into subject_label(label_name,sort_num,create_by,create_time,update_by,update_time,is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.labelName}#{entity.sortNum}#{entity.createBy}#{entity.createTime}#{entity.updateBy}#{entity.updateTime}#{entity.isDeleted})
+            (#{entity.labelName},#{entity.sortNum},#{entity.createBy},#{entity.createTime},#{entity.updateBy},#{entity.updateTime},#{entity.isDeleted})
         </foreach>
         on duplicate key update
-label_name = values(label_name)sort_num = values(sort_num)create_by = values(create_by)create_time = values(create_time)update_by = values(update_by)update_time = values(update_time)is_deleted = values(is_deleted)
+label_name = values(label_name),sort_num = values(sort_num),create_by = values(create_by),create_time = values(create_time),update_by = values(update_by),update_time = values(update_time),is_deleted = values(is_deleted)
     </insert>
 
     <!--通过主键修改数据-->
@@ -152,6 +152,7 @@ label_name = values(label_name)sort_num = values(sort_num)create_by = values(cre
         <foreach collection="list" item="labelId" separator="," open="(" close=")">
             #{labelId}
         </foreach>
+        AND is_deleted = 0
     </select>
 
 </mapper>

@@ -97,6 +97,7 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
             bo.setLabelName(label.getLabelName());
             bo.setSortNum(label.getSortNum());
             bo.setId(label.getId());
+            subjectLabelBOList.add(bo);
         });
         return subjectLabelBOList;
     }

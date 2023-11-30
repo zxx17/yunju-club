@@ -31,7 +31,7 @@ public class SubjectLabelController {
 
 
     @PostMapping("/add")
-    public Result<Object> addLabel(SubjectLabelDTO subjectLabelDTO) {
+    public Result<Object> addLabel(@RequestBody SubjectLabelDTO subjectLabelDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectLabelController.addLabel.dto{}", JSONObject.toJSONString(subjectLabelDTO));
@@ -48,7 +48,7 @@ public class SubjectLabelController {
     }
 
     @PostMapping("/update")
-    public Result<Object> updateLabel(SubjectLabelDTO subjectLabelDTO) {
+    public Result<Object> updateLabel(@RequestBody SubjectLabelDTO subjectLabelDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectLabelController.updateLabel.dto{}", JSONObject.toJSONString(subjectLabelDTO));
@@ -65,7 +65,7 @@ public class SubjectLabelController {
     }
 
     @PostMapping("/delete")
-    public Result<Object> deleteLabel(SubjectLabelDTO subjectLabelDTO) {
+    public Result<Object> deleteLabel(@RequestBody SubjectLabelDTO subjectLabelDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectLabelController.deleteLabel.dto{}", JSONObject.toJSONString(subjectLabelDTO));
