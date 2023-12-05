@@ -2,6 +2,8 @@ package com.zsyj.subject.infra.basic.service;
 
 import com.zsyj.subject.infra.basic.entity.SubjectRadio;
 
+import java.util.List;
+
 
 /**
  * 单选题表(SubjectRadio)表服务接口
@@ -44,4 +46,5 @@ public interface SubjectRadioService {
      */
     boolean deleteById(Integer id);
 
+    void batchInsert(List<SubjectRadio> subjectRadioList);
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum NotifyEnum {
 
+    INSERT_SUCCESS("新增成功 "),
     INSERT_FAIL("新增失败: "),
     QUERY_FAIL("查询失败: "),
     UPDATE_FAIL("更新失败: "),

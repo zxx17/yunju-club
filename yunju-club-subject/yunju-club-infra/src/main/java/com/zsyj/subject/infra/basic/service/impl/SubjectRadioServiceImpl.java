@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 单选题表(SubjectRadio)表服务实现类
@@ -64,5 +65,10 @@ public class SubjectRadioServiceImpl implements SubjectRadioService {
     @Override
     public boolean deleteById(Integer id) {
         return this.subjectRadioDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public void batchInsert(List<SubjectRadio> subjectRadioList) {
+        this.subjectRadioDao.insertBatch(subjectRadioList);
     }
 }

@@ -79,4 +79,9 @@ public class SubjectMappingServiceImpl implements SubjectMappingService {
         log.info("SubjectMappingServiceImpl.queryLabelByCategoryId.subjectMappingList{}", subjectMappingList);
         return subjectMappingList;
     }
+
+    @Override
+    public void batchInsert(List<SubjectMapping> subjectMappingList) {
+        this.subjectMappingDao.insertBatch(subjectMappingList);
+    }
 }
