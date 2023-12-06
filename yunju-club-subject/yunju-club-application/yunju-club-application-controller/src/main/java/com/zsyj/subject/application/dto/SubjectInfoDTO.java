@@ -1,13 +1,16 @@
 package com.zsyj.subject.application.dto;
 
+import com.zsyj.subject.common.entity.PageInfo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
 
 
 @Data
-public class SubjectInfoDTO implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class SubjectInfoDTO extends PageInfo implements Serializable {
     /**
      * 主键
      */
@@ -56,7 +59,15 @@ public class SubjectInfoDTO implements Serializable {
      */
     private List<SubjectAnswerDTO> optionList;
 
+    /**
+     * 题目分类
+     */
+    private Integer categoryId;
 
+    /**
+     * 题目标签
+     */
+    private Integer labelId;
 
 
 }

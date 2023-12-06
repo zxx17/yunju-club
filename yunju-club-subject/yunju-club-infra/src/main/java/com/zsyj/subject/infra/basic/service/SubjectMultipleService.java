@@ -2,6 +2,8 @@ package com.zsyj.subject.infra.basic.service;
 
 import com.zsyj.subject.infra.basic.entity.SubjectMultiple;
 
+import java.util.List;
+
 
 /**
  * 多选题表(SubjectMultiple)表服务接口
@@ -45,4 +47,6 @@ public interface SubjectMultipleService {
      */
     boolean deleteById(Integer id);
 
+
+    void batchInsert(List<SubjectMultiple> subjectMultipleList);
 }

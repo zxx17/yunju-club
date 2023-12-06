@@ -18,7 +18,7 @@ public class SubjectBrief implements Serializable {
     /**
      * 题目id
      */
-    private String subjectId;
+    private Integer subjectId;
     /**
      * 题目答案
      */

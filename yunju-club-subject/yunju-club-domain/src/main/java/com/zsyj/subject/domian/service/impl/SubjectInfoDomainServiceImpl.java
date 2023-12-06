@@ -1,6 +1,8 @@
 package com.zsyj.subject.domian.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zsyj.subject.common.entity.PageResult;
+import com.zsyj.subject.common.enums.DeletedFlagEnum;
 import com.zsyj.subject.domian.convert.SubjectInfoBOConvert;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import com.zsyj.subject.domian.handler.subject.SubjectTypeHandler;
@@ -38,17 +40,22 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
     @Resource
     private SubjectTypeHandlerFactory subjectTypeHandlerFactory;
 
+    /**
+     * 新增题目
+     * @param subjectInfoBO bo
+     */
     @Override
     public void add(SubjectInfoBO subjectInfoBO) {
         if (log.isInfoEnabled()) {
             log.info("SubjectInfoDomainServiceImpl.add.bo{}", JSONObject.toJSONString(subjectInfoBO));
         }
+        //插入题目基本信息
         SubjectInfo subjectInfo = SubjectInfoBOConvert.INSTANCE.convertBOToSubjectInfo(subjectInfoBO);
         subjectInfoService.insert(subjectInfo);
-
+        //插入对应题目类型的信息
         SubjectTypeHandler instance = subjectTypeHandlerFactory.getHandler(subjectInfo.getSubjectType());
         instance.add(subjectInfoBO);
-
+        //插入题目mapping映射表 关联信息
         List<Integer> categoryIds = subjectInfoBO.getCategoryIds();
         List<Integer> labelIds = subjectInfoBO.getLabelIds();
         List<SubjectMapping> subjectMappingList = new LinkedList<>();
@@ -58,9 +65,16 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
                 subjectMapping.setSubjectId(subjectInfo.getId());
                 subjectMapping.setCategoryId(categoryId);
                 subjectMapping.setLabelId(labelId);
+                subjectMapping.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
                 subjectMappingList.add(subjectMapping);
             });
         });
         subjectMappingService.batchInsert(subjectMappingList);
+    }
+
+
+    @Override
+    public PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO) {
+        return null;
     }
 }

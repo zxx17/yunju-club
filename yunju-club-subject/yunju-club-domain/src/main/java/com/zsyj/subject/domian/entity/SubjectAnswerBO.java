@@ -13,7 +13,7 @@ public class SubjectAnswerBO implements Serializable {
     /**
      * 题目答案标识
      */
-    private Integer optionTYpe;
+    private Integer optionType;
     /**
      * 题目答案
      */

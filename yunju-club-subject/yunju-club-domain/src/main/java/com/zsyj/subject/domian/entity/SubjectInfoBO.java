@@ -56,6 +56,15 @@ public class SubjectInfoBO implements Serializable {
      */
     private List<SubjectAnswerBO> optionList;
 
+    /**
+     * 题目分类
+     */
+    private Integer categoryId;
+
+    /**
+     * 题目标签
+     */
+    private Integer labelId;
 
 
 

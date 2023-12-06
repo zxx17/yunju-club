@@ -1,6 +1,7 @@
 package com.zsyj.subject.application.convert;
 
 import com.zsyj.subject.application.dto.SubjectInfoDTO;
+import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -20,6 +21,8 @@ public interface SubjectInfoDTOConvert {
 
 
     SubjectInfoBO convertDTOToSubjectInfoBO(SubjectInfoDTO subjectInfoDTO);
+
+    PageResult<SubjectInfoDTO> convertBOToSubjectInfoDTOButPage(PageResult<SubjectInfoBO> subjectInfoBOPageResult);
 
 
 }

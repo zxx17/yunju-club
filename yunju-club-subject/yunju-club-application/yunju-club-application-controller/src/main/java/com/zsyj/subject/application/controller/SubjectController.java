@@ -1,10 +1,12 @@
 package com.zsyj.subject.application.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.google.common.base.Preconditions;
 import com.zsyj.subject.application.convert.SubjectAnswerDTOConvert;
 import com.zsyj.subject.application.convert.SubjectInfoDTOConvert;
 import com.zsyj.subject.application.dto.SubjectInfoDTO;
+import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.common.entity.Result;
 import com.zsyj.subject.domian.entity.SubjectAnswerBO;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
@@ -49,9 +51,9 @@ public class SubjectController {
                 log.info("SubjectController.add.dto{}", JSONObject.toJSONString(subjectInfoDTO));
             }
             Preconditions.checkArgument(StringUtils.isNotBlank(subjectInfoDTO.getSubjectName()), "题目名称不能为空");
-            Preconditions.checkArgument(StringUtils.isNotBlank(subjectInfoDTO.getSubjectAnswer()), "题目分数不能为空");
+            Preconditions.checkNotNull(subjectInfoDTO.getSubjectSource(), "题目分值不能为空");
             Preconditions.checkNotNull(subjectInfoDTO.getSubjectDifficult(), "题目难度不能为空");
-            Preconditions.checkNotNull(subjectInfoDTO.getSubjectAnswer(), "题目答案不能为空");
+            Preconditions.checkArgument(StringUtils.isNotBlank(subjectInfoDTO.getSubjectAnswer()), "题目答案不能为空");
             Preconditions.checkNotNull(subjectInfoDTO.getSubjectType(), "题目类型不能为空");
 
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.convertDTOToSubjectInfoBO(subjectInfoDTO);
@@ -65,5 +67,27 @@ public class SubjectController {
         }
     }
 
+
+    /**
+     * 查询题目列表
+     * @param subjectInfoDTO dto
+     */
+    @PostMapping("/getSubjectPage")
+    public Result<PageResult<SubjectInfoDTO>> getSubjectPage(SubjectInfoDTO subjectInfoDTO){
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.getSubjectPage.dto{}", JSONObject.toJSONString(subjectInfoDTO));
+            }
+            Preconditions.checkNotNull(subjectInfoDTO.getCategoryId(), "题目分类id不能为空");
+            Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "题目标签id不能为空");
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.convertDTOToSubjectInfoBO(subjectInfoDTO);
+            PageResult<SubjectInfoBO> subjectInfoBOPageResult= subjectInfoDomainService.getSubjectPage(subjectInfoBO);
+            PageResult<SubjectInfoDTO> subjectInfoDTOPageResult = SubjectInfoDTOConvert.INSTANCE.convertBOToSubjectInfoDTOButPage(subjectInfoBOPageResult);
+            return Result.ok(subjectInfoDTOPageResult);
+        }catch (Exception e){
+            log.error("SubjectController.getSubjectPage.error{}", e.getMessage());
+            return Result.fail();
+        }
+    }
 
 }
