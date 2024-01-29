@@ -69,6 +69,11 @@ public class SubjectInfoDTO extends PageInfo implements Serializable {
      */
     private Integer labelId;
 
+    /**
+     * 标签名
+     */
+    private List<String> labelName;
+
 
 }
 

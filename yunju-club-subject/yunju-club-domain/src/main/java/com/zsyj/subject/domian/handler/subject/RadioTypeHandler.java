@@ -32,7 +32,7 @@ public class RadioTypeHandler implements SubjectTypeHandler {
     @Override
     public void add(SubjectInfoBO subjectInfoBO) {
         List<SubjectRadio> subjectRadioList = new LinkedList<>();
-        Preconditions.checkArgument(CollectionUtils.isEmpty(subjectInfoBO.getOptionList()),"单选题答案选项不能为空");
+        Preconditions.checkArgument(!CollectionUtils.isEmpty(subjectInfoBO.getOptionList()),"单选题答案选项不能为空");
         subjectInfoBO.getOptionList().forEach(option ->{
             SubjectRadio subjectRadio = SubjectRadioBOConvert.INSTANCE.convertInfoBOToSubjectRadio(option);
             subjectRadio.setSubjectId(subjectInfoBO.getId());

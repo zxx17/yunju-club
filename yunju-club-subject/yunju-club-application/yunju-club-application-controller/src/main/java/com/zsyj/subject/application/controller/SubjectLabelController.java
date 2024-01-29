@@ -43,7 +43,7 @@ public class SubjectLabelController {
             return Result.ok(isInsert);
         } catch (Exception e) {
             log.error("SubjectLabelController.addLabel.error{}", e.getMessage());
-            return Result.fail(INSERT_FAIL + e.getMessage());
+            return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
 
@@ -60,7 +60,7 @@ public class SubjectLabelController {
             return Result.ok(isInsert);
         } catch (Exception e) {
             log.error("SubjectLabelController.updateLabel.error{}", e.getMessage());
-            return Result.fail(INSERT_FAIL + e.getMessage());
+            return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ public class SubjectLabelController {
             return Result.ok(isInsert);
         } catch (Exception e) {
             log.error("SubjectLabelController.deleteLabel.error{}", e.getMessage());
-            return Result.fail(INSERT_FAIL + e.getMessage());
+            return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
 
@@ -103,7 +103,7 @@ public class SubjectLabelController {
             return Result.ok(subjectLabelDTOList);
         } catch (Exception e) {
             log.error("SubjectLabelController.queryLabelByCategoryId.error{}", e.getMessage());
-            return Result.fail(QUERY_FAIL + e.getMessage());
+            return Result.fail(QUERY_FAIL.getNotify() + e.getMessage());
         }
     }
 

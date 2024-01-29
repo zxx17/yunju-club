@@ -75,5 +75,7 @@ public interface SubjectMappingDao {
      * @return list list<SubjectMapping>
      */
     List<SubjectMapping> queryLabelByCategoryId(SubjectMapping subjectMapping);
+
+    List<SubjectMapping> queryDistinctLabelId(SubjectMapping subjectMapping);
 }
 

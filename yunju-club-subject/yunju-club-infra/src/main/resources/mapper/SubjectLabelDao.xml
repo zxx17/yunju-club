@@ -155,5 +155,15 @@ label_name = values(label_name),sort_num = values(sort_num),create_by = values(c
         AND is_deleted = 0
     </select>
 
+    <select id="batchQueryById" resultMap="SubjectLabelMap">
+        select
+        id, label_name, sort_num, create_by, create_time, update_by, is_deleted, update_time
+        from subject_label
+        where id in
+        <foreach open="(" close=")" collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>
 

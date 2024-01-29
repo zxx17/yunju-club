@@ -24,5 +24,7 @@ public interface SubjectInfoDTOConvert {
 
     PageResult<SubjectInfoDTO> convertBOToSubjectInfoDTOButPage(PageResult<SubjectInfoBO> subjectInfoBOPageResult);
 
+    SubjectInfoDTO convertBOToSubjectInfoDTO(SubjectInfoBO subjectInfoBO);
+
 
 }

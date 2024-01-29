@@ -36,7 +36,8 @@ public class MultipleTypeHandler implements SubjectTypeHandler{
         //多选题目的插入
         List<SubjectMultiple> subjectMultipleList = new LinkedList<>();
         subjectInfoBO.getOptionList().forEach(option -> {
-            SubjectMultiple subjectMultiple = SubjectMultipleBOConvert.INSTANCE.convertInfoBOToSubjectMultiple(option);
+            SubjectMultiple subjectMultiple = SubjectMultipleBOConvert.INSTANCE
+                    .convertInfoBOToSubjectMultiple(option);
             subjectMultiple.setSubjectId(subjectInfoBO.getId());
             subjectMultiple.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
             subjectMultipleList.add(subjectMultiple);

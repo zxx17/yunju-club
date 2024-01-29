@@ -65,7 +65,7 @@ public class SubjectCategoryController {
             return Result.ok(true);
         } catch (Exception e) {
             log.error("SubjectCategoryController.add.error{}", e.getMessage());
-            return Result.fail(INSERT_FAIL + e.getMessage());
+            return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public class SubjectCategoryController {
             return Result.ok(subjectCategoryDTOList);
         } catch (Exception e) {
             log.error("SubjectCategoryController.queryPrimaryCategory.error{}", e.getMessage());
-            return Result.fail("查询失败");
+            return Result.fail(QUERY_FAIL.getNotify() + e.getMessage());
         }
     }
 

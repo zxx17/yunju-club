@@ -1,13 +1,16 @@
 package com.zsyj.subject.domian.entity;
 
+import com.zsyj.subject.common.entity.PageInfo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
 
 
 @Data
-public class SubjectInfoBO implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class SubjectInfoBO extends PageInfo implements Serializable {
     /**
      * 主键
      */
@@ -65,6 +68,11 @@ public class SubjectInfoBO implements Serializable {
      * 题目标签
      */
     private Integer labelId;
+
+    /**
+     * 标签name
+     */
+    private List<String> labelName;
 
 
 

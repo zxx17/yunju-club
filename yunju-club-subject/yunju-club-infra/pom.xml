@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.21</version>
+            <version>1.1.22</version>
         </dependency>
         <!-- mysql-driver -->
         <dependency>
@@ -38,7 +38,7 @@
         <!-- orm-frame -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter-test</artifactId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.4.0</version>
         </dependency>
         <!-- 公共层依赖 -->

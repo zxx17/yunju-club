@@ -19,5 +19,12 @@ public interface ISubjectInfoDomainService {
      */
     void add(SubjectInfoBO subjectInfoBO);
 
+    /**
+     * 查询题目列表
+     * @param subjectInfoBO dto
+     */
     PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO);
+
+
+    SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO);
 }

@@ -19,8 +19,18 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="SubjectInfoMap">
-        select
-          id, subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by, create_time, update_by, update_time, is_deleted
+        select id,
+               subject_name,
+               subject_difficult,
+               settle_name,
+               subject_type,
+               subject_source,
+               subject_parse,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               is_deleted
         from subject_info
         where id = #{id}
     </select>
@@ -28,7 +38,8 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SubjectInfoMap">
         select
-          id, subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by, create_time, update_by, update_time, is_deleted
+        id, subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by,
+        create_time, update_by, update_time, is_deleted
         from subject_info
         <where>
             <if test="id != null">
@@ -117,23 +128,31 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by, create_time, update_by, update_time, is_deleted)
-        values (#{subjectName}, #{subjectDifficult}, #{settleName}, #{subjectType}, #{subjectSource}, #{subjectParse}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{isDeleted})
+        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
+                                 subject_parse, create_by, create_time, update_by, update_time, is_deleted)
+        values (#{subjectName}, #{subjectDifficult}, #{settleName}, #{subjectType}, #{subjectSource}, #{subjectParse},
+                #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by, create_time, update_by, update_time, is_deleted)
+        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
+        subject_parse, create_by, create_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.subjectName}, #{entity.subjectDifficult}, #{entity.settleName}, #{entity.subjectType}, #{entity.subjectSource}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+            (#{entity.subjectName}, #{entity.subjectDifficult}, #{entity.settleName}, #{entity.subjectType},
+            #{entity.subjectSource}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by, create_time, update_by, update_time, is_deleted)
+        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
+        subject_parse, create_by, create_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.subjectName}, #{entity.subjectDifficult}, #{entity.settleName}, #{entity.subjectType}, #{entity.subjectSource}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+            (#{entity.subjectName}, #{entity.subjectDifficult}, #{entity.settleName}, #{entity.subjectType},
+            #{entity.subjectSource}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
         on duplicate key update
         subject_name = values(subject_name),
@@ -192,8 +211,58 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from subject_info where id = #{id}
+        delete
+        from subject_info
+        where id = #{id}
     </delete>
+
+    <select id="countByCondition" resultType="java.lang.Integer">
+        select count(*)
+        from subject_info a,
+        subject_mapping b
+        where
+        a.id = b.subject_id
+        and b.category_id = #{categoryId}
+        and b.label_id = #{labelId}
+        and a.is_deleted = 0
+        and b.is_deleted = 0
+        <if test="subjectInfo.subjectDifficult != null">
+            and a.subject_difficult = #{subjectInfo.subjectDifficult}
+        </if>
+        <if test="subjectInfo.subjectType != null">
+            and a.subject_type = #{subjectInfo.subjectType}
+        </if>
+    </select>
+
+    <select id="queryPage" resultMap="SubjectInfoMap">
+        select a.id,
+        a.subject_name,
+        a.subject_difficult,
+        a.settle_name,
+        a.subject_type,
+        a.subject_source,
+        a.subject_parse,
+        a.create_by,
+        a.create_time,
+        a.update_by,
+        a.update_time,
+        a.is_deleted
+        from subject_info a,
+        subject_mapping b
+        where
+        a.id = b.subject_id
+        and b.category_id = #{categoryId}
+        and b.label_id = #{labelId}
+        and a.is_deleted = 0
+        and b.is_deleted = 0
+        <if test="subjectInfo.subjectDifficult != null">
+            and a.subject_difficult = #{subjectInfo.subjectDifficult}
+        </if>
+        <if test="subjectInfo.subjectType != null">
+            and a.subject_type = #{subjectInfo.subjectType}
+        </if>
+        limit #{start},#{pageSize}
+    </select>
 
 </mapper>
 

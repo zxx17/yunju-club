@@ -5,6 +5,8 @@ import com.zsyj.subject.infra.basic.entity.SubjectInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author Xinxuan Zhuo
  * @version 2023/12/5
@@ -21,5 +23,7 @@ public interface SubjectInfoBOConvert {
 
     SubjectInfo convertBOToSubjectInfo(SubjectInfoBO subjectInfoDTO);
 
+
+    List<SubjectInfoBO> convertToSubjectInfoBOLIst(List<SubjectInfo> subjectInfoList);
 
 }

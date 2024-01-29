@@ -50,4 +50,6 @@ public interface SubjectLabelService {
      * @return list List<SubjectLabel>
      */
     List<SubjectLabel> querySubjectLabelById(List<Integer> labelIds);
+
+    List<SubjectLabel> batchQueryById(List<Integer> labelIds);
 }

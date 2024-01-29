@@ -2,6 +2,8 @@ package com.zsyj.subject.infra.basic.service;
 
 import com.zsyj.subject.infra.basic.entity.SubjectInfo;
 
+import java.util.List;
+
 
 /**
  * 题目信息表(SubjectInfo)表服务接口
@@ -45,4 +47,7 @@ public interface SubjectInfoService {
      */
     boolean deleteById(Integer id);
 
+    int countByCondition(SubjectInfo subjectInfo, Integer categoryId, Integer labelId);
+
+    List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Integer categoryId, Integer labelId, Integer start, Integer pageSize);
 }
