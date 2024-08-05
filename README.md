@@ -1,2 +1,2 @@
 # yunju-club
-a community of programmers🐵
+Yunju Club adopts advanced domain-driven design (DDD) microservice architecture. This is an open platform that brings together all developers who are eager to grow to share knowledge, exchange experiences, and solve various challenges in programming side by side. Yunju Club is not only a space for technical exchanges, but also an ideal place for you to improve your skills, practice interview questions, and expand your horizons. The possibilities here are endless.
