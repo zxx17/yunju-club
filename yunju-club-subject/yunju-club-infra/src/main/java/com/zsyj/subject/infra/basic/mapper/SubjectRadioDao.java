@@ -20,7 +20,7 @@ public interface SubjectRadioDao {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectRadio queryById(Integer id);
+    SubjectRadio queryById(Long id);
 
 
 
@@ -71,7 +71,7 @@ public interface SubjectRadioDao {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(Long id);
 
 }
 

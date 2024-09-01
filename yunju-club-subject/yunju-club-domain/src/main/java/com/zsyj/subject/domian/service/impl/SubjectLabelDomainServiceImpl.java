@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +42,8 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
         SubjectLabel subjectLabel = SubjectLabelBOConverter.INSTANCE
                 .convertBOToSubjectLabel(subjectLabelBO);
         subjectLabel.setIsDeleted(UN_DELETE.getFlag());
+        subjectLabel.setCreateTime(new Date());
+        subjectLabel.setUpdateTime(new Date());
         int isInsert = subjectLabelService.insert(subjectLabel);
         return isInsert > 0;
     }
@@ -52,6 +55,7 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
         }
         SubjectLabel subjectLabel = SubjectLabelBOConverter.INSTANCE
                 .convertBOToSubjectLabel(subjectLabelBO);
+        subjectLabel.setUpdateTime(new Date());
         int isUpdate = subjectLabelService.update(subjectLabel);
         return isUpdate > 0;
     }
@@ -80,6 +84,7 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
         if (log.isInfoEnabled()) {
             log.info("SubjectLabelDomainServiceImpl.queryLabelByCategoryId.bo{}", JSONObject.toJSONString(subjectLabelBO));
         }
+        // 根据分类ID 查询Mapping表对应的LabelIds
         Integer categoryId = subjectLabelBO.getCategoryId();
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setCategoryId(categoryId);
@@ -88,6 +93,7 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
         if (CollectionUtils.isEmpty(subjectMappingList)) {
             return Collections.emptyList();
         }
+        // 过去所有LabelIds查询标签信息
         List<Integer> labelIds = subjectMappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
         List<SubjectLabel> subjectLabelList = subjectLabelService.querySubjectLabelById(labelIds);
         List<SubjectLabelBO> subjectLabelBOList = new LinkedList<>();

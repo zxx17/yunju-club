@@ -18,7 +18,7 @@ public class SubjectJudge implements Serializable {
     /**
      * 题目id
      */
-    private Integer subjectId;
+    private Long subjectId;
     /**
      * 是否正确
      */

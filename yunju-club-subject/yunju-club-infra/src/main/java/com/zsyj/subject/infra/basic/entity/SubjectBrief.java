@@ -14,15 +14,15 @@ import java.io.Serializable;
 @Data
 public class SubjectBrief implements Serializable {
 
-    private Integer id;
+    private Long id;
     /**
      * 题目id
      */
-    private Integer subjectId;
+    private Long subjectId;
     /**
      * 题目答案
      */
-    private Integer subjectAnswer;
+    private String subjectAnswer;
     /**
      * 创建人
      */

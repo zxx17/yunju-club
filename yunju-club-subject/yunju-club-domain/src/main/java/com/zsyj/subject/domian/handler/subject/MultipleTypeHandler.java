@@ -32,7 +32,7 @@ public class MultipleTypeHandler implements SubjectTypeHandler{
 
     @Override
     public void add(SubjectInfoBO subjectInfoBO) {
-        Preconditions.checkArgument(CollectionUtils.isEmpty(subjectInfoBO.getOptionList()),"多选题答案选项不能为空");
+        Preconditions.checkArgument(!CollectionUtils.isEmpty(subjectInfoBO.getOptionList()),"多选题答案选项不能为空");
         //多选题目的插入
         List<SubjectMultiple> subjectMultipleList = new LinkedList<>();
         subjectInfoBO.getOptionList().forEach(option -> {

@@ -21,6 +21,9 @@ import java.util.List;
 import static com.zsyj.subject.common.enums.NotifyEnum.INSERT_FAIL;
 import static com.zsyj.subject.common.enums.NotifyEnum.QUERY_FAIL;
 
+/**
+ * 刷题模块 标签 控制器
+ */
 @Slf4j
 @RestController
 @RequestMapping("/subject/label")

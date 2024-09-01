@@ -26,7 +26,7 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
      * @return 实例对象
      */
     @Override
-    public SubjectInfo queryById(Integer id) {
+    public SubjectInfo queryById(Long id) {
         return this.subjectInfoDao.queryById(id);
     }
 

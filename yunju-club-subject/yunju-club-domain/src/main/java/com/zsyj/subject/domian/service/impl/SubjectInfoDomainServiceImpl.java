@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
 
     /**
      * 新增题目
+     *
      * @param subjectInfoBO bo
      */
     @Override
@@ -62,8 +64,9 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         SubjectInfo subjectInfo = SubjectInfoBOConvert.INSTANCE
                 .convertBOToSubjectInfo(subjectInfoBO);
         subjectInfo.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
+        // 插入subject_info题目基本信息
         subjectInfoService.insert(subjectInfo);
-        //插入对应题目类型的信息
+        // 插入对应题目类型的信息（工厂加策略模式）
         SubjectTypeHandler instance = subjectTypeHandlerFactory.getHandler(subjectInfo.getSubjectType());
         subjectInfoBO.setId(subjectInfo.getId());
         instance.add(subjectInfoBO);
@@ -71,12 +74,14 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         List<Integer> categoryIds = subjectInfoBO.getCategoryIds();
         List<Integer> labelIds = subjectInfoBO.getLabelIds();
         List<SubjectMapping> subjectMappingList = new LinkedList<>();
-        categoryIds.forEach(categoryId->{
-            labelIds.forEach(labelId->{
+        categoryIds.forEach(categoryId -> {
+            labelIds.forEach(labelId -> {
                 SubjectMapping subjectMapping = new SubjectMapping();
                 subjectMapping.setSubjectId(subjectInfo.getId());
                 subjectMapping.setCategoryId(categoryId);
                 subjectMapping.setLabelId(labelId);
+                subjectMapping.setCreateTime(new Date());
+                subjectMapping.setUpdateTime(new Date());
                 subjectMapping.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
                 subjectMappingList.add(subjectMapping);
             });
@@ -87,6 +92,7 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
 
     /**
      * 查询题目列表
+     *
      * @param subjectInfoBO dto
      */
     @Override
@@ -110,7 +116,7 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
                 , subjectInfoBO.getLabelId(), start, subjectInfoBO.getPageSize());
         List<SubjectInfoBO> subjectInfoBOS = SubjectInfoBOConvert.INSTANCE
                 .convertToSubjectInfoBOLIst(subjectInfoList);
-        subjectInfoBOS.forEach(info->{
+        subjectInfoBOS.forEach(info -> {
             SubjectMapping subjectMapping = new SubjectMapping();
             subjectMapping.setSubjectId(info.getId());
             List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
@@ -128,6 +134,11 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
 
     @Override
     public SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO) {
+        if (log.isInfoEnabled()) {
+            log.info("SubjectInfoDomainServiceImpl.querySubjectInfo.bo{}", JSONObject.toJSONString(subjectInfoBO));
+        }
+
+
         return null;
     }
 }

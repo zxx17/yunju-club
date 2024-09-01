@@ -20,7 +20,7 @@ public interface SubjectMultipleDao {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectMultiple queryById(Integer id);
+    SubjectMultiple queryById(Long id);
 
 
     /**
@@ -70,7 +70,7 @@ public interface SubjectMultipleDao {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(Long id);
 
 }
 

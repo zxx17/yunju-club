@@ -19,7 +19,7 @@ public interface SubjectRadioService {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectRadio queryById(Integer id);
+    SubjectRadio queryById(Long id);
 
 
     /**
@@ -44,7 +44,7 @@ public interface SubjectRadioService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
     void batchInsert(List<SubjectRadio> subjectRadioList);
 }

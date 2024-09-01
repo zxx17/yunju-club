@@ -19,7 +19,7 @@ public interface SubjectMultipleService {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectMultiple queryById(Integer id);
+    SubjectMultiple queryById(Long id);
 
 
 
@@ -45,7 +45,7 @@ public interface SubjectMultipleService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
 
     void batchInsert(List<SubjectMultiple> subjectMultipleList);

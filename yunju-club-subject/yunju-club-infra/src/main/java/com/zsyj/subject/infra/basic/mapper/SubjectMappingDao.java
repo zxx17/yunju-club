@@ -18,7 +18,7 @@ public interface SubjectMappingDao {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectMapping queryById(Integer id);
+    SubjectMapping queryById(Long id);
 
     /**
      * 统计总行数
@@ -67,7 +67,7 @@ public interface SubjectMappingDao {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(Integer id);
+    int deleteById(Long id);
 
     /**
      * 通过分类id查询标签

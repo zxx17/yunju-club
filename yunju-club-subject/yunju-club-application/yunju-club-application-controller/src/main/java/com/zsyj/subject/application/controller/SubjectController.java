@@ -1,7 +1,6 @@
 package com.zsyj.subject.application.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.google.common.base.Preconditions;
 import com.zsyj.subject.application.convert.SubjectAnswerDTOConvert;
 import com.zsyj.subject.application.convert.SubjectInfoDTOConvert;
@@ -21,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-import static com.zsyj.subject.common.enums.NotifyEnum.INSERT_FAIL;
-import static com.zsyj.subject.common.enums.NotifyEnum.INSERT_SUCCESS;
+import static com.zsyj.subject.common.enums.NotifyEnum.*;
 
 
 /**
@@ -75,7 +73,7 @@ public class SubjectController {
      * @param subjectInfoDTO dto
      */
     @PostMapping("/getSubjectPage")
-    public Result<PageResult<SubjectInfoDTO>> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO){
+    public Result<Object> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO){
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.getSubjectPage.dto{}", JSONObject.toJSONString(subjectInfoDTO));
@@ -94,7 +92,7 @@ public class SubjectController {
             return Result.ok(subjectInfoDTOPageResult);
         }catch (Exception e){
             log.error("SubjectController.getSubjectPage.error{}", e.getMessage());
-            return Result.fail();
+            return Result.fail(QUERY_FAIL.getNotify()+ e.getMessage());
         }
     }
 
@@ -102,7 +100,7 @@ public class SubjectController {
      * 查询题目详情信息
      */
     @PostMapping("/querySubjectInfo")
-    public Result<SubjectInfoDTO> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+    public Result<Object> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.querySubjectInfo.dto:{}", JSONObject.toJSONString(subjectInfoDTO));
@@ -116,7 +114,7 @@ public class SubjectController {
             return Result.ok(dto);
         } catch (Exception e) {
             log.error("SubjectCategoryController.querySubjectInfo.error:{}", e.getMessage());
-            return Result.fail();
+            return Result.fail(QUERY_FAIL.getNotify()+ e.getMessage());
         }
     }
 

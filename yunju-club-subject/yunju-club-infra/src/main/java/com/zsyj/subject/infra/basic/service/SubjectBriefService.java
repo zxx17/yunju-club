@@ -17,7 +17,7 @@ public interface SubjectBriefService {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectBrief queryById(Integer id);
+    SubjectBrief queryById(Long id);
 
 
     /**
@@ -42,6 +42,6 @@ public interface SubjectBriefService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
 }

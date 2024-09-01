@@ -27,7 +27,7 @@ public class SubjectMultipleServiceImpl implements SubjectMultipleService {
      * @return 实例对象
      */
     @Override
-    public SubjectMultiple queryById(Integer id) {
+    public SubjectMultiple queryById(Long id) {
         return this.subjectMultipleDao.queryById(id);
     }
 
@@ -63,7 +63,7 @@ public class SubjectMultipleServiceImpl implements SubjectMultipleService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Long id) {
         return this.subjectMultipleDao.deleteById(id) > 0;
     }
 

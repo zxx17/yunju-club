@@ -18,7 +18,7 @@ public interface SubjectMappingService {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectMapping queryById(Integer id);
+    SubjectMapping queryById(Long id);
 
 
     /**
@@ -43,7 +43,7 @@ public interface SubjectMappingService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(Long id);
 
     /**
      * 通过分类id查询标签

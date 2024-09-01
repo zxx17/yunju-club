@@ -26,7 +26,7 @@ public class SubjectBriefServiceImpl implements SubjectBriefService {
      * @return 实例对象
      */
     @Override
-    public SubjectBrief queryById(Integer id) {
+    public SubjectBrief queryById(Long id) {
         return this.subjectBriefDao.queryById(id);
     }
 
@@ -63,7 +63,7 @@ public class SubjectBriefServiceImpl implements SubjectBriefService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Long id) {
         return this.subjectBriefDao.deleteById(id) > 0;
     }
 }

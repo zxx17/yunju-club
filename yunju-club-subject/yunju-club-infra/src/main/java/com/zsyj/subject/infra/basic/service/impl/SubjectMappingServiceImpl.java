@@ -28,7 +28,7 @@ public class SubjectMappingServiceImpl implements SubjectMappingService {
      * @return 实例对象
      */
     @Override
-    public SubjectMapping queryById(Integer id) {
+    public SubjectMapping queryById(Long id) {
         return this.subjectMappingDao.queryById(id);
     }
 
@@ -64,7 +64,7 @@ public class SubjectMappingServiceImpl implements SubjectMappingService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Long id) {
         return this.subjectMappingDao.deleteById(id) > 0;
     }
 

@@ -14,11 +14,11 @@ import java.io.Serializable;
 @Data
 public class SubjectRadio implements Serializable {
 
-    private Integer id;
+    private Long id;
     /**
      * 题目id
      */
-    private Integer subjectId;
+    private Long subjectId;
     /**
      * 选项类型（A B C D E）
      */

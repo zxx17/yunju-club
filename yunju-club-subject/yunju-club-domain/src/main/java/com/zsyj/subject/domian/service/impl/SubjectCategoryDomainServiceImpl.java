@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 import static com.zsyj.subject.common.enums.DeletedFlagEnum.IS_DELETED;
@@ -42,6 +43,8 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
         SubjectCategory subjectCategory = SubjectCategoryBOConverter.INSTANCE
                 .convertBOToSubjectCategory(subjectCategoryBO);
         subjectCategory.setIsDeleted(UN_DELETE.getFlag());
+        subjectCategory.setCreateTime(new Date());
+        subjectCategory.setUpdateTime(new Date());
         subjectCategoryService.insert(subjectCategory);
     }
 
@@ -72,6 +75,7 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
             log.info("SubjectCategoryDomainServiceImpl.update.bo{}", JSONObject.toJSONString(subjectCategoryBO));
         }
         SubjectCategory subjectCategory = SubjectCategoryBOConverter.INSTANCE.convertBOToSubjectCategory(subjectCategoryBO);
+        subjectCategory.setUpdateTime(new Date());
         int isUpdate = subjectCategoryService.update(subjectCategory);
         return isUpdate > 0;
     }

@@ -14,7 +14,7 @@ public class SubjectInfoBO extends PageInfo implements Serializable {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
     /**
      * 题目名称
      */

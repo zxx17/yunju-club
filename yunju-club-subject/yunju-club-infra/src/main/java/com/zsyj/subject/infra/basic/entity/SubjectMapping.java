@@ -16,11 +16,11 @@ public class SubjectMapping implements Serializable {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
     /**
      * 题目id
      */
-    private Integer subjectId;
+    private Long subjectId;
     /**
      * 分类id
      */

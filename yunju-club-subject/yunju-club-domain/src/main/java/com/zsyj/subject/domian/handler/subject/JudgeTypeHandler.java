@@ -11,16 +11,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 判断题目的策略类
  */
 @Component
-public class JudgeTypeHandler implements SubjectTypeHandler{
+public class JudgeTypeHandler implements SubjectTypeHandler {
 
     @Resource
     private SubjectJudgeService subjectJudgeService;
-    
+
     @Override
     public SubjectInfoTypeEnum getHandlerType() {
         return SubjectInfoTypeEnum.JUDGE;
@@ -30,11 +31,19 @@ public class JudgeTypeHandler implements SubjectTypeHandler{
     public void add(SubjectInfoBO subjectInfoBO) {
         //判断题目的插入
         SubjectJudge subjectJudge = new SubjectJudge();
-        SubjectAnswerBO subjectAnswerBO = subjectInfoBO.getOptionList().get(0);
+        //判断题的optionList仅能有一个
+        List<SubjectAnswerBO> optionList = subjectInfoBO.getOptionList();
+        SubjectAnswerBO subjectAnswerBO = checkOptionList(optionList);
         subjectJudge.setSubjectId(subjectInfoBO.getId());
         subjectJudge.setIsCorrect(subjectAnswerBO.getIsCorrect());
         subjectJudge.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
         subjectJudgeService.insert(subjectJudge);
+    }
+
+    private SubjectAnswerBO checkOptionList(List<SubjectAnswerBO> optionList) {
+        // checkArgument 第一个参数为true则返回errorMessage
+        Preconditions.checkArgument(!(!optionList.isEmpty() && optionList.size() != 1), "判断题的答案只能有一个");
+        return optionList.get(0);
     }
 
 }

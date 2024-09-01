@@ -27,7 +27,7 @@ public class SubjectRadioServiceImpl implements SubjectRadioService {
      * @return 实例对象
      */
     @Override
-    public SubjectRadio queryById(Integer id) {
+    public SubjectRadio queryById(Long id) {
         return this.subjectRadioDao.queryById(id);
     }
 
@@ -63,7 +63,7 @@ public class SubjectRadioServiceImpl implements SubjectRadioService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Long id) {
         return this.subjectRadioDao.deleteById(id) > 0;
     }
 

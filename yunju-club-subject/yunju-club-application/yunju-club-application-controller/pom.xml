@@ -23,12 +23,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.4.2</version>
         </dependency>
-        <!--   基础设施层依赖     -->
-        <dependency>
-            <groupId>com.zsyunju</groupId>
-            <artifactId>yunju-club-infra</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <!--   领域层层依赖     -->
         <dependency>
             <groupId>com.zsyunju</groupId>

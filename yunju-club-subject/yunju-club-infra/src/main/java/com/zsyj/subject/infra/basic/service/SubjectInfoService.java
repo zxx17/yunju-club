@@ -19,7 +19,7 @@ public interface SubjectInfoService {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectInfo queryById(Integer id);
+    SubjectInfo queryById(Long id);
 
 
 

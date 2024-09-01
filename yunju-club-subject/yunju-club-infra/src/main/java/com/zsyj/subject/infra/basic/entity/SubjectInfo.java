@@ -11,7 +11,7 @@ public class SubjectInfo implements Serializable {
     /**
      * 主键
      */
-    private Integer id;
+    private Long id;
     /**
      * 题目名称
      */
