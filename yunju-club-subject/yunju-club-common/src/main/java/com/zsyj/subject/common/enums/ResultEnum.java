@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public enum ResultEnum {
 
-    SUCCESS(2000, "成功"),
-    FAIL(5000, "失败");
+    SUCCESS(200, "成功"),
+    FAIL(500, "失败");
 
     private int code;
     private String desc;

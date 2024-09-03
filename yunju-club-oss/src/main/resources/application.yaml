@@ -1,0 +1,10 @@
+server:
+  port: 4000
+
+storage:
+  service:
+    type: minio
+minio:
+  url: http://192.168.118.232:9674
+  accessKey: AoGrSJB4yJEITettRc6A
+  secretKey: b62GQ6QdmTadgkLeFHDnBNa0u85xVaW8BwJlql2V
