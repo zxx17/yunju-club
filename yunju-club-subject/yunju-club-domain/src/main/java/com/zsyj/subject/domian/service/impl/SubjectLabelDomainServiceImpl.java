@@ -85,7 +85,7 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
             log.info("SubjectLabelDomainServiceImpl.queryLabelByCategoryId.bo{}", JSONObject.toJSONString(subjectLabelBO));
         }
         // 根据分类ID 查询Mapping表对应的LabelIds
-        Integer categoryId = subjectLabelBO.getCategoryId();
+        Long categoryId = subjectLabelBO.getCategoryId();
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setCategoryId(categoryId);
         subjectMapping.setIsDeleted(UN_DELETE.getFlag());
@@ -94,7 +94,7 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
             return Collections.emptyList();
         }
         // 过去所有LabelIds查询标签信息
-        List<Integer> labelIds = subjectMappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+        List<Long> labelIds = subjectMappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
         List<SubjectLabel> subjectLabelList = subjectLabelService.querySubjectLabelById(labelIds);
         List<SubjectLabelBO> subjectLabelBOList = new LinkedList<>();
         subjectLabelList.forEach(label -> {

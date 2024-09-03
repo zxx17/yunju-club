@@ -45,7 +45,7 @@ public class SubjectLabelController {
             Boolean isInsert = subjectLabelDomainService.add(subjectLabelBO);
             return Result.ok(isInsert);
         } catch (Exception e) {
-            log.error("SubjectLabelController.addLabel.error{}", e.getMessage());
+            log.error("SubjectLabelController.addLabel.error", e);
             return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -62,7 +62,7 @@ public class SubjectLabelController {
             Boolean isInsert = subjectLabelDomainService.updateLabel(subjectLabelBO);
             return Result.ok(isInsert);
         } catch (Exception e) {
-            log.error("SubjectLabelController.updateLabel.error{}", e.getMessage());
+            log.error("SubjectLabelController.updateLabel.error", e);
             return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -79,7 +79,7 @@ public class SubjectLabelController {
             Boolean isInsert = subjectLabelDomainService.deleteLabel(subjectLabelBO);
             return Result.ok(isInsert);
         } catch (Exception e) {
-            log.error("SubjectLabelController.deleteLabel.error{}", e.getMessage());
+            log.error("SubjectLabelController.deleteLabel.error", e);
             return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -105,7 +105,7 @@ public class SubjectLabelController {
                     .convertBOToSubjectLabelDTOList(subjectLabelBOList);
             return Result.ok(subjectLabelDTOList);
         } catch (Exception e) {
-            log.error("SubjectLabelController.queryLabelByCategoryId.error{}", e.getMessage());
+            log.error("SubjectLabelController.queryLabelByCategoryId.error", e);
             return Result.fail(QUERY_FAIL.getNotify() + e.getMessage());
         }
     }

@@ -62,7 +62,7 @@ public class SubjectController {
             subjectInfoDomainService.add(subjectInfoBO);
             return Result.ok(INSERT_SUCCESS.getNotify());
         }catch (Exception e){
-            log.error("SubjectController.add.error{}", e.getMessage());
+            log.error("SubjectController.add.error", e);
             return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -91,7 +91,7 @@ public class SubjectController {
 
             return Result.ok(subjectInfoDTOPageResult);
         }catch (Exception e){
-            log.error("SubjectController.getSubjectPage.error{}", e.getMessage());
+            log.error("SubjectController.getSubjectPage.error", e);
             return Result.fail(QUERY_FAIL.getNotify()+ e.getMessage());
         }
     }
@@ -105,16 +105,20 @@ public class SubjectController {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.querySubjectInfo.dto:{}", JSONObject.toJSONString(subjectInfoDTO));
             }
+            // 校验
             Preconditions.checkNotNull(subjectInfoDTO.getId(), "题目id不能为空");
+            // DTO-->BO转换
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE
                     .convertDTOToSubjectInfoBO(subjectInfoDTO);
+            // 查询
             SubjectInfoBO boResult = subjectInfoDomainService.querySubjectInfo(subjectInfoBO);
+            // BO-->DTO转换
             SubjectInfoDTO dto = SubjectInfoDTOConvert.INSTANCE
                     .convertBOToSubjectInfoDTO(boResult);
             return Result.ok(dto);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.querySubjectInfo.error:{}", e.getMessage());
-            return Result.fail(QUERY_FAIL.getNotify()+ e.getMessage());
+            log.error("SubjectCategoryController.querySubjectInfo.error:{}", e);
+            return Result.fail();
         }
     }
 

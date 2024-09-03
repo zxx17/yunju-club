@@ -11,7 +11,7 @@ public enum NotifyEnum {
     UPDATE_FAIL("更新失败: "),
     DELETE_FAIL("删除失败: ");
 
-    private String notify;
+    private final String notify;
 
     NotifyEnum(String message){
         this.notify = message;

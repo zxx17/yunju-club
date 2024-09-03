@@ -64,7 +64,7 @@ public class SubjectCategoryController {
             subjectCategoryDomainService.add(subjectCategoryBO);
             return Result.ok(true);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.add.error{}", e.getMessage());
+            log.error("SubjectCategoryController.add.error", e);
             return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -87,7 +87,7 @@ public class SubjectCategoryController {
             }
             return Result.ok(subjectCategoryDTOList);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.queryPrimaryCategory.error{}", e.getMessage());
+            log.error("SubjectCategoryController.queryPrimaryCategory.error", e);
             return Result.fail(QUERY_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -113,7 +113,7 @@ public class SubjectCategoryController {
                     .convertBOToSubjectCategoryDTOList(subjectCategoryBOList);
             return Result.ok(subjectCategoryDTOList);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.queryCategoryByPrimary.error{}", e.getMessage());
+            log.error("SubjectCategoryController.queryCategoryByPrimary.error", e);
             return Result.fail(QUERY_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -135,7 +135,7 @@ public class SubjectCategoryController {
             Boolean isUpdate = subjectCategoryDomainService.update(subjectCategoryBO);
             return Result.ok(isUpdate);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.update.error{}", e.getMessage());
+            log.error("SubjectCategoryController.update.error", e);
             return Result.fail(UPDATE_FAIL.getNotify() + e.getMessage());
         }
     }
@@ -157,7 +157,7 @@ public class SubjectCategoryController {
             Boolean isDelete = subjectCategoryDomainService.delete(subjectCategoryBO);
             return Result.ok(isDelete);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.delete.error{}", e.getMessage());
+            log.error("SubjectCategoryController.delete.error", e);
             return Result.fail(UPDATE_FAIL.getNotify() + e.getMessage());
         }
     }

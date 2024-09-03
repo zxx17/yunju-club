@@ -1,6 +1,7 @@
 package com.zsyj.subject.domian.convert;
 
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
+import com.zsyj.subject.domian.entity.SubjectOptionBO;
 import com.zsyj.subject.infra.basic.entity.SubjectInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -26,4 +27,5 @@ public interface SubjectInfoBOConvert {
 
     List<SubjectInfoBO> convertToSubjectInfoBOLIst(List<SubjectInfo> subjectInfoList);
 
+    SubjectInfoBO convertOptionAndInfoToBo(SubjectOptionBO subjectOptionBO, SubjectInfo subjectInfo);
 }

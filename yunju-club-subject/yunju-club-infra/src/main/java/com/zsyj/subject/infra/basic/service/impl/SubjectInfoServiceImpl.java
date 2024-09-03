@@ -67,12 +67,12 @@ public class SubjectInfoServiceImpl implements SubjectInfoService {
     }
 
     @Override
-    public int countByCondition(SubjectInfo subjectInfo, Integer categoryId, Integer labelId) {
+    public int countByCondition(SubjectInfo subjectInfo, Long categoryId, Long labelId) {
         return this.subjectInfoDao.countByCondition(subjectInfo, categoryId, labelId);
     }
 
     @Override
-    public List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Integer categoryId, Integer labelId, Integer start, Integer pageSize) {
+    public List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Long categoryId, Long labelId, Integer start, Integer pageSize) {
         return this.subjectInfoDao.queryPage(subjectInfo, categoryId, labelId, start, pageSize);
     }
 }

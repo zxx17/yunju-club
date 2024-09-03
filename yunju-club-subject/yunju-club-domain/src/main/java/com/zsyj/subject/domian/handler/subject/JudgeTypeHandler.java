@@ -3,8 +3,10 @@ package com.zsyj.subject.domian.handler.subject;
 import com.google.common.base.Preconditions;
 import com.zsyj.subject.common.enums.DeletedFlagEnum;
 import com.zsyj.subject.common.enums.SubjectInfoTypeEnum;
+import com.zsyj.subject.domian.convert.SubjectJudgeBOConvert;
 import com.zsyj.subject.domian.entity.SubjectAnswerBO;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
+import com.zsyj.subject.domian.entity.SubjectOptionBO;
 import com.zsyj.subject.infra.basic.entity.SubjectJudge;
 import com.zsyj.subject.infra.basic.service.SubjectJudgeService;
 import org.springframework.stereotype.Component;
@@ -38,6 +40,17 @@ public class JudgeTypeHandler implements SubjectTypeHandler {
         subjectJudge.setIsCorrect(subjectAnswerBO.getIsCorrect());
         subjectJudge.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
         subjectJudgeService.insert(subjectJudge);
+    }
+
+    @Override
+    public SubjectOptionBO query(Long subjectId) {
+        SubjectJudge subjectJudge = new SubjectJudge();
+        subjectJudge.setSubjectId(subjectId);
+        List<SubjectJudge> subjectJudgeDOList = subjectJudgeService.queryByCondition(subjectJudge);
+        List<SubjectAnswerBO> subjectAnswerBOS = SubjectJudgeBOConvert.INSTANCE.convertEntityToBoList(subjectJudgeDOList);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOS);
+        return subjectOptionBO;
     }
 
     private SubjectAnswerBO checkOptionList(List<SubjectAnswerBO> optionList) {

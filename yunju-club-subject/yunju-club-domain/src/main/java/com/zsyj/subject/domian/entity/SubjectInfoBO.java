@@ -47,12 +47,12 @@ public class SubjectInfoBO extends PageInfo implements Serializable {
     /**
      * 分类id
      */
-    private List<Integer> categoryIds;
+    private List<Long> categoryIds;
 
     /**
      * 标签id
      */
-    private List<Integer> labelIds;
+    private List<Long> labelIds;
 
     /**
      * 答案选项
@@ -62,12 +62,12 @@ public class SubjectInfoBO extends PageInfo implements Serializable {
     /**
      * 题目分类
      */
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 题目标签
      */
-    private Integer labelId;
+    private Long labelId;
 
     /**
      * 标签name

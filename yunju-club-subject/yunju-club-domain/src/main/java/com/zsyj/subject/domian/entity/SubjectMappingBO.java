@@ -18,11 +18,11 @@ public class SubjectMappingBO implements Serializable {
     /**
      * 分类id
      */
-    private Integer categoryId;
+    private Long categoryId;
     /**
      * 标签id
      */
-    private Integer labelId;
+    private Long labelId;
 
 
 }

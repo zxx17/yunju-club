@@ -49,7 +49,7 @@ public interface SubjectLabelService {
      * @param labelIds labelId
      * @return list List<SubjectLabel>
      */
-    List<SubjectLabel> querySubjectLabelById(List<Integer> labelIds);
+    List<SubjectLabel> querySubjectLabelById(List<Long> labelIds);
 
-    List<SubjectLabel> batchQueryById(List<Integer> labelIds);
+    List<SubjectLabel> batchQueryById(List<Long> labelIds);
 }

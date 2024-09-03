@@ -73,5 +73,6 @@ public interface SubjectJudgeDao {
      */
     int deleteById(Integer id);
 
+    List<SubjectJudge> queryAllByLimit(SubjectJudge subjectJudge);
 }
 

@@ -2,6 +2,7 @@ package com.zsyj.subject.domian.handler.subject;
 
 import com.zsyj.subject.common.enums.SubjectInfoTypeEnum;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
+import com.zsyj.subject.domian.entity.SubjectOptionBO;
 
 /**
  * @author Xinxuan Zhuo
@@ -20,9 +21,15 @@ public interface SubjectTypeHandler {
     SubjectInfoTypeEnum getHandlerType();
 
     /**
-     * 实际的题目的插入
+     * 题目的插入
      */
     void add(SubjectInfoBO subjectInfoBO);
+
+    /**
+     * 题目详情的查询
+     * @param subjectId 题目ID
+     */
+    SubjectOptionBO query(Long subjectId);
 
 
 }

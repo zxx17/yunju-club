@@ -7,6 +7,8 @@ import com.zsyj.subject.infra.basic.entity.SubjectRadio;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author Xinxuan Zhuo
  * @version 2023/12/5
@@ -23,5 +25,7 @@ public interface SubjectMultipleBOConvert {
 
     SubjectMultiple convertInfoBOToSubjectMultiple(SubjectAnswerBO subjectAnswerBO);
 
+
+    List<SubjectAnswerBO> convertEntityToBoList(List<SubjectMultiple> subjectMultipleList);
 
 }
