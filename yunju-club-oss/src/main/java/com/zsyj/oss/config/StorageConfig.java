@@ -3,6 +3,7 @@ package com.zsyj.oss.config;
 import com.zsyj.oss.adapter.MinioStorageAdapter;
 import com.zsyj.oss.adapter.StorageAdapter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0.0
  * @since 2024/9/3
  **/
+@RefreshScope
 @Configuration
 public class StorageConfig {
 
@@ -20,6 +22,7 @@ public class StorageConfig {
     private String storageType;
 
     @Bean
+    @RefreshScope
     public StorageAdapter storageService() {
         if ("minio".equals(storageType)) {
             return new MinioStorageAdapter();

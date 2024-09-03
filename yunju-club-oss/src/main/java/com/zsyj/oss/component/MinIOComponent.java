@@ -35,9 +35,7 @@ public class MinIOComponent {
         boolean exists = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build());
         if (!exists) {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucket).build());
-            return;
         }
-        log.warn("重复创建桶：{}", bucket);
     }
 
     /**

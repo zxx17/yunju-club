@@ -16,6 +16,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 2024/9/3
  **/
+@SuppressWarnings("unchecked")
 @RestController
 public class FileController {
 
@@ -45,7 +46,7 @@ public class FileController {
      * 上传文件
      */
     @RequestMapping("/upload")
-    public Result upload(MultipartFile uploadFile, String bucket, String objectName)  {
+    public Result<String> upload(MultipartFile uploadFile, String bucket, String objectName)  {
         String url = fileService.uploadFile(uploadFile, bucket, objectName);
         return Result.ok(url);
     }
