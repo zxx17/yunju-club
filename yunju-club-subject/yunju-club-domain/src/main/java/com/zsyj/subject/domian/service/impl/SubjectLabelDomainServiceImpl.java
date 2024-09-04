@@ -1,11 +1,14 @@
 package com.zsyj.subject.domian.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zsyj.subject.common.enums.CategoryTypeEnum;
 import com.zsyj.subject.domian.convert.SubjectLabelBOConverter;
 import com.zsyj.subject.domian.entity.SubjectLabelBO;
 import com.zsyj.subject.domian.service.ISubjectLabelDomainService;
+import com.zsyj.subject.infra.basic.entity.SubjectCategory;
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 import com.zsyj.subject.infra.basic.entity.SubjectMapping;
+import com.zsyj.subject.infra.basic.service.SubjectCategoryService;
 import com.zsyj.subject.infra.basic.service.SubjectLabelService;
 import com.zsyj.subject.infra.basic.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,9 @@ import java.util.stream.Collectors;
 import static com.zsyj.subject.common.enums.DeletedFlagEnum.IS_DELETED;
 import static com.zsyj.subject.common.enums.DeletedFlagEnum.UN_DELETE;
 
+/**
+ * 刷题模块标签业务领域Service
+ */
 @Slf4j
 @Service
 public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService {
@@ -32,6 +38,9 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
 
     @Resource
     private SubjectMappingService subjectMappingService;
+
+    @Resource
+    private SubjectCategoryService subjectCategoryService;
 
 
     @Override
@@ -84,8 +93,20 @@ public class SubjectLabelDomainServiceImpl implements ISubjectLabelDomainService
         if (log.isInfoEnabled()) {
             log.info("SubjectLabelDomainServiceImpl.queryLabelByCategoryId.bo{}", JSONObject.toJSONString(subjectLabelBO));
         }
-        // 根据分类ID 查询Mapping表对应的LabelIds
         Long categoryId = subjectLabelBO.getCategoryId();
+        // 如果是一级分类，就查询所有标签，此逻辑用于新增题目
+        SubjectCategory subjectCategory = subjectCategoryService.queryById(categoryId);
+        if (subjectCategory == null){
+            return Collections.emptyList();
+        }
+        if (CategoryTypeEnum.PRIMARY.getCode() == subjectCategory.getCategoryType()) {
+            SubjectLabel subjectLabel = new SubjectLabel();
+            subjectLabel.setCategoryId(categoryId);
+            List<SubjectLabel> labelList = subjectLabelService.queryByCondition(subjectLabel);
+            return SubjectLabelBOConverter.INSTANCE.convertLabelToBoList(labelList);
+        }
+
+        // 此逻辑用于根据题目的分类ID来查询所有标签，根据分类ID 查询Mapping表对应的LabelIds
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setCategoryId(categoryId);
         subjectMapping.setIsDeleted(UN_DELETE.getFlag());

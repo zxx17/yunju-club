@@ -52,4 +52,6 @@ public interface SubjectLabelService {
     List<SubjectLabel> querySubjectLabelById(List<Long> labelIds);
 
     List<SubjectLabel> batchQueryById(List<Long> labelIds);
+
+    List<SubjectLabel> queryByCondition(SubjectLabel subjectLabel);
 }

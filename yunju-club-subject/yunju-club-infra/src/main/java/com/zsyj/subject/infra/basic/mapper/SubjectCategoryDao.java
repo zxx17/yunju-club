@@ -20,7 +20,7 @@ public interface SubjectCategoryDao {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectCategory queryById(Integer id);
+    SubjectCategory queryById(Long id);
 
     /**
      * 查询指定行数据

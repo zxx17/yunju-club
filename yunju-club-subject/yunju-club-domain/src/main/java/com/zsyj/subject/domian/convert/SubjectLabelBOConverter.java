@@ -5,6 +5,8 @@ import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 
 /**
  * @author Xinxuan Zhuo
@@ -20,5 +22,7 @@ public interface SubjectLabelBOConverter {
     SubjectLabelBOConverter INSTANCE = Mappers.getMapper(SubjectLabelBOConverter.class);
 
     SubjectLabel convertBOToSubjectLabel(SubjectLabelBO subjectLabelBO);
+
+    List<SubjectLabelBO> convertLabelToBoList(List<SubjectLabel> subjectLabelList);
 
 }

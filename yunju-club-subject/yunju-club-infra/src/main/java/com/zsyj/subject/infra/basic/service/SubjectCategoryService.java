@@ -20,7 +20,7 @@ public interface SubjectCategoryService {
      * @param id 主键
      * @return 实例对象
      */
-    SubjectCategory queryById(Integer id);
+    SubjectCategory queryById(Long id);
 
 
     /**

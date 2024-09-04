@@ -15,8 +15,14 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="SubjectJudgeMap">
-        select
-          id, subject_id, is_correct, create_by, create_time, update_by, update_time, is_deleted
+        select id,
+               subject_id,
+               is_correct,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               is_deleted
         from subject_judge
         where id = #{id}
     </select>
@@ -24,7 +30,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SubjectJudgeMap">
         select
-          id, subject_id, is_correct, create_by, create_time, update_by, update_time, is_deleted
+        id, subject_id, is_correct, create_by, create_time, update_by, update_time, is_deleted
         from subject_judge
         <where>
             <if test="id != null">
@@ -48,9 +54,7 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
-            </if>
+            and is_deleted = 0
         </where>
     </select>
 
@@ -80,9 +84,7 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
-            </if>
+            and is_deleted = 0
         </where>
     </select>
 
@@ -96,7 +98,8 @@
         insert into subject_judge(subject_id, is_correct, create_by, create_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.subjectId}, #{entity.isCorrect}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+            (#{entity.subjectId}, #{entity.isCorrect}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy},
+            #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
     </insert>
 
@@ -104,7 +107,8 @@
         insert into subject_judge(subject_id, is_correct, create_by, create_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.subjectId}, #{entity.isCorrect}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+            (#{entity.subjectId}, #{entity.isCorrect}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy},
+            #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
         on duplicate key update
         subject_id = values(subject_id),
@@ -147,7 +151,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from subject_judge where id = #{id}
+        delete
+        from subject_judge
+        where id = #{id}
     </delete>
 
 </mapper>

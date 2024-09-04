@@ -75,9 +75,7 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
-            </if>
+            and is_deleted = 0
         </where>
 
     </select>
@@ -120,9 +118,7 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
-            </if>
+            and is_deleted = 0
         </where>
     </select>
 
@@ -132,9 +128,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
-                                 subject_parse, create_by, create_time, update_by, update_time, is_deleted)
+        subject_parse, create_by, create_time, update_by, update_time, is_deleted)
         values (#{subjectName}, #{subjectDifficult}, #{settleName}, #{subjectType}, #{subjectSource}, #{subjectParse},
-                #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{isDeleted})
+        #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
