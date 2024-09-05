@@ -2,8 +2,6 @@ server:
   port: 3000
 
 spring:
-  application:
-    name: yunju-club-subject
   datasource:
     username: root
     password: D+ciu4qe/DwTi+Z9kEnnfP+Mch0Mz6FZOtoP1oGvyLStgHHWjyld1VwEecgP/E743weglffdRsYMw1IgyyOKNA==
