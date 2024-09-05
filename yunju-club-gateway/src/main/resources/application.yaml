@@ -1,0 +1,48 @@
+server:
+  port: 5000
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: oss
+          uri: lb://yunju-club-oss-dev
+          predicates:
+            - Path=/oss/**
+          filters:
+            - StripPrefix=1
+        - id: auth
+          uri: lb://yunju-club-auth-dev
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        - id: subject
+          uri: lb://yunju-club-subject-dev
+          predicates:
+            - Path=/subject/**
+          filters:
+            - StripPrefix=1
+        - id: practice
+          uri: lb://yunju-club-practice-dev
+          predicates:
+            - Path=/practice/**
+          filters:
+            - StripPrefix=1
+        - id: circle
+          uri: lb://yunju-club-circle
+          predicates:
+            - Path=/circle/**
+          filters:
+            - StripPrefix=1
+        - id: interview
+          uri: lb://yunju-club-interview
+          predicates:
+            - Path=/interview/**
+          filters:
+            - StripPrefix=1
+        - id: iot
+          uri: lb://yunju-club-iot-dev
+          predicates:
+            - Path=/iot/**
+          filters:
+            - StripPrefix=1

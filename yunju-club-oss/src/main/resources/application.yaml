@@ -4,3 +4,5 @@ minio:
   url: http://192.168.118.232:9674
   accessKey: AoGrSJB4yJEITettRc6A
   secretKey: b62GQ6QdmTadgkLeFHDnBNa0u85xVaW8BwJlql2V
+logging:
+  config: classpath:log4j2-spring.xml
