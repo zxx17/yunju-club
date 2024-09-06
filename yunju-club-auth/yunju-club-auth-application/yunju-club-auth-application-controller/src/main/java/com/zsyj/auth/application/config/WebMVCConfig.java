@@ -1,10 +1,10 @@
-package com.zsyj.subject.application.config;
+package com.zsyj.auth.application.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.zsyj.subject.application.interceptor.LoginInterceptor;
+import com.zsyj.auth.application.interceptor.LoginInterceptor;
 import lombok.NonNull;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import java.util.List;
 
 /**
- * 对mvc返回的json进行处理的相关配置.
+ * web全局配置
  *
  * @author Xinxuan Zhuo
  * @version 1.0.0
@@ -35,13 +35,11 @@ public class WebMVCConfig extends WebMvcConfigurationSupport {
         converters.add(mappingJackson2HttpMessageConverter());
     }
 
-
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**").excludePathPatterns("/user/doLogin");
     }
-
 
     /**
      * Jackson全局转化long类型为String，解决jackson序列化时long类型缺失精度问题
