@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Data
 public class AuthUserDTO implements Serializable {
 
+    private Long id;
+
     private String userName;
 
     private String nickName;

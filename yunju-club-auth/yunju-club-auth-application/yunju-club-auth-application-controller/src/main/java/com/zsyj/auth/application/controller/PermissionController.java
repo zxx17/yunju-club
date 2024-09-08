@@ -37,7 +37,7 @@ public class PermissionController {
             }
             Preconditions.checkArgument(!StringUtils.isBlank(authPermissionDTO.getName()), "权限名称不能为空");
             Preconditions.checkNotNull(authPermissionDTO.getParentId(), "权限父id不能为空");
-            AuthPermissionBO permissionBO = AuthPermissionDTOConverter.INSTANCE.convertDTOToBO(authPermissionDTO);
+            AuthPermissionBO permissionBO = AuthPermissionDTOConverter.INSTANCE.convertAuthPermissionDTOToBO(authPermissionDTO);
             return Result.ok(authPermissionDomainService.add(permissionBO));
         } catch (Exception e) {
             log.error("PermissionController.add.error:{}", e.getMessage(), e);
@@ -55,7 +55,7 @@ public class PermissionController {
                 log.info("PermissionController.update.dto:{}", JSON.toJSONString(authPermissionDTO));
             }
             Preconditions.checkNotNull(authPermissionDTO.getId(), "权限id不能为空");
-            AuthPermissionBO permissionBO = AuthPermissionDTOConverter.INSTANCE.convertDTOToBO(authPermissionDTO);
+            AuthPermissionBO permissionBO = AuthPermissionDTOConverter.INSTANCE.convertAuthPermissionDTOToBO(authPermissionDTO);
             return Result.ok(authPermissionDomainService.update(permissionBO));
         } catch (Exception e) {
             log.error("PermissionController.update.error:{}", e.getMessage(), e);
@@ -73,7 +73,7 @@ public class PermissionController {
                 log.info("PermissionController.delete.dto:{}", JSON.toJSONString(authPermissionDTO));
             }
             Preconditions.checkNotNull(authPermissionDTO.getId(), "权限id不能为空");
-            AuthPermissionBO permissionBO = AuthPermissionDTOConverter.INSTANCE.convertDTOToBO(authPermissionDTO);
+            AuthPermissionBO permissionBO = AuthPermissionDTOConverter.INSTANCE.convertAuthPermissionDTOToBO(authPermissionDTO);
             return Result.ok(authPermissionDomainService.delete(permissionBO));
         } catch (Exception e) {
             log.error("PermissionController.delete.error:{}", e.getMessage(), e);

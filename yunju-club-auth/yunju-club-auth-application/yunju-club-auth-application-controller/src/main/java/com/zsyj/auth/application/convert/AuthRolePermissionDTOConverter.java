@@ -13,6 +13,6 @@ public interface AuthRolePermissionDTOConverter {
 
     AuthRolePermissionDTOConverter INSTANCE = Mappers.getMapper(AuthRolePermissionDTOConverter.class);
 
-    AuthRolePermissionBO convertDTOToBO(AuthRolePermissionDTO authRolePermissionDTO);
+    AuthRolePermissionBO convertAuthRolePermissionDTOToBO(AuthRolePermissionDTO authRolePermissionDTO);
 
 }

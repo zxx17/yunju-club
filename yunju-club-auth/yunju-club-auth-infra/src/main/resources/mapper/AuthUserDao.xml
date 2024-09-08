@@ -95,7 +95,7 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
-              and is_deleted = 0
+            and is_deleted = 0
         </where>
     </select>
 
@@ -149,7 +149,7 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
-              and is_deleted = 0
+            and is_deleted = 0
         </where>
     </select>
     <select id="listUserInfoByIds" resultType="com.zsyj.auth.infra.basic.entity.AuthUser">
@@ -311,7 +311,14 @@
                 is_deleted = #{isDeleted},
             </if>
         </set>
-        where user_name = #{userName}
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </where>
     </update>
 
     <!--通过主键删除-->

@@ -37,7 +37,7 @@ public class RoleController {
             }
             Preconditions.checkArgument(!StringUtils.isBlank(authRoleDTO.getRoleKey()), "角色key不能为空");
             Preconditions.checkArgument(!StringUtils.isBlank(authRoleDTO.getRoleName()), "角色名称不能为空");
-            AuthRoleBO authRoleBO = AuthRoleDTOConverter.INSTANCE.convertDTOToBO(authRoleDTO);
+            AuthRoleBO authRoleBO = AuthRoleDTOConverter.INSTANCE.convertAuthRoleDTOToBO(authRoleDTO);
             return Result.ok(authRoleDomainService.add(authRoleBO));
         } catch (Exception e) {
             log.error("UserController.register.error:{}", e.getMessage(), e);
@@ -55,7 +55,7 @@ public class RoleController {
                 log.info("RoleController.update.dto:{}", JSON.toJSONString(authRoleDTO));
             }
             Preconditions.checkNotNull(authRoleDTO.getId(), "角色id不能为空");
-            AuthRoleBO authRoleBO = AuthRoleDTOConverter.INSTANCE.convertDTOToBO(authRoleDTO);
+            AuthRoleBO authRoleBO = AuthRoleDTOConverter.INSTANCE.convertAuthRoleDTOToBO(authRoleDTO);
             return Result.ok(authRoleDomainService.update(authRoleBO));
         } catch (Exception e) {
             log.error("RoleController.update.error:{}", e.getMessage(), e);
@@ -72,7 +72,7 @@ public class RoleController {
             if (log.isInfoEnabled()) {
                 log.info("RoleController.delete.dto:{}", JSON.toJSONString(authRoleDTO));
             }
-            AuthRoleBO authRoleBO = AuthRoleDTOConverter.INSTANCE.convertDTOToBO(authRoleDTO);
+            AuthRoleBO authRoleBO = AuthRoleDTOConverter.INSTANCE.convertAuthRoleDTOToBO(authRoleDTO);
             return Result.ok(authRoleDomainService.delete(authRoleBO));
         } catch (Exception e) {
             log.error("RoleController.delete.error:{}", e.getMessage(), e);

@@ -94,6 +94,7 @@ public class UserController {
             Preconditions.checkArgument(!StringUtils.isBlank(authUserDTO.getUserName()), "用户名不能为空");
             AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
             AuthUserBO userInfo = authUserDomainService.getUserInfo(authUserBO);
+            userInfo.setPassword(null);
             return Result.ok(AuthUserDTOConverter.INSTANCE.convertBOToDTO(userInfo));
         } catch (Exception e) {
             log.error("UserController.update.error:{}", e.getMessage(), e);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,9 @@ public class AuthPermissionDomainServiceImpl implements AuthPermissionDomainServ
     public Boolean add(AuthPermissionBO authPermissionBO) {
         AuthPermission authPermission = AuthPermissionBOConverter.INSTANCE.convertBOToEntity(authPermissionBO);
         authPermission.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        Date insertAuthPermissionDate = new Date();
+        authPermission.setCreatedTime(insertAuthPermissionDate);
+        authPermission.setUpdateTime(insertAuthPermissionDate);
         Integer count = authPermissionService.insert(authPermission);
         return count > 0;
     }
@@ -41,6 +45,7 @@ public class AuthPermissionDomainServiceImpl implements AuthPermissionDomainServ
     @Override
     public Boolean update(AuthPermissionBO authPermissionBO) {
         AuthPermission authPermission = AuthPermissionBOConverter.INSTANCE.convertBOToEntity(authPermissionBO);
+        authPermission.setUpdateTime(new Date());
         Integer count = authPermissionService.update(authPermission);
         return count > 0;
     }

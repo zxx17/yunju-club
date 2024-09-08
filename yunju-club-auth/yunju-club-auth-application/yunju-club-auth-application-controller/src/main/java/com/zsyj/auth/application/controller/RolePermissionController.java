@@ -37,12 +37,14 @@ public class RolePermissionController {
             }
             Preconditions.checkArgument(!CollectionUtils.isEmpty(authRolePermissionDTO.getPermissionIdList()),"权限关联不能为空");
             Preconditions.checkNotNull(authRolePermissionDTO.getRoleId(),"角色不能为空!");
-            AuthRolePermissionBO rolePermissionBO = AuthRolePermissionDTOConverter.INSTANCE.convertDTOToBO(authRolePermissionDTO);
+            AuthRolePermissionBO rolePermissionBO = AuthRolePermissionDTOConverter.INSTANCE.convertAuthRolePermissionDTOToBO(authRolePermissionDTO);
             return Result.ok(authRolePermissionDomainService.add(rolePermissionBO));
         } catch (Exception e) {
             log.error("PermissionController.add.error:{}", e.getMessage(), e);
             return Result.fail("新增角色权限失败");
         }
     }
+
+    // TODO 删除角色权限，删除角色之后对应的中间表也要删除
 
 }

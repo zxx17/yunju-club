@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -22,6 +23,9 @@ public class AuthRoleDomainServiceImpl implements AuthRoleDomainService {
     public Boolean add(AuthRoleBO authRoleBO) {
         AuthRole authRole = AuthRoleBOConverter.INSTANCE.convertBOToEntity(authRoleBO);
         authRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        Date insertAuthRoleDate = new Date();
+        authRole.setCreatedTime(insertAuthRoleDate);
+        authRole.setUpdateTime(insertAuthRoleDate);
         Integer count = authRoleService.insert(authRole);
         return count > 0;
     }
@@ -29,6 +33,7 @@ public class AuthRoleDomainServiceImpl implements AuthRoleDomainService {
     @Override
     public Boolean update(AuthRoleBO authRoleBO) {
         AuthRole authRole = AuthRoleBOConverter.INSTANCE.convertBOToEntity(authRoleBO);
+        authRole.setUpdateTime(new Date());
         Integer count = authRoleService.update(authRole);
         return count > 0;
     }

@@ -22,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Resource
     private RedisUtil redisUtil;
 
-    private static final String salt = "chicken";
+    private static final String salt = "zsyj-club-salt";
 
     private static final String authPermissionPrefix = "auth.permission";
 
@@ -79,12 +80,15 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
             // TODO 更换默认昵称
             authUser.setNickName("default-0.0-");
         }
+        Date registerTime = new Date();
         authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
         authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        authUser.setCreatedTime(registerTime);
+        authUser.setUpdateTime(registerTime);
         // 插入用户信息
         Integer count = authUserService.insert(authUser);
 
-        //建立一个初步的默认的角色的关联
+        //建立一个初步的默认的角色的关联  插入角色信息 到用户角色关联表
         AuthRole authRole = new AuthRole();
         authRole.setRoleKey(AuthConstant.NORMAL_USER);
         AuthRole roleResult = authRoleService.queryByCondition(authRole);
@@ -94,23 +98,24 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         authUserRole.setUserId(userId);
         authUserRole.setRoleId(roleId);
         authUserRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
-        // 插入角色信息
+        authUserRole.setCreatedTime(registerTime);
+        authUserRole.setUpdateTime(registerTime);
         authUserRoleService.insert(authUserRole);
-
+        // 缓存角色信息
         String roleKey = redisUtil.buildKey(authRolePrefix, authUser.getUserName());
         List<AuthRole> roleList = new LinkedList<>();
         roleList.add(authRole);
-        // 缓存该用户的角色信息
         redisUtil.set(roleKey, new Gson().toJson(roleList));
 
+        // 初始化用户权限
         AuthRolePermission authRolePermission = new AuthRolePermission();
+        // 根据RoleId查对应的权限ID
         authRolePermission.setRoleId(roleId);
         List<AuthRolePermission> rolePermissionList = authRolePermissionService.
                 queryByCondition(authRolePermission);
-
         List<Long> permissionIdList = rolePermissionList.stream()
                 .map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
-        //根据roleId查权限
+        //根据权限Id查权限
         List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
         String permissionKey = redisUtil.buildKey(authPermissionPrefix, authUser.getUserName());
         // 缓存该用户的角色的权限
@@ -122,6 +127,7 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Override
     public Boolean update(AuthUserBO authUserBO) {
         AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
+        authUser.setUpdateTime(new Date());
         Integer count = authUserService.updateByUserName(authUser);
         return count > 0;
     }
