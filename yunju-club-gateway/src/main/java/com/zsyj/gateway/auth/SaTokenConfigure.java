@@ -31,8 +31,7 @@ public class SaTokenConfigure {
                     SaRouter.match("/oss/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/subject/**", r -> StpUtil.checkLogin());
                     SaRouter.match("/subject/subject/add", r -> StpUtil.checkPermission("subject:add"));
-                })
-                ;
+                });
     }
 
 }
