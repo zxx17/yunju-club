@@ -18,5 +18,6 @@ public class SimLabMenuDTO {
     private String key;
     private String label;
     private String projectUrl;
+    private String projectDesc;
     private List<SimLabMenuDTO> children = new ArrayList<>();
 }

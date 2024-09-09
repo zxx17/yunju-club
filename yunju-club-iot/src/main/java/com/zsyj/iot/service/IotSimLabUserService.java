@@ -44,4 +44,5 @@ public interface IotSimLabUserService {
      */
     boolean deleteById(Long id);
 
+    Long queryFinishedCount();
 }

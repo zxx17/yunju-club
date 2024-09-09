@@ -65,4 +65,11 @@ public class IotSimLabUserServiceImpl implements IotSimLabUserService {
     public boolean deleteById(Long id) {
         return this.iotSimLabUserDao.deleteById(id) > 0;
     }
+
+    @Override
+    public Long queryFinishedCount() {
+        IotSimLabUser iotSimLabUser = new IotSimLabUser();
+        iotSimLabUser.setIsFinished(1);
+        return this.iotSimLabUserDao.count(iotSimLabUser);
+    }
 }

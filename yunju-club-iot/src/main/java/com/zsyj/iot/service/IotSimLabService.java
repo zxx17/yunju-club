@@ -48,4 +48,6 @@ public interface IotSimLabService {
     boolean deleteById(Long id);
 
     List<IotSimLab> queryAllSimLabData();
+
+    Long queryProjectCount();
 }

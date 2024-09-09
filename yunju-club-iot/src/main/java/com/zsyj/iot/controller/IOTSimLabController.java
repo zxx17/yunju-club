@@ -4,6 +4,7 @@ import com.zsyj.iot.entity.IotSimLab;
 import com.zsyj.iot.entity.Result;
 import com.zsyj.iot.entity.dto.SimLabMenuDTO;
 import com.zsyj.iot.service.IotSimLabService;
+import com.zsyj.iot.service.IotSimLabUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,15 +28,19 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/simLab")
 public class IOTSimLabController {
+
     @Resource
     private IotSimLabService iotSimLabService;
+
+    @Resource
+    private IotSimLabUserService iotSimLabUserService;
 
 
     /**
      * 左侧虚拟仿真实验树形菜单
      */
     @GetMapping("/menu")
-    public Result<List<Object>> simLabMenu() {
+    public Result<List<SimLabMenuDTO>> simLabMenu() {
         try {
             List<IotSimLab> iotSimLabList = iotSimLabService.queryAllSimLabData();
             List<SimLabMenuDTO> res = convertToDTO(iotSimLabList);
@@ -46,14 +51,19 @@ public class IOTSimLabController {
         }
     }
 
-    /**
-     * 实验完成数排行榜
-     */
-
 
     /**
      * 累计完成实验总数和项目总数
      */
+    @GetMapping("/count")
+    public Result<Map<String, Long>> count() {
+        Map<String, Long> res = new HashMap<>();
+        Long finishedCount = iotSimLabUserService.queryFinishedCount();
+        Long projectCount = iotSimLabService.queryProjectCount();
+        res.put("finishedCount", finishedCount);
+        res.put("projectCount", projectCount);
+        return Result.ok(res);
+    }
 
 
     /**
@@ -61,10 +71,9 @@ public class IOTSimLabController {
      */
 
 
-
-
     /**
      * 将 IotSimLab 转换为 SimLabMenuDTO
+     *
      * @param iotSimLabList 虚拟仿真实验室数据 列表
      * @return dto
      */
@@ -82,6 +91,7 @@ public class IOTSimLabController {
             child.setLabel(iotSimLab.getProjectName());
             child.setKey(iotSimLab.getProjectUrl());
             child.setProjectUrl(iotSimLab.getProjectUrl());
+            child.setProjectDesc(iotSimLab.getProjectDesc());
             simLabMenuDTOr.getChildren().add(child);
         }
         simLabMenuDTOList.add(simLabMenuDTOr);
@@ -99,6 +109,7 @@ public class IOTSimLabController {
             SimLabMenuDTO projectChild = new SimLabMenuDTO();
             projectChild.setKey(iotSimLab.getProjectUrl());
             projectChild.setProjectUrl(iotSimLab.getProjectUrl());
+            projectChild.setProjectDesc(iotSimLab.getProjectDesc());
             projectChild.setLabel(iotSimLab.getProjectName());
             deviceChild.getChildren().add(projectChild);
         }

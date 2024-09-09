@@ -6,6 +6,7 @@
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="deviceName" column="device_name" jdbcType="VARCHAR"/>
         <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="projectDesc" column="project_desc" jdbcType="VARCHAR"/>
         <result property="projectType" column="project_type" jdbcType="INTEGER"/>
         <result property="projectUrl" column="project_url" jdbcType="VARCHAR"/>
         <result property="diffcult" column="diffcult" jdbcType="INTEGER"/>
@@ -25,6 +26,7 @@
                project_name,
                project_type,
                project_url,
+               project_desc,
                diffcult,
                sorted,
                finished_count,
@@ -40,7 +42,8 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="IotSimLabMap">
         select
-        id, device_name, project_name, project_type, project_url, diffcult, sorted, finished_count, created_by,
+        id, device_name, project_name, project_type, project_url, project_desc,diffcult, sorted, finished_count,
+        created_by,
         created_time, update_by, update_time, is_deleted
         from iot_sim_lab
         <where>
@@ -133,29 +136,35 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into iot_sim_lab(device_name, project_name, project_type, project_url, diffcult, sorted, finished_count,
+        insert into iot_sim_lab(device_name, project_name, project_type, project_url, project_desc, diffcult, sorted,
+                                finished_count,
                                 created_by, created_time, update_by, update_time, is_deleted)
-        values (#{deviceName}, #{projectName}, #{projectType}, #{projectUrl}, #{diffcult}, #{sorted}, #{finishedCount},
+        values (#{deviceName}, #{projectName}, #{projectType}, #{projectUrl}, #{projectDesc} #{diffcult}, #{sorted},
+                #{finishedCount},
                 #{createdBy}, #{createdTime}, #{updateBy}, #{updateTime}, #{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into iot_sim_lab(device_name, project_name, project_type, project_url, diffcult, sorted, finished_count,
+        insert into iot_sim_lab(device_name, project_name, project_type, project_url,project_desc, diffcult, sorted,
+        finished_count,
         created_by, created_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.deviceName}, #{entity.projectName}, #{entity.projectType}, #{entity.projectUrl},
+            (#{entity.deviceName}, #{entity.projectName}, #{entity.projectType},
+            #{entity.projectUrl},#{entity.projectDesc},
             #{entity.diffcult}, #{entity.sorted}, #{entity.finishedCount}, #{entity.createdBy}, #{entity.createdTime},
             #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into iot_sim_lab(device_name, project_name, project_type, project_url, diffcult, sorted, finished_count,
+        insert into iot_sim_lab(device_name, project_name, project_type, project_url, project_desc,diffcult, sorted,
+        finished_count,
         created_by, created_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.deviceName}, #{entity.projectName}, #{entity.projectType}, #{entity.projectUrl},
+            (#{entity.deviceName}, #{entity.projectName}, #{entity.projectType},
+            #{entity.projectUrl},#{entity.projectDesc},
             #{entity.diffcult}, #{entity.sorted}, #{entity.finishedCount}, #{entity.createdBy}, #{entity.createdTime},
             #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
@@ -189,6 +198,9 @@
             </if>
             <if test="projectUrl != null and projectUrl != ''">
                 project_url = #{projectUrl},
+            </if>
+            <if test="projectDesc != null and projectDesc != ''">
+                project_desc = #{projectDesc},
             </if>
             <if test="diffcult != null">
                 diffcult = #{diffcult},

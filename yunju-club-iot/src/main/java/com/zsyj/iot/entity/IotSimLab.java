@@ -32,6 +32,10 @@ public class IotSimLab implements Serializable {
      */
     private String projectUrl;
     /**
+     * 项目描述
+     */
+    private String projectDesc;
+    /**
      * 难度（1，2，3，4）
      */
     private Integer diffcult;
@@ -95,6 +99,14 @@ public class IotSimLab implements Serializable {
 
     public void setProjectType(Integer projectType) {
         this.projectType = projectType;
+    }
+
+    public String getProjectDesc() {
+        return projectDesc;
+    }
+
+    public void setProjectDesc(String projectDesc) {
+        this.projectDesc = projectDesc;
     }
 
     public String getProjectUrl() {

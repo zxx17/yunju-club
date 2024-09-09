@@ -72,4 +72,9 @@ public class IotSimLabServiceImpl implements IotSimLabService {
     public List<IotSimLab> queryAllSimLabData() {
         return this.iotSimLabDao.queryAllByLimit();
     }
+
+    @Override
+    public Long queryProjectCount() {
+        return this.iotSimLabDao.count(new IotSimLab());
+    }
 }
