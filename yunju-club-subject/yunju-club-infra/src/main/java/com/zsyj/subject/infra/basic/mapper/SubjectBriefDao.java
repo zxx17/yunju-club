@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 简答题表(SubjectBrief)表数据库访问层
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:37:25
  */
 public interface SubjectBriefDao {

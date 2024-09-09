@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 多选题表(SubjectMultiple)表数据库访问层
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:36
  */
 public interface SubjectMultipleDao {

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsyj.iot.mapper.IotSimLabDao">
+
+    <resultMap type="com.zsyj.iot.entity.IotSimLab" id="IotSimLabMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="deviceName" column="device_name" jdbcType="VARCHAR"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="projectType" column="project_type" jdbcType="INTEGER"/>
+        <result property="projectUrl" column="project_url" jdbcType="VARCHAR"/>
+        <result property="diffcult" column="diffcult" jdbcType="INTEGER"/>
+        <result property="sorted" column="sorted" jdbcType="INTEGER"/>
+        <result property="finishedCount" column="finished_count" jdbcType="INTEGER"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="IotSimLabMap">
+        select id,
+               device_name,
+               project_name,
+               project_type,
+               project_url,
+               diffcult,
+               sorted,
+               finished_count,
+               created_by,
+               created_time,
+               update_by,
+               update_time,
+               is_deleted
+        from iot_sim_lab
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="IotSimLabMap">
+        select
+        id, device_name, project_name, project_type, project_url, diffcult, sorted, finished_count, created_by,
+        created_time, update_by, update_time, is_deleted
+        from iot_sim_lab
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="deviceName != null and deviceName != ''">
+                and device_name = #{deviceName}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and project_name = #{projectName}
+            </if>
+            <if test="projectType != null">
+                and project_type = #{projectType}
+            </if>
+            <if test="projectUrl != null and projectUrl != ''">
+                and project_url = #{projectUrl}
+            </if>
+            <if test="diffcult != null">
+                and diffcult = #{diffcult}
+            </if>
+            <if test="sorted != null">
+                and sorted = #{sorted}
+            </if>
+            <if test="finishedCount != null">
+                and finished_count = #{finishedCount}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            and is_deleted = 0
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from iot_sim_lab
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="deviceName != null and deviceName != ''">
+                and device_name = #{deviceName}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and project_name = #{projectName}
+            </if>
+            <if test="projectType != null">
+                and project_type = #{projectType}
+            </if>
+            <if test="projectUrl != null and projectUrl != ''">
+                and project_url = #{projectUrl}
+            </if>
+            <if test="diffcult != null">
+                and diffcult = #{diffcult}
+            </if>
+            <if test="sorted != null">
+                and sorted = #{sorted}
+            </if>
+            <if test="finishedCount != null">
+                and finished_count = #{finishedCount}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+
+            and is_deleted = 0
+
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into iot_sim_lab(device_name, project_name, project_type, project_url, diffcult, sorted, finished_count,
+                                created_by, created_time, update_by, update_time, is_deleted)
+        values (#{deviceName}, #{projectName}, #{projectType}, #{projectUrl}, #{diffcult}, #{sorted}, #{finishedCount},
+                #{createdBy}, #{createdTime}, #{updateBy}, #{updateTime}, #{isDeleted})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into iot_sim_lab(device_name, project_name, project_type, project_url, diffcult, sorted, finished_count,
+        created_by, created_time, update_by, update_time, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.deviceName}, #{entity.projectName}, #{entity.projectType}, #{entity.projectUrl},
+            #{entity.diffcult}, #{entity.sorted}, #{entity.finishedCount}, #{entity.createdBy}, #{entity.createdTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into iot_sim_lab(device_name, project_name, project_type, project_url, diffcult, sorted, finished_count,
+        created_by, created_time, update_by, update_time, is_deleted)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.deviceName}, #{entity.projectName}, #{entity.projectType}, #{entity.projectUrl},
+            #{entity.diffcult}, #{entity.sorted}, #{entity.finishedCount}, #{entity.createdBy}, #{entity.createdTime},
+            #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
+        </foreach>
+        on duplicate key update
+        device_name = values(device_name),
+        project_name = values(project_name),
+        project_type = values(project_type),
+        project_url = values(project_url),
+        diffcult = values(diffcult),
+        sorted = values(sorted),
+        finished_count = values(finished_count),
+        created_by = values(created_by),
+        created_time = values(created_time),
+        update_by = values(update_by),
+        update_time = values(update_time),
+        is_deleted = values(is_deleted)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update iot_sim_lab
+        <set>
+            <if test="deviceName != null and deviceName != ''">
+                device_name = #{deviceName},
+            </if>
+            <if test="projectName != null and projectName != ''">
+                project_name = #{projectName},
+            </if>
+            <if test="projectType != null">
+                project_type = #{projectType},
+            </if>
+            <if test="projectUrl != null and projectUrl != ''">
+                project_url = #{projectUrl},
+            </if>
+            <if test="diffcult != null">
+                diffcult = #{diffcult},
+            </if>
+            <if test="sorted != null">
+                sorted = #{sorted},
+            </if>
+            <if test="finishedCount != null">
+                finished_count = #{finishedCount},
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                created_by = #{createdBy},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from iot_sim_lab
+        where id = #{id}
+    </delete>
+
+</mapper>
+

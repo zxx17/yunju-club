@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 题目分类表(SubjectCategory)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-24 11:21:40
  */
 

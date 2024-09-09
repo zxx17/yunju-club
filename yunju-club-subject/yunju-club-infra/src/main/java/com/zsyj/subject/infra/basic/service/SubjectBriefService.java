@@ -6,7 +6,7 @@ import com.zsyj.subject.infra.basic.entity.SubjectBrief;
 /**
  * 简答题表(SubjectBrief)表服务接口
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:37:26
  */
 public interface SubjectBriefService {

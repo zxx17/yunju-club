@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 题目标签表(SubjectLabel)表服务接口
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-27 19:22:45
  */
 public interface SubjectLabelService {

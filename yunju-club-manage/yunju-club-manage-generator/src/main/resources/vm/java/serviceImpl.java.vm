@@ -1,4 +1,4 @@
-package ${packageName}.service.impl;
+package ${packageName}.com.zsyj.iot.service.impl;
 
 import java.util.List;
 #foreach ($column in $columns)

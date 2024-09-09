@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * (AuthUser)表服务实现类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-01 01:25:23
  */
 @Service("authUserService")

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 判断题表(SubjectJudge)表数据库访问层
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:13
  */
 public interface SubjectJudgeDao {

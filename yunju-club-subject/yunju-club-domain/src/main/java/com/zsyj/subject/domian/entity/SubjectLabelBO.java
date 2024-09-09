@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 题目标签表(SubjectLabel)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-27 19:22:45
  */
 @Data

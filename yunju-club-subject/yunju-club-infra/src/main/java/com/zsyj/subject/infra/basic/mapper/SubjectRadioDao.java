@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 单选题表(SubjectRadio)表数据库访问层
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:49
  */
 public interface SubjectRadioDao {

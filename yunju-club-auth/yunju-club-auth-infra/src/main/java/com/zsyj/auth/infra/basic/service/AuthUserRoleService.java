@@ -6,7 +6,7 @@ import com.zsyj.auth.infra.basic.entity.AuthUserRole;
 /**
  * (AuthUserRole)表服务接口
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-03 00:18:09
  */
 public interface AuthUserRoleService {

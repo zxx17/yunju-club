@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * (AuthRolePermission)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-04 22:16:00
  */
 public class AuthRolePermission implements Serializable {

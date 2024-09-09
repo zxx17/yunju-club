@@ -1,4 +1,4 @@
-package com.zsyj.auth.application.context;
+package com.zsyj.iot.context;
 
 import java.util.Map;
 import java.util.Objects;

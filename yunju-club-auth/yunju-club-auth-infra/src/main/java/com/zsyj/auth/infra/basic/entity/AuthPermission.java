@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * (AuthPermission)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-03 00:45:50
  */
 public class AuthPermission implements Serializable {

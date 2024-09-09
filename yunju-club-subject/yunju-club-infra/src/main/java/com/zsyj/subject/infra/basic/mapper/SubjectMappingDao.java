@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 题目分类关联表(SubjectMapping)表数据库访问层
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-29 19:34:33
  */
 public interface SubjectMappingDao {

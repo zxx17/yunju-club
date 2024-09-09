@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * (AuthRole)表服务接口
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-02 23:55:19
  */
 public interface AuthRoleService {

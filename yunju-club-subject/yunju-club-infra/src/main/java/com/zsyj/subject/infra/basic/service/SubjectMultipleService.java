@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 多选题表(SubjectMultiple)表服务接口
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:36
  */
 public interface SubjectMultipleService {

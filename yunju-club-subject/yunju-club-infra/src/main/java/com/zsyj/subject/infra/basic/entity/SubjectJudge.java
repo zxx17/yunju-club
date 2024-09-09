@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 判断题表(SubjectJudge)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:14
  */
 @Data

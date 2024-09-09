@@ -1,6 +1,6 @@
 package com.zsyj.subject.application.interceptor;
 
-import com.zsyj.auth.context.LoginContextHolder;
+import com.zsyj.subject.common.context.LoginContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;

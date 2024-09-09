@@ -1,2 +1,31 @@
 server:
   port: 4010
+spring:
+  datasource:
+    username: root
+    password: D+ciu4qe/DwTi+Z9kEnnfP+Mch0Mz6FZOtoP1oGvyLStgHHWjyld1VwEecgP/E743weglffdRsYMw1IgyyOKNA==
+    url: jdbc:mysql://192.168.118.232:9670/yj_club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 20
+      min-idle: 20
+      connection-properties: config.decrypt=true;config.decrypt.key=${public-key};
+      max-active: 100
+      max-wait: 60000
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/**
+        login-username: admin
+        login-password: 191002
+      filter:
+        stat:
+          enabled: true
+          slow-sql-millis: 2000
+          log-slow-sql: true
+        wall:
+          enabled: true
+        config:
+          enabled: true
+          
+# 数据库密码解密密钥 应该放在nacos
+public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoFa0sh1tK/VjqrKMVaO4cy58A5StVOwZhVFSaseTS7hDzUcgkw/aUe/T/0HzS2mwSToGTVQS6KD+UtQZwdN0cCAwEAAQ==

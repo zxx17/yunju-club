@@ -35,5 +35,5 @@ logging:
 #   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
-# 数据库密码解密密钥 应该放在项目的密钥文件
+# 数据库密码解密密钥 应该放在nacos
 public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoFa0sh1tK/VjqrKMVaO4cy58A5StVOwZhVFSaseTS7hDzUcgkw/aUe/T/0HzS2mwSToGTVQS6KD+UtQZwdN0cCAwEAAQ==

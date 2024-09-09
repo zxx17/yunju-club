@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * (AuthUser)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-01 01:25:22
  */
 public class AuthUser implements Serializable {

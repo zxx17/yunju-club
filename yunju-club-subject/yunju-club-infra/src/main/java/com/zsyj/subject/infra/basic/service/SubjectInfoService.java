@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 题目信息表(SubjectInfo)表服务接口
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:37:57
  */
 public interface SubjectInfoService {

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 题目分类表(SubjectCategory)表服务实现类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-24 11:21:42
  */
 @Slf4j

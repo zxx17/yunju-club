@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 多选题表(SubjectMultiple)表服务实现类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:36
  */
 @Service("subjectMultipleService")

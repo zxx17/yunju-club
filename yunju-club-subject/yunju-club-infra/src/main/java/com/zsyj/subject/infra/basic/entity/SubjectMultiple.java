@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 多选题表(SubjectMultiple)实体类
  *
- * @author makejava
+ * @author Xinxuan Zhuo
  * @since 2023-11-30 11:38:36
  */
 @Data
