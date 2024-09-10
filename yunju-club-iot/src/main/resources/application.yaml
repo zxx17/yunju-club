@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: D+ciu4qe/DwTi+Z9kEnnfP+Mch0Mz6FZOtoP1oGvyLStgHHWjyld1VwEecgP/E743weglffdRsYMw1IgyyOKNA==
-    url: jdbc:mysql://192.168.118.232:9670/yj_club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://192.168.150.101:9670/yj_club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 20

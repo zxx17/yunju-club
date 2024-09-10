@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: D+ciu4qe/DwTi+Z9kEnnfP+Mch0Mz6FZOtoP1oGvyLStgHHWjyld1VwEecgP/E743weglffdRsYMw1IgyyOKNA==
-    url: jdbc:mysql://192.168.118.232:9670/yj_club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://192.168.150.101:9670/yj_club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 20
@@ -31,7 +31,7 @@ spring:
     # Redis数据库索引（默认为0）
     database: 1
     # Redis服务器地址
-    host: 192.168.118.232
+    host: 192.168.150.101
     # Redis服务器连接端口
     port: 9672
     # Redis服务器连接密码（默认为空）

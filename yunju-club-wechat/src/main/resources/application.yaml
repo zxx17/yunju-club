@@ -2,17 +2,17 @@ server:
   port: 3012
 
 spring:
+  profiles:
+    active: dev
   redis:
     # Redis数据库索引（默认为0）
     database: 1
     # Redis服务器地址
-#    host: 192.168.118.232
-    host: localhost
+    host: 192.168.150.101
     # Redis服务器连接端口
-#    port: 9672
-    port: 6379
+    port: 9672
     # Redis服务器连接密码（默认为空）
-#    password: lyun@rediszxx
+    password: lyun@rediszxx
     # 连接超时时间
     timeout: 2s
     lettuce:
