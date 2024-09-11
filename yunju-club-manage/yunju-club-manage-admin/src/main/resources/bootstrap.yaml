@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: yunju-club-manage-dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.150.101:9675
+        prefix: ${spring.application.name}
+      discovery:
+        enabled: true
+        server-addr: 192.168.150.101:9675
