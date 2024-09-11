@@ -1,9 +1,12 @@
 package com.zsyj.subject.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.zsyj.subject.application.convert.SubjectCategoryDTOConverter;
+import com.zsyj.subject.application.convert.SubjectLabelDTOConverter;
 import com.zsyj.subject.application.dto.SubjectCategoryDTO;
+import com.zsyj.subject.application.dto.SubjectLabelDTO;
 import com.zsyj.subject.common.entity.Result;
 import com.zsyj.subject.domian.entity.SubjectCategoryBO;
 import com.zsyj.subject.domian.service.ISubjectCategoryDomainService;
@@ -12,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 
 import static com.zsyj.subject.common.enums.NotifyEnum.*;
@@ -160,6 +164,38 @@ public class SubjectCategoryController {
         } catch (Exception e) {
             log.error("SubjectCategoryController.delete.error", e);
             return Result.fail(UPDATE_FAIL.getNotify() + e.getMessage());
+        }
+    }
+
+    /**
+     * 根据大分类的ID查出小分类和标签
+     * @param subjectCategoryDTO 分类ID
+     * @return 一次性返回分类和标签数据，后端组装树形结构
+     */
+    @PostMapping("/queryCategoryAndLabel")
+    public Result<List<SubjectCategoryDTO>> queryCategoryAndLabel(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectCategoryController.queryCategoryAndLabel.dto:{}"
+                        , JSON.toJSONString(subjectCategoryDTO));
+            }
+            Preconditions.checkNotNull(subjectCategoryDTO.getId(), "分类id不能为空");
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
+                    convertDTOToSubjectCategoryBO(subjectCategoryDTO);
+            // 根据分类ID查询标签信息
+            List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategoryAndLabel(subjectCategoryBO);
+            List<SubjectCategoryDTO> dtoList = new LinkedList<>();
+            // 组装标签信息到CategoryDTO中
+            subjectCategoryBOList.forEach(bo -> {
+                SubjectCategoryDTO dto = SubjectCategoryDTOConverter.INSTANCE.convertSubjectCategoryBOToDTO(bo);
+                List<SubjectLabelDTO> labelDTOList = SubjectLabelDTOConverter.INSTANCE.convertBOToSubjectLabelDTOList(bo.getLabelBOList());
+                dto.setLabelDTOList(labelDTOList);
+                dtoList.add(dto);
+            });
+            return Result.ok(dtoList);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.queryPrimaryCategory.error:{}", e.getMessage(), e);
+            return Result.fail();
         }
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 用户服务feign
  */
-@FeignClient("jc-club-auth-dev")
+@FeignClient("yunju-club-auth-dev")
 public interface UserFeignService {
 
     @RequestMapping("/user/getUserInfo")

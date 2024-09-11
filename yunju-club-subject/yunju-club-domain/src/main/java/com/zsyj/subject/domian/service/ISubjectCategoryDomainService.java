@@ -41,4 +41,6 @@ public interface ISubjectCategoryDomainService {
      * @return boolean
      */
     Boolean delete(SubjectCategoryBO subjectCategoryBO);
+
+    List<SubjectCategoryBO> queryCategoryAndLabel(SubjectCategoryBO subjectCategoryBO);
 }
