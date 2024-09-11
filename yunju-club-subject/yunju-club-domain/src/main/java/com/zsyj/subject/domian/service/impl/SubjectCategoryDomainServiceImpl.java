@@ -55,12 +55,19 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
      */
     @Override
     public List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO) {
-        SubjectCategory subjectCategory = SubjectCategoryBOConverter.INSTANCE.convertBOToSubjectCategory(subjectCategoryBO);
+        SubjectCategory subjectCategory = SubjectCategoryBOConverter.INSTANCE.
+                convertBOToSubjectCategory(subjectCategoryBO);
         List<SubjectCategory> subjectCategoryList = subjectCategoryService.queryCategory(subjectCategory);
-        List<SubjectCategoryBO> subjectCategoryBOList = SubjectCategoryBOConverter.INSTANCE.convertToSubjectCategoryBO(subjectCategoryList);
+        List<SubjectCategoryBO> subjectCategoryBOList = SubjectCategoryBOConverter.INSTANCE.
+                convertToSubjectCategoryBO(subjectCategoryList);
         if (log.isInfoEnabled()) {
             log.info("SubjectCategoryDomainServiceImpl.queryCategory.subjectCategoryBOList:{}", subjectCategoryBOList);
         }
+        // 查询该分类大类下有几道题目
+        subjectCategoryBOList.forEach(bo -> {
+            Long subjectCount = subjectCategoryService.querySubjectCount(bo.getId());
+            bo.setCount(subjectCount);
+        });
         return subjectCategoryBOList;
     }
 

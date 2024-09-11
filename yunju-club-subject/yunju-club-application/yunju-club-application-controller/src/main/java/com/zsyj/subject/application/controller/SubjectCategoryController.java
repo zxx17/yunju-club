@@ -75,10 +75,11 @@ public class SubjectCategoryController {
      *
      * @return json result List<SubjectCategoryDTO>
      */
-    @GetMapping("/queryPrimaryCategory")
-    public Result<Object> queryPrimaryCategory() {
+    @PostMapping("/queryPrimaryCategory")
+    public Result<Object> queryPrimaryCategory(@RequestBody SubjectCategoryDTO subjectCategoryDTO) {
         try {
-            SubjectCategoryBO subjectCategoryBO = new SubjectCategoryBO();
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.
+                    convertDTOToSubjectCategoryBO(subjectCategoryDTO);
             subjectCategoryBO.setCategoryType(CATEGORY_TYPE_BIG);
             List<SubjectCategoryBO> subjectCategoryBOList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
             List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.convertBOToSubjectCategoryDTOList(subjectCategoryBOList);

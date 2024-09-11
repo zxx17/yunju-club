@@ -2,7 +2,7 @@ server:
   port: 4000
 minio:
   url: http://192.168.150.101:9674
-  accessKey: AoGrSJB4yJEITettRc6A
-  secretKey: b62GQ6QdmTadgkLeFHDnBNa0u85xVaW8BwJlql2V
+  accessKey: 0sAH8LhwrO6f9gCuwILP
+  secretKey: 6OVRV1g6102kHwffbpa80g3VraRhi83VnpfJB7yd
 logging:
   config: classpath:log4j2-spring.xml

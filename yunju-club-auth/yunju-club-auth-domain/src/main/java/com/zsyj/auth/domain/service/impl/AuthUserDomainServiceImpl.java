@@ -127,6 +127,9 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     @Override
     public Boolean update(AuthUserBO authUserBO) {
         AuthUser authUser = AuthUserBOConverter.INSTANCE.convertBOToEntity(authUserBO);
+        if(!StringUtils.isBlank(authUser.getPassword())){
+            authUser.setPassword(SaSecureUtil.md5BySalt(authUser.getPassword(), salt));
+        }
         authUser.setUpdateTime(new Date());
         Integer count = authUserService.updateByUserName(authUser);
         return count > 0;
@@ -143,24 +146,45 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
     }
 
     @Override
-    public SaTokenInfo doLogin(String validCode) {
-        String loginKey = redisUtil.buildKey(LOGIN_PREFIX, validCode);
-        String openId = redisUtil.get(loginKey);
-        if (StringUtils.isBlank(openId)) {
-            return null;
+    public SaTokenInfo doLogin(String validCode, AuthUserBO bo) {
+        if(bo == null){
+            String loginKey = redisUtil.buildKey(LOGIN_PREFIX, validCode);
+            String openId = redisUtil.get(loginKey);
+            if (StringUtils.isBlank(openId)) {
+                log.warn("doLogin.error:{}", "验证码错误");
+                return null;
+            }
+            AuthUserBO authUserBO = new AuthUserBO();
+            authUserBO.setUserName(openId);
+            this.register(authUserBO);
+            StpUtil.login(openId);
+            SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+            return tokenInfo;
+        }else{
+            AuthUser authUser = new AuthUser();
+            authUser.setUserName(bo.getUserName());
+            List<AuthUser> authUsers = authUserService.queryByCondition(authUser);
+            if (CollectionUtils.isEmpty(authUsers)){
+                log.warn("doLogin.error:{}", "用户不存在");
+                return null;
+            }
+            if (authUsers.get(0).getPassword().equals(SaSecureUtil.md5BySalt(bo.getPassword(), salt))){
+                StpUtil.login(authUsers.get(0).getUserName());
+                SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+                return tokenInfo;
+            }else{
+                log.warn("doLogin.error:{}", "密码错误");
+                return null;
+            }
         }
-        AuthUserBO authUserBO = new AuthUserBO();
-        authUserBO.setUserName(openId);
-        this.register(authUserBO);
-        StpUtil.login(openId);
-        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
-        return tokenInfo;
+
     }
 
     @Override
     public AuthUserBO getUserInfo(AuthUserBO authUserBO) {
         AuthUser authUser = new AuthUser();
         authUser.setUserName(authUserBO.getUserName());
+        // 容错性处理
         List<AuthUser> userList = authUserService.queryByCondition(authUser);
         if (CollectionUtils.isEmpty(userList)) {
             return new AuthUserBO();

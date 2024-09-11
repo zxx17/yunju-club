@@ -48,4 +48,6 @@ public interface SubjectCategoryService {
     boolean deleteById(Integer id);
 
     List<SubjectCategory> queryCategory(SubjectCategory subjectCategory);
+
+    Long querySubjectCount(Integer id);
 }

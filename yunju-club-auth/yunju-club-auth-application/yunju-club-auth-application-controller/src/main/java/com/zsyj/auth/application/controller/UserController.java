@@ -72,17 +72,20 @@ public class UserController {
 
 
     @RequestMapping("doLogin")
-    public Result<SaTokenInfo> doLogin(@RequestParam("validCode") String validCode) {
+    public Result<SaTokenInfo> doLogin(@RequestParam("validCode") String validCode,
+                                @RequestBody(required = false)AuthUserDTO authUserDTO ) {
         try {
-            Preconditions.checkArgument(!StringUtils.isBlank(validCode), "验证码不能为空!");
-            return Result.ok(authUserDomainService.doLogin(validCode));
+            if(authUserDTO == null){
+                Preconditions.checkArgument(!StringUtils.isBlank(validCode), "验证码不能为空!");
+            }
+            AuthUserBO authUserBO = AuthUserDTOConverter.INSTANCE.convertDTOToBO(authUserDTO);
+            return Result.ok(authUserDomainService.doLogin(validCode,authUserBO));
         } catch (Exception e) {
             log.error("UserController.doLogin.error:{}", e.getMessage(), e);
             return Result.fail("用户登录失败");
         }
     }
 
-    // TODO 使用用户名和密码进行登录
 
     /**
      * 获取用户信息
@@ -99,8 +102,8 @@ public class UserController {
             userInfo.setPassword(null);
             return Result.ok(AuthUserDTOConverter.INSTANCE.convertBOToDTO(userInfo));
         } catch (Exception e) {
-            log.error("UserController.update.error:{}", e.getMessage(), e);
-            return Result.fail("更新用户信息失败");
+            log.error("UserController.getUserInfo.error:{}", e.getMessage(), e);
+            return Result.fail("获取用户信息失败");
         }
     }
 

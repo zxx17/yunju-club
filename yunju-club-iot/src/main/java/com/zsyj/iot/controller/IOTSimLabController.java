@@ -38,6 +38,7 @@ public class IOTSimLabController {
 
     /**
      * 左侧虚拟仿真实验树形菜单
+     * 一次性查询 组装成树形结构返回给前端，提高效率
      */
     @GetMapping("/menu")
     public Result<List<SimLabMenuDTO>> simLabMenu() {
