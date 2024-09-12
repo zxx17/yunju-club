@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsyj.system.mapper.IotSimLabMapper">
+    
+    <resultMap type="IotSimLab" id="IotSimLabResult">
+        <result property="id"    column="id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectType"    column="project_type"    />
+        <result property="projectUrl"    column="project_url"    />
+        <result property="projectDesc"    column="project_desc"    />
+        <result property="diffcult"    column="diffcult"    />
+        <result property="sorted"    column="sorted"    />
+        <result property="finishedCount"    column="finished_count"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectIotSimLabVo">
+        select id, device_name, project_name, project_type, project_url, project_desc, diffcult, sorted, finished_count, created_by, created_time, update_by, update_time, is_deleted from iot_sim_lab
+    </sql>
+
+    <select id="selectIotSimLabList" parameterType="IotSimLab" resultMap="IotSimLabResult">
+        <include refid="selectIotSimLabVo"/>
+        <where>  
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="projectType != null "> and project_type = #{projectType}</if>
+            <if test="projectUrl != null  and projectUrl != ''"> and project_url = #{projectUrl}</if>
+            <if test="projectDesc != null  and projectDesc != ''"> and project_desc = #{projectDesc}</if>
+            <if test="diffcult != null "> and diffcult = #{diffcult}</if>
+            <if test="sorted != null "> and sorted = #{sorted}</if>
+            <if test="finishedCount != null "> and finished_count = #{finishedCount}</if>
+            <if test="createdBy != null  and createdBy != ''"> and created_by = #{createdBy}</if>
+            <if test="createdTime != null "> and created_time = #{createdTime}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectIotSimLabById" parameterType="Long" resultMap="IotSimLabResult">
+        <include refid="selectIotSimLabVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertIotSimLab" parameterType="IotSimLab" useGeneratedKeys="true" keyProperty="id">
+        insert into iot_sim_lab
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceName != null">device_name,</if>
+            <if test="projectName != null">project_name,</if>
+            <if test="projectType != null">project_type,</if>
+            <if test="projectUrl != null">project_url,</if>
+            <if test="projectDesc != null">project_desc,</if>
+            <if test="diffcult != null">diffcult,</if>
+            <if test="sorted != null">sorted,</if>
+            <if test="finishedCount != null">finished_count,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="projectName != null">#{projectName},</if>
+            <if test="projectType != null">#{projectType},</if>
+            <if test="projectUrl != null">#{projectUrl},</if>
+            <if test="projectDesc != null">#{projectDesc},</if>
+            <if test="diffcult != null">#{diffcult},</if>
+            <if test="sorted != null">#{sorted},</if>
+            <if test="finishedCount != null">#{finishedCount},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIotSimLab" parameterType="IotSimLab">
+        update iot_sim_lab
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="projectName != null">project_name = #{projectName},</if>
+            <if test="projectType != null">project_type = #{projectType},</if>
+            <if test="projectUrl != null">project_url = #{projectUrl},</if>
+            <if test="projectDesc != null">project_desc = #{projectDesc},</if>
+            <if test="diffcult != null">diffcult = #{diffcult},</if>
+            <if test="sorted != null">sorted = #{sorted},</if>
+            <if test="finishedCount != null">finished_count = #{finishedCount},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIotSimLabById" parameterType="Long">
+        delete from iot_sim_lab where id = #{id}
+    </delete>
+
+    <delete id="deleteIotSimLabByIds" parameterType="String">
+        delete from iot_sim_lab where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
