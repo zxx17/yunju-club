@@ -5,7 +5,7 @@
 
     <groupId>com.zsyunju</groupId>
     <artifactId>yunju-club-subject</artifactId>
-    <description>卓晟云聚社区刷题模块</description>
+    <description>云聚社区刷题模块</description>
     <packaging>pom</packaging>
     <version>1.0.0</version>
 

@@ -163,9 +163,10 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
         }else{
             AuthUser authUser = new AuthUser();
             authUser.setUserName(bo.getUserName());
+            authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
             List<AuthUser> authUsers = authUserService.queryByCondition(authUser);
             if (CollectionUtils.isEmpty(authUsers)){
-                log.warn("doLogin.error:{}", "用户不存在");
+                log.warn("doLogin.error:{}", "用户不存在或已被禁用");
                 return null;
             }
             if (authUsers.get(0).getPassword().equals(SaSecureUtil.md5BySalt(bo.getPassword(), salt))){

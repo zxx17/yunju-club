@@ -23,7 +23,6 @@ import java.util.List;
 
 /**
  * 用户相关接口
- * TODO 这里的接口要和前端对接后修改requestmapping的method
  */
 @RestController
 @RequestMapping("/user/")

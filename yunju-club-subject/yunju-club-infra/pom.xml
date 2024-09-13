@@ -7,7 +7,7 @@
         <groupId>com.zsyunju</groupId>
         <version>1.0.0</version>
     </parent>
-    <description>卓晟云聚社区刷题模块基础设施层</description>
+    <description>云聚社区刷题模块基础设施层</description>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>yunju-club-infra</artifactId>
