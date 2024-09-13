@@ -8,7 +8,7 @@
         <result property="subjectDifficult" column="subject_difficult" jdbcType="INTEGER"/>
         <result property="settleName" column="settle_name" jdbcType="VARCHAR"/>
         <result property="subjectType" column="subject_type" jdbcType="INTEGER"/>
-        <result property="subjectSource" column="subject_source" jdbcType="INTEGER"/>
+        <result property="subjectScore" column="subject_score" jdbcType="INTEGER"/>
         <result property="subjectParse" column="subject_parse" jdbcType="VARCHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -24,7 +24,7 @@
                subject_difficult,
                settle_name,
                subject_type,
-               subject_source,
+               subject_score,
                subject_parse,
                create_by,
                create_time,
@@ -38,7 +38,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SubjectInfoMap">
         select
-        id, subject_name, subject_difficult, settle_name, subject_type, subject_source, subject_parse, create_by,
+        id, subject_name, subject_difficult, settle_name, subject_type, subject_score, subject_parse, create_by,
         create_time, update_by, update_time, is_deleted
         from subject_info
         <where>
@@ -57,8 +57,8 @@
             <if test="subjectType != null">
                 and subject_type = #{subjectType}
             </if>
-            <if test="subjectSource != null">
-                and subject_source = #{subjectSource}
+            <if test="subjectScore != null">
+                and subject_score = #{subjectScore}
             </if>
             <if test="subjectParse != null and subjectParse != ''">
                 and subject_parse = #{subjectParse}
@@ -100,8 +100,8 @@
             <if test="subjectType != null">
                 and subject_type = #{subjectType}
             </if>
-            <if test="subjectSource != null">
-                and subject_source = #{subjectSource}
+            <if test="subjectScore != null">
+                and subject_score = #{subjectScore}
             </if>
             <if test="subjectParse != null and subjectParse != ''">
                 and subject_parse = #{subjectParse}
@@ -127,30 +127,30 @@
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
+        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_score,
         subject_parse, create_by, create_time, update_by, update_time, is_deleted)
-        values (#{subjectName}, #{subjectDifficult}, #{settleName}, #{subjectType}, #{subjectSource}, #{subjectParse},
+        values (#{subjectName}, #{subjectDifficult}, #{settleName}, #{subjectType}, #{subjectScore}, #{subjectParse},
         #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{isDeleted})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
+        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_score,
         subject_parse, create_by, create_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.subjectName}, #{entity.subjectDifficult}, #{entity.settleName}, #{entity.subjectType},
-            #{entity.subjectSource}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime},
+            #{entity.subjectScore}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime},
             #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_source,
+        insert into subject_info(subject_name, subject_difficult, settle_name, subject_type, subject_score,
         subject_parse, create_by, create_time, update_by, update_time, is_deleted)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.subjectName}, #{entity.subjectDifficult}, #{entity.settleName}, #{entity.subjectType},
-            #{entity.subjectSource}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime},
+            #{entity.subjectScore}, #{entity.subjectParse}, #{entity.createBy}, #{entity.createTime},
             #{entity.updateBy}, #{entity.updateTime}, #{entity.isDeleted})
         </foreach>
         on duplicate key update
@@ -158,7 +158,7 @@
         subject_difficult = values(subject_difficult),
         settle_name = values(settle_name),
         subject_type = values(subject_type),
-        subject_source = values(subject_source),
+        subject_score = values(subject_score),
         subject_parse = values(subject_parse),
         create_by = values(create_by),
         create_time = values(create_time),
@@ -183,8 +183,8 @@
             <if test="subjectType != null">
                 subject_type = #{subjectType},
             </if>
-            <if test="subjectSource != null">
-                subject_source = #{subjectSource},
+            <if test="subjectScore != null">
+                subject_score = #{subjectScore},
             </if>
             <if test="subjectParse != null and subjectParse != ''">
                 subject_parse = #{subjectParse},
@@ -239,7 +239,7 @@
         a.subject_difficult,
         a.settle_name,
         a.subject_type,
-        a.subject_source,
+        a.subject_score,
         a.subject_parse,
         a.create_by,
         a.create_time,

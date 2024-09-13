@@ -120,7 +120,7 @@ create table subject_info
     subject_difficult int          null comment '题目难度',
     settle_name       varchar(32)  null comment '出题人姓名',
     subject_type      int          null comment '题目类型 1单选 2多选 3判断 4简答',
-    subject_source    int          null comment '题目分值',
+    subject_score    int          null comment '题目分值',
     subject_parse     varchar(512) null comment '题目解析',
     create_by         varchar(32)  null comment '创建人',
     create_time       datetime     null comment '创建时间',

@@ -31,7 +31,7 @@ public class SubjectInfo implements Serializable {
     /**
      * 题目分值
      */
-    private Integer subjectSource;
+    private Integer subjectScore;
     /**
      * 题目解析
      */

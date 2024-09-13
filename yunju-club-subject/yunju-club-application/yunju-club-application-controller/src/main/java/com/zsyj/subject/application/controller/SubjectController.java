@@ -50,7 +50,7 @@ public class SubjectController {
                 log.info("SubjectController.add.dto{}", JSONObject.toJSONString(subjectInfoDTO));
             }
             Preconditions.checkArgument(StringUtils.isNotBlank(subjectInfoDTO.getSubjectName()), "题目名称不能为空");
-            Preconditions.checkNotNull(subjectInfoDTO.getSubjectSource(), "题目分值不能为空");
+            Preconditions.checkNotNull(subjectInfoDTO.getSubjectScore(), "题目分值不能为空");
             Preconditions.checkNotNull(subjectInfoDTO.getSubjectDifficult(), "题目难度不能为空");
             Preconditions.checkNotNull(subjectInfoDTO.getSubjectType(), "题目类型不能为空");
 
