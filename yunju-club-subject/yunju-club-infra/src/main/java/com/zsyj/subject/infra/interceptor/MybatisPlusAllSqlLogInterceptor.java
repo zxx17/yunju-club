@@ -1,4 +1,4 @@
-package com.zsyj.subject.infra.basic.interceptor;
+package com.zsyj.subject.infra.interceptor;
 
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import org.apache.ibatis.executor.Executor;

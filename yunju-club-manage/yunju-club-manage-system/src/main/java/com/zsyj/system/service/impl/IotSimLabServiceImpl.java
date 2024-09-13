@@ -53,6 +53,7 @@ public class IotSimLabServiceImpl implements IIotSimLabService
     @Override
     public int insertIotSimLab(IotSimLab iotSimLab)
     {
+        iotSimLab.setCreatedTime(DateUtils.getNowDate());
         return iotSimLabMapper.insertIotSimLab(iotSimLab);
     }
 

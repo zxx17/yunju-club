@@ -3,7 +3,6 @@ package com.zsyj.subject.infra.basic.mapper;
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 import org.apache.ibatis.annotations.Param;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 /**

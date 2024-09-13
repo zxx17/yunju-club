@@ -1,4 +1,4 @@
-package com.zsyj.subject.infra.basic.interceptor;
+package com.zsyj.subject.infra.interceptor;
 
 import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
 import lombok.AllArgsConstructor;

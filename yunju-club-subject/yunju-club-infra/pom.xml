@@ -47,6 +47,12 @@
             <artifactId>yunju-club-common</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!--   auth-feign-api     -->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>yunju-club-auth-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

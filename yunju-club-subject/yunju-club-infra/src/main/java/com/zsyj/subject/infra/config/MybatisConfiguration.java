@@ -1,8 +1,8 @@
-package com.zsyj.subject.infra.basic.config;
+package com.zsyj.subject.infra.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.zsyj.subject.infra.basic.interceptor.MybatisPlusAllSqlLogInterceptor;
-import com.zsyj.subject.infra.basic.interceptor.SqlStatementInterceptor;
+import com.zsyj.subject.infra.interceptor.MybatisPlusAllSqlLogInterceptor;
+import com.zsyj.subject.infra.interceptor.SqlStatementInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

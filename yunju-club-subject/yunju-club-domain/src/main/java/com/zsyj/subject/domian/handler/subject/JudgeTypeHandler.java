@@ -10,7 +10,6 @@ import com.zsyj.subject.domian.entity.SubjectOptionBO;
 import com.zsyj.subject.infra.basic.entity.SubjectJudge;
 import com.zsyj.subject.infra.basic.service.SubjectJudgeService;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;

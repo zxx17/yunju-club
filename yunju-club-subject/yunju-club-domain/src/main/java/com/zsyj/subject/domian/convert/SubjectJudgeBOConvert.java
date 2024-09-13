@@ -1,8 +1,6 @@
 package com.zsyj.subject.domian.convert;
 
 import com.zsyj.subject.domian.entity.SubjectAnswerBO;
-import com.zsyj.subject.domian.entity.SubjectInfoBO;
-import com.zsyj.subject.infra.basic.entity.SubjectBrief;
 import com.zsyj.subject.infra.basic.entity.SubjectJudge;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
