@@ -51,7 +51,7 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
     private ThreadPoolExecutor labelThreadPool;
 
     @Resource
-    private CacheUtil cacheUtil;
+    private CacheUtil<String, SubjectCategoryBO> cacheUtil;
 
     /**
      * 新增分类
@@ -136,6 +136,9 @@ public class SubjectCategoryDomainServiceImpl implements ISubjectCategoryDomainS
         String cacheKey = "categoryAndLabel." + categoryId;
         List<SubjectCategoryBO> subjectCategoryBOS = cacheUtil.getListResult(cacheKey,
                 SubjectCategoryBO.class, (key) -> getSubjectCategoryBOS(categoryId));
+        if (log.isInfoEnabled()) {
+            log.info("SubjectCategoryDomainServiceImpl.queryCategoryAndLabel.subjectCategoryBOS:{}", subjectCategoryBOS);
+        }
         return subjectCategoryBOS;
     }
 

@@ -28,9 +28,16 @@ public class CacheUtil<K, V> {
                     .expireAfterWrite(10, TimeUnit.SECONDS)
                     .build();
 
+    /**
+     * 获取缓存列表数据
+     * @param cacheKey  缓存key
+     * @param clazz     缓存对象类型
+     * @param function 缓存获取不到时执行的方法
+     * @return List<V>
+     */
     public List<V> getListResult(String cacheKey, Class<V> clazz,
                              Function<String, List<V>> function) {
-        List<V> resultList = new ArrayList<>();
+        List<V> resultList;
         String content = localCache.getIfPresent(cacheKey);
         if (StringUtils.isNotBlank(content)) {
             resultList = JSON.parseArray(content, clazz);
@@ -43,17 +50,22 @@ public class CacheUtil<K, V> {
         return resultList;
     }
 
-
+    /**
+     * 获取缓存map数据
+     * @param cacheKey 缓存key
+     * @param function 缓存获取不到时执行的方法
+     * @return Map<K, V>
+     */
     public Map<K, V> getMapResult(String cacheKey,
                                   Function<String, Map<K, V>> function) {
-        Map<K, V> resultMap = new HashMap<>();
+        Map<K, V> resultMap;
         String content = localCache.getIfPresent(cacheKey);
-        if (content != null && !content.trim().isEmpty()) {
+        if (StringUtils.isNotBlank(content)) {
             TypeReference<Map<K, V>> typeRef = new TypeReference<Map<K, V>>() {};
             resultMap = JSON.parseObject(content, typeRef);
         } else {
             resultMap = function.apply(cacheKey);
-            if (resultMap != null && !resultMap.isEmpty()) {
+            if (!CollectionUtils.isEmpty(resultMap)) {
                 localCache.put(cacheKey, JSON.toJSONString(resultMap));
             }
         }
