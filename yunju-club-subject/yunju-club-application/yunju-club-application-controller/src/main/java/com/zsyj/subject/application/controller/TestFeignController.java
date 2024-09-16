@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  *
  */
 @RestController
-@RequestMapping("/subject/category")
+@RequestMapping("/subject/")
 @Slf4j
 public class TestFeignController {
 
@@ -22,9 +22,10 @@ public class TestFeignController {
     private AuthUserServiceRpc authUserServiceRpc;
 
     @GetMapping("testFeign")
-    public void testFeign() {
-        UserInfo userInfo = authUserServiceRpc.getUserInfo("oejvp6DGK3-G8-IFEJO4POcZudME");
+    public String testFeign() {
+        UserInfo userInfo = authUserServiceRpc.getUserInfo("testFeign");
         log.info("testFeign.userInfo:{}", userInfo);
+        return "success";
     }
 
 }
