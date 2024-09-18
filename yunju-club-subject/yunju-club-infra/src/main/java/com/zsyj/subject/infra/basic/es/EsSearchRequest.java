@@ -3,8 +3,7 @@ package com.zsyj.subject.infra.basic.es;
 import lombok.Data;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-
-import javax.swing.*;
+import org.elasticsearch.search.sort.SortOrder;
 
 /**
  * Es搜索实体封装.

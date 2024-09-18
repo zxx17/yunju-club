@@ -3,6 +3,8 @@ package com.zsyj.subject.domian.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.common.enums.DeletedFlagEnum;
+import com.zsyj.subject.common.util.IdWorkerUtil;
+import com.zsyj.subject.common.util.LoginUtil;
 import com.zsyj.subject.domian.convert.SubjectInfoBOConvert;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import com.zsyj.subject.domian.entity.SubjectOptionBO;
@@ -10,8 +12,10 @@ import com.zsyj.subject.domian.handler.subject.SubjectTypeHandler;
 import com.zsyj.subject.domian.handler.subject.SubjectTypeHandlerFactory;
 import com.zsyj.subject.domian.service.ISubjectInfoDomainService;
 import com.zsyj.subject.infra.basic.entity.SubjectInfo;
+import com.zsyj.subject.infra.basic.entity.SubjectInfoEs;
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 import com.zsyj.subject.infra.basic.entity.SubjectMapping;
+import com.zsyj.subject.infra.basic.service.SubjectEsService;
 import com.zsyj.subject.infra.basic.service.SubjectInfoService;
 import com.zsyj.subject.infra.basic.service.SubjectLabelService;
 import com.zsyj.subject.infra.basic.service.SubjectMappingService;
@@ -49,6 +53,8 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
     @Resource
     private SubjectLabelService subjectLabelService;
 
+    @Resource
+    private SubjectEsService subjectEsService;
 
     /**
      * 新增题目
@@ -88,6 +94,19 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
             });
         });
         subjectMappingService.batchInsert(subjectMappingList);
+        // 同步到es
+        // TODO 补充createUser逻辑
+        String loginId = LoginUtil.getLoginId();
+        SubjectInfoEs subjectInfoEs = SubjectInfoEs.builder()
+                .subjectId(subjectInfo.getId())
+                .docId(new IdWorkerUtil(1, 1, 1).nextId())
+                .subjectAnswer(subjectInfoBO.getSubjectAnswer())
+                .createTime(new Date().getTime())
+                .createUser(loginId)
+                .subjectName(subjectInfo.getSubjectName())
+                .subjectType(subjectInfo.getSubjectType())
+                .build();
+        subjectEsService.insert(subjectInfoEs);
     }
 
 
@@ -155,7 +174,6 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         List<String> labelNames = labelList.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
         info.setLabelName(labelNames);
     }
-
 
 
 }
