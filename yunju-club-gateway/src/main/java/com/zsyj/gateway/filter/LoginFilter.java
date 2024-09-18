@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -30,6 +29,7 @@ public class LoginFilter implements GlobalFilter {
         if (url.equals("/user/doLogin")) {
             return chain.filter(exchange);
         }
+        // TODO 自己从redis取LoginId，sa-token真不好用 satoken:login:token:CI13PBXCpLztdrO14D2dkQosz1TZAkRF
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         log.info("LoginFilter.tokenInfo:{}", new Gson().toJson(tokenInfo));
         String loginId = (String) tokenInfo.getLoginId();

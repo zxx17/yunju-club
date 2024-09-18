@@ -46,6 +46,12 @@ spring:
             - Path=/iot/**
           filters:
             - StripPrefix=1
+        - id: ai
+          uri: lb://yunju-club-ai-dev
+          predicates:
+            - Path=/ai/**
+          filters:
+            - StripPrefix=1
   redis:
     # Redis数据库索引（默认为0）
     database: 1
