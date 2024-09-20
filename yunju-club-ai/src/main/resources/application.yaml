@@ -29,5 +29,3 @@ spring:
 
 # 数据库密码解密密钥 应该放在nacos
 public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoFa0sh1tK/VjqrKMVaO4cy58A5StVOwZhVFSaseTS7hDzUcgkw/aUe/T/0HzS2mwSToGTVQS6KD+UtQZwdN0cCAwEAAQ==
-ali-ai:
-  key: sk-b8f7e6cf1c7a48129e3ebbbb0ba74491

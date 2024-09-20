@@ -30,7 +30,7 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(redisSerializer);
         redisTemplate.setHashKeySerializer(redisSerializer);
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
+        redisTemplate.setValueSerializer(redisSerializer);
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer());
         return redisTemplate;
     }
