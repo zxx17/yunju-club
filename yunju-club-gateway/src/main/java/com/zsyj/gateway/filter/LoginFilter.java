@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -20,7 +21,7 @@ import javax.annotation.Resource;
 public class LoginFilter implements GlobalFilter{
 
     @Resource
-    private RedisUtil redisUtil;
+    private StringRedisTemplate stringRedisTemplate;
 
     private static final String LOGIN_PATH = "/user/doLogin";
     private static final String SATOKEN_HEADER = "satoken";
@@ -47,7 +48,7 @@ public class LoginFilter implements GlobalFilter{
 
         String cleanToken = tokenHeader.replace(HEADER_TOKEN_PREFIX, "");
         String key = TOKEN_PREFIX + cleanToken;
-        String loginId = redisUtil.get(key);
+        String loginId = stringRedisTemplate.opsForValue().get(key);
 
         if (loginId == null) {
             log.warn("Login ID not found for token: {}", cleanToken);

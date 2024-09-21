@@ -115,27 +115,39 @@ public class SubjectEsServiceImpl implements SubjectEsService {
     }
 
     /**
-     * 将es命中的数据转成SubjectInfoEs
-     * @param hit 命中数据
-     * @return SubjectInfoEs
+     * 将ES命中的数据转换为SubjectInfoEs对象
+     *
+     * @param hit 命中的数据
+     * @return 转换后的SubjectInfoEs对象，如果没有有效的命中数据，则返回null
      */
     private SubjectInfoEs convertEs2PojoResult(SearchHit hit) {
+        // 获取命中数据的源内容并转为Map形式
         Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+        // 如果源内容为空，则返回null
         if (CollectionUtils.isEmpty(sourceAsMap)) {
             return null;
         }
+        // 创建SubjectInfoEs对象来存储转换后的数据
         SubjectInfoEs result = new SubjectInfoEs();
+
+        // 从源内容中获取主题ID并设置到结果对象
         result.setSubjectId(MapUtils.getLong(sourceAsMap, EsSubjectFields.SUBJECT_ID));
+        // 从源内容中获取主题名称并设置到结果对象
         result.setSubjectName(MapUtils.getString(sourceAsMap, EsSubjectFields.SUBJECT_NAME));
 
+        // 从源内容中获取主题答案并设置到结果对象
         result.setSubjectAnswer(MapUtils.getString(sourceAsMap, EsSubjectFields.SUBJECT_ANSWER));
 
+        // 从源内容中获取文档ID并设置到结果对象
         result.setDocId(MapUtils.getLong(sourceAsMap, EsSubjectFields.DOC_ID));
+        // 从源内容中获取主题类型并设置到结果对象
         result.setSubjectType(MapUtils.getInteger(sourceAsMap, EsSubjectFields.SUBJECT_TYPE));
+
+        // 计算并设置主题的得分，将ES的得分转换为百分制
         result.setScore(new BigDecimal(String.valueOf(hit.getScore())).multiply(new BigDecimal("100.00")
                 .setScale(2, RoundingMode.HALF_UP)));
 
-        //处理name的高亮
+        // 处理主题名称的高亮显示
         Map<String, HighlightField> highlightFields = hit.getHighlightFields();
         HighlightField subjectNameField = highlightFields.get(EsSubjectFields.SUBJECT_NAME);
         if(Objects.nonNull(subjectNameField)){
@@ -147,7 +159,7 @@ public class SubjectEsServiceImpl implements SubjectEsService {
             result.setSubjectName(subjectNameBuilder.toString());
         }
 
-        //处理答案高亮
+        // 处理主题答案的高亮显示
         HighlightField subjectAnswerField = highlightFields.get(EsSubjectFields.SUBJECT_ANSWER);
         if(Objects.nonNull(subjectAnswerField)){
             Text[] fragments = subjectAnswerField.getFragments();
@@ -158,8 +170,10 @@ public class SubjectEsServiceImpl implements SubjectEsService {
             result.setSubjectAnswer(subjectAnswerBuilder.toString());
         }
 
+        // 返回转换后的SubjectInfoEs对象
         return result;
     }
+
 
 
     /**

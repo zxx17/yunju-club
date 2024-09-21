@@ -1,7 +1,5 @@
 package com.zsyj.subject.infra.interceptor;
 
-import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
-import lombok.AllArgsConstructor;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
