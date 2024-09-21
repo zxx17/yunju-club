@@ -74,7 +74,10 @@ public class SubjectInfoBO extends PageInfo implements Serializable {
      */
     private List<String> labelName;
 
-
+    /**
+     * 搜索关键字
+     */
+    private String keyWord;
 
 }
 

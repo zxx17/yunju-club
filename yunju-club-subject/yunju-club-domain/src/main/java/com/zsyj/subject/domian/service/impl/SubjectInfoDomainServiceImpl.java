@@ -166,6 +166,14 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         return bo;
     }
 
+    @Override
+    public PageResult<SubjectInfoEs> getSubjectPageBySearch(SubjectInfoBO subjectInfoBO) {
+        SubjectInfoEs subjectInfoEs = new SubjectInfoEs();
+        subjectInfoEs.setPageNo(subjectInfoBO.getPageNo());
+        subjectInfoEs.setPageSize(subjectInfoBO.getPageSize());
+        subjectInfoEs.setKeyWord(subjectInfoBO.getKeyWord());
+        return subjectEsService.querySubjectList(subjectInfoEs);
+    }
 
     private void assembleLabelName(SubjectInfoBO info, SubjectMapping subjectMapping) {
         List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);

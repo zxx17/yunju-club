@@ -2,6 +2,7 @@ package com.zsyj.subject.domian.service;
 
 import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
+import com.zsyj.subject.infra.basic.entity.SubjectInfoEs;
 
 /**
  * @author Xinxuan Zhuo
@@ -31,4 +32,9 @@ public interface ISubjectInfoDomainService {
      * @return subjectInfoBO
      */
     SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO);
+
+    /**
+     * 全文检索
+     */
+    PageResult<SubjectInfoEs> getSubjectPageBySearch(SubjectInfoBO subjectInfoBO);
 }

@@ -1,5 +1,6 @@
 package com.zsyj.subject.application.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.zsyj.subject.application.convert.SubjectAnswerDTOConvert;
@@ -10,6 +11,7 @@ import com.zsyj.subject.common.entity.Result;
 import com.zsyj.subject.domian.entity.SubjectAnswerBO;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import com.zsyj.subject.domian.service.ISubjectInfoDomainService;
+import com.zsyj.subject.infra.basic.entity.SubjectInfoEs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +29,7 @@ import static com.zsyj.subject.common.enums.NotifyEnum.*;
  * @author Xinxuan Zhuo
  * @version 2023/11/23
  * <p>
- *  刷题 题目controller
+ * 刷题 题目controller
  * </p>
  */
 
@@ -41,10 +43,11 @@ public class SubjectController {
 
     /**
      * 新增题目
+     *
      * @param subjectInfoDTO dto
      */
     @PostMapping("/add")
-    public Result<Object> addSubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO){
+    public Result<Object> addSubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.add.dto{}", JSONObject.toJSONString(subjectInfoDTO));
@@ -61,7 +64,7 @@ public class SubjectController {
             subjectInfoBO.setOptionList(subjectAnswerBOList);
             subjectInfoDomainService.add(subjectInfoBO);
             return Result.ok(INSERT_SUCCESS.getNotify());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("SubjectController.add.error", e);
             return Result.fail(INSERT_FAIL.getNotify() + e.getMessage());
         }
@@ -70,10 +73,11 @@ public class SubjectController {
 
     /**
      * 查询题目列表
+     *
      * @param subjectInfoDTO dto
      */
     @PostMapping("/getSubjectPage")
-    public Result<Object> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO){
+    public Result<Object> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.getSubjectPage.dto{}", JSONObject.toJSONString(subjectInfoDTO));
@@ -84,15 +88,15 @@ public class SubjectController {
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE
                     .convertDTOToSubjectInfoBO(subjectInfoDTO);
 
-            PageResult<SubjectInfoBO> subjectInfoBOPageResult= subjectInfoDomainService.getSubjectPage(subjectInfoBO);
+            PageResult<SubjectInfoBO> subjectInfoBOPageResult = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
 
             PageResult<SubjectInfoDTO> subjectInfoDTOPageResult = SubjectInfoDTOConvert.INSTANCE
                     .convertBOToSubjectInfoDTOButPage(subjectInfoBOPageResult);
 
             return Result.ok(subjectInfoDTOPageResult);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("SubjectController.getSubjectPage.error", e);
-            return Result.fail(QUERY_FAIL.getNotify()+ e.getMessage());
+            return Result.fail(QUERY_FAIL.getNotify() + e.getMessage());
         }
     }
 
@@ -121,5 +125,28 @@ public class SubjectController {
             return Result.fail();
         }
     }
+
+
+    /**
+     * 全文检索
+     */
+    @PostMapping("/getSubjectPageBySearch")
+    public Result<PageResult<SubjectInfoEs>> getSubjectPageBySearch(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("SubjectController.getSubjectPageBySearch.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+            Preconditions.checkArgument(StringUtils.isNotBlank(subjectInfoDTO.getKeyWord()), "关键词不能为空");
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.convertDTOToSubjectInfoBO(subjectInfoDTO);
+            subjectInfoBO.setPageNo(subjectInfoDTO.getPageNo());
+            subjectInfoBO.setPageSize(subjectInfoDTO.getPageSize());
+            PageResult<SubjectInfoEs> boPageResult = subjectInfoDomainService.getSubjectPageBySearch(subjectInfoBO);
+            return Result.ok(boPageResult);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.getSubjectPageBySearch.error:{}", e.getMessage(), e);
+            return Result.fail();
+        }
+    }
+
 
 }

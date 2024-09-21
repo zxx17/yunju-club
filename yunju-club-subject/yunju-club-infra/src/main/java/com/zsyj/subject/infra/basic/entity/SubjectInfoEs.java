@@ -1,9 +1,7 @@
 package com.zsyj.subject.infra.basic.entity;
 
 import com.zsyj.subject.common.entity.PageInfo;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,6 +15,8 @@ import java.math.BigDecimal;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class SubjectInfoEs extends PageInfo implements Serializable {
 
