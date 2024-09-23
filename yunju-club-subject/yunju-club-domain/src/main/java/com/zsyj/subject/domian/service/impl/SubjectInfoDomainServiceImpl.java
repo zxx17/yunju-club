@@ -1,5 +1,6 @@
 package com.zsyj.subject.domian.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.common.enums.DeletedFlagEnum;
@@ -10,23 +11,24 @@ import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import com.zsyj.subject.domian.entity.SubjectOptionBO;
 import com.zsyj.subject.domian.handler.subject.SubjectTypeHandler;
 import com.zsyj.subject.domian.handler.subject.SubjectTypeHandlerFactory;
+import com.zsyj.subject.domian.redis.RedisUtil;
 import com.zsyj.subject.domian.service.ISubjectInfoDomainService;
+import com.zsyj.subject.domian.service.SubjectLikedDomainService;
 import com.zsyj.subject.infra.basic.entity.SubjectInfo;
 import com.zsyj.subject.infra.basic.entity.SubjectInfoEs;
 import com.zsyj.subject.infra.basic.entity.SubjectLabel;
 import com.zsyj.subject.infra.basic.entity.SubjectMapping;
-import com.zsyj.subject.infra.basic.service.SubjectEsService;
-import com.zsyj.subject.infra.basic.service.SubjectInfoService;
-import com.zsyj.subject.infra.basic.service.SubjectLabelService;
-import com.zsyj.subject.infra.basic.service.SubjectMappingService;
+import com.zsyj.subject.infra.basic.service.*;
+import com.zsyj.subject.infra.rpc.AuthUserServiceRpc;
+import com.zsyj.subject.infra.rpc.entity.UserInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -55,6 +57,17 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
 
     @Resource
     private SubjectEsService subjectEsService;
+
+    @Resource
+    private RedisUtil redisUtil;
+
+    @Resource
+    private AuthUserServiceRpc authUserServiceRpc;
+
+    @Resource
+    private SubjectLikedDomainService subjectLikedDomainService;
+
+    private static final String RANK_KEY = "subject_rank";
 
     /**
      * 新增题目
@@ -95,7 +108,7 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         });
         subjectMappingService.batchInsert(subjectMappingList);
         // 同步到es
-        // TODO 补充createUser逻辑
+        // TODO 补充createUser逻辑 是否这边放昵称、头像等信息，扩展ES文档映射字段
         String loginId = LoginUtil.getLoginId();
         SubjectInfoEs subjectInfoEs = SubjectInfoEs.builder()
                 .subjectId(subjectInfo.getId())
@@ -107,6 +120,8 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
                 .subjectType(subjectInfo.getSubjectType())
                 .build();
         subjectEsService.insert(subjectInfoEs);
+        // 同步到redis出题贡献榜，贡献值+1
+        redisUtil.addScore(RANK_KEY, loginId, 1);
     }
 
 
@@ -162,9 +177,18 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         SubjectMapping subjectMapping = new SubjectMapping();
         subjectMapping.setSubjectId(subjectInfo.getId());
         subjectMapping.setIsDeleted(DeletedFlagEnum.UN_DELETE.getFlag());
+        // 组装标签信息
         assembleLabelName(bo, subjectMapping);
+        // 题目点赞数量和当前用户点赞状态
+        Boolean liked = subjectLikedDomainService.isLiked(bo.getId().toString(), LoginUtil.getLoginId());
+        Integer likedCount = subjectLikedDomainService.getLikedCount(bo.getId().toString());
+        bo.setLiked(liked);
+        bo.setLikedCount(likedCount);
+        // 组装快速刷题 上一题 下一题
+        assembleSubjectCursor(subjectInfoBO, bo);
         return bo;
     }
+
 
     @Override
     public PageResult<SubjectInfoEs> getSubjectPageBySearch(SubjectInfoBO subjectInfoBO) {
@@ -175,12 +199,60 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         return subjectEsService.querySubjectList(subjectInfoEs);
     }
 
+    @Override
+    public List<SubjectInfoBO> getContributeList() {
+        // 取贡献榜前5
+        Set<ZSetOperations.TypedTuple<String>> typedTuples = redisUtil.rankWithScore(RANK_KEY, 0, 5);
+        if (log.isInfoEnabled()) {
+            // value是用户ID
+            log.info("getContributeList.typedTuples:{}", JSON.toJSONString(typedTuples));
+        }
+        if (CollectionUtils.isEmpty(typedTuples)) {
+            return Collections.emptyList();
+        }
+        List<SubjectInfoBO> boList = new LinkedList<>();
+        typedTuples.forEach(rank -> {
+            SubjectInfoBO subjectInfoBO = new SubjectInfoBO();
+            subjectInfoBO.setSubjectCount(Objects.requireNonNull(rank.getScore()).intValue());
+            // 远程调用用户微服务获取用户信息 TODO 这里用先提前批量获取，然后放入缓存中 减少循环中的远程RPC调用
+            UserInfo userInfo = authUserServiceRpc.getUserInfo(rank.getValue());
+            subjectInfoBO.setCreateUser(userInfo.getNickName());
+            subjectInfoBO.setCreateUserAvatar(userInfo.getAvatar());
+            boList.add(subjectInfoBO);
+        });
+        return boList;
+    }
+
+    /**
+     * 组装标签名称
+     *
+     * @param info           题目信息
+     * @param subjectMapping mapping信息
+     */
     private void assembleLabelName(SubjectInfoBO info, SubjectMapping subjectMapping) {
         List<SubjectMapping> mappingList = subjectMappingService.queryLabelId(subjectMapping);
         List<Long> labelIds = mappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
         List<SubjectLabel> labelList = subjectLabelService.batchQueryById(labelIds);
         List<String> labelNames = labelList.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
         info.setLabelName(labelNames);
+    }
+
+    /**
+     * 组装快速刷题 上一题 下一题
+     * @param subjectInfoBO 原始bo 就是dto前端传来的，要拿到原始的分类和标签id 才能够查询
+     * @param bo 题目信息 题目答案、选项、解析等信息，但是分类和标签信息
+     */
+    private void assembleSubjectCursor(SubjectInfoBO subjectInfoBO, SubjectInfoBO bo) {
+        Long categoryId = subjectInfoBO.getCategoryId();
+        Long labelId = subjectInfoBO.getLabelId();
+        Long subjectId = subjectInfoBO.getId();
+        if (Objects.isNull(categoryId) || Objects.isNull(labelId)) {
+            return;
+        }
+        Long nextSubjectId = subjectInfoService.querySubjectIdCursor(subjectId, categoryId, labelId, 1);
+        bo.setNextSubjectId(nextSubjectId);
+        Long lastSubjectId = subjectInfoService.querySubjectIdCursor(subjectId, categoryId, labelId, 0);
+        bo.setLastSubjectId(lastSubjectId);
     }
 
 

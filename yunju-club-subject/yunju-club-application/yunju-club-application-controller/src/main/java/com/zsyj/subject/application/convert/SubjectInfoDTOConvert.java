@@ -6,6 +6,8 @@ import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author Xinxuan Zhuo
  * @version 2023/12/5
@@ -26,5 +28,6 @@ public interface SubjectInfoDTOConvert {
 
     SubjectInfoDTO convertBOToSubjectInfoDTO(SubjectInfoBO subjectInfoBO);
 
+    List<SubjectInfoDTO> convertBOListToSubjectInfoDTOList(List<SubjectInfoBO> subjectInfoBOList);
 
 }

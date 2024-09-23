@@ -4,6 +4,8 @@ import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.domian.entity.SubjectInfoBO;
 import com.zsyj.subject.infra.basic.entity.SubjectInfoEs;
 
+import java.util.List;
+
 /**
  * @author Xinxuan Zhuo
  * @version 2023/12/5
@@ -37,4 +39,10 @@ public interface ISubjectInfoDomainService {
      * 全文检索
      */
     PageResult<SubjectInfoEs> getSubjectPageBySearch(SubjectInfoBO subjectInfoBO);
+
+    /**
+     * 获取题目贡献榜
+     * @return SubjectInfoBOLIst
+     */
+    List<SubjectInfoBO> getContributeList();
 }

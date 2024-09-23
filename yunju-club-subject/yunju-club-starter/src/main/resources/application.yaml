@@ -50,10 +50,19 @@ spring:
         min-idle: 0
 logging:
   config: classpath:log4j2-spring.xml
-# mybatis-plus配置
-#mybatis-plus:
-#  configuration:
-#   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+xxl:
+  job:
+    admin:
+      addresses: http://127.0.0.1:8080/xxl-job-admin
+    accessToken: xxl_job_zxx17
+    executor:
+      appname: ${spring.application.name}
+      address:
+      ip: 127.0.0.1
+      port: 9999
+      logpath: ./log/xxl-job/jobhandler
+      logretentiondays: 30
 
 
 # 数据库密码解密密钥 应该放在nacos

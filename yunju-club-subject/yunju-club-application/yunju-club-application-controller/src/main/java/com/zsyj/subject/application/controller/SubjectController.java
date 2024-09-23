@@ -104,7 +104,7 @@ public class SubjectController {
      * 查询题目详情信息
      */
     @PostMapping("/querySubjectInfo")
-    public Result<Object> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
+    public Result<SubjectInfoDTO> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO) {
         try {
             if (log.isInfoEnabled()) {
                 log.info("SubjectController.querySubjectInfo.dto:{}", JSONObject.toJSONString(subjectInfoDTO));
@@ -121,7 +121,7 @@ public class SubjectController {
                     .convertBOToSubjectInfoDTO(boResult);
             return Result.ok(dto);
         } catch (Exception e) {
-            log.error("SubjectCategoryController.querySubjectInfo.error:{}", e);
+            log.error("SubjectCategoryController.querySubjectInfo.error:{} : {}", e, e.getMessage());
             return Result.fail();
         }
     }
@@ -147,6 +147,23 @@ public class SubjectController {
             return Result.fail();
         }
     }
+
+    /**
+     * 获取题目贡献榜
+     */
+    @PostMapping("/getContributeList")
+    public Result<List<SubjectInfoDTO>> getContributeList() {
+        try {
+            List<SubjectInfoBO> boList = subjectInfoDomainService.getContributeList();
+            List<SubjectInfoDTO> dtoList = SubjectInfoDTOConvert.INSTANCE.convertBOListToSubjectInfoDTOList(boList);
+            return Result.ok(dtoList);
+        } catch (Exception e) {
+            log.error("SubjectCategoryController.getContributeList.error:{}", e.getMessage(), e);
+            return Result.fail();
+        }
+    }
+
+    // TODO 题目纠错功能待开发
 
 
 }

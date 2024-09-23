@@ -50,4 +50,14 @@ public interface SubjectInfoService {
     int countByCondition(SubjectInfo subjectInfo, Long categoryId, Long labelId);
 
     List<SubjectInfo> queryPage(SubjectInfo subjectInfo, Long categoryId, Long labelId, Integer start, Integer pageSize);
+
+    /**
+     * 根据条件查询题目id游标 上一题下一题
+     * @param subjectId 题目id
+     * @param categoryId 分类id
+     * @param labelId 标签id
+     * @param cursor 游标
+     * @return 题目id
+     */
+    Long querySubjectIdCursor(Long subjectId, Long categoryId, Long labelId, int cursor);
 }
