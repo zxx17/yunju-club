@@ -168,6 +168,10 @@ public class AuthUserDomainServiceImpl implements AuthUserDomainService {
                 log.warn("doLogin.error:{}", "用户不存在或已被禁用");
                 return null;
             }
+            if(StringUtils.isBlank(authUsers.get(0).getPassword())){
+                log.warn("doLogin.error:{}", "用户未设置登陆密码");
+                return null;
+            }
             if (authUsers.get(0).getPassword().equals(SaSecureUtil.md5BySalt(bo.getPassword(), salt))){
                 StpUtil.login(authUsers.get(0).getUserName());
                 SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
