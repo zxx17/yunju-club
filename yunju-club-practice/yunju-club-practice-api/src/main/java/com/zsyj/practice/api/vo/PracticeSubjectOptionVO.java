@@ -8,12 +8,12 @@ import java.io.Serializable;
 public class PracticeSubjectOptionVO implements Serializable {
 
     /**
-     * 答案类型
+     * 选项类型
      */
     private Integer optionType;
 
     /**
-     * 答案内容
+     * 选项内容
      */
     private String optionContent;
 

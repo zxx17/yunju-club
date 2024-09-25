@@ -20,5 +20,18 @@
         order by subject_type
     </select>
 
+    <insert id="insertBatch">
+        INSERT INTO practice_set_detail(set_id, subject_id, subject_type, is_deleted, created_by, created_time)
+        values
+        <foreach collection="detailPOList" item="item" separator=",">
+            (#{item.setId,jdbcType=BIGINT},
+            #{item.subjectId,jdbcType=BIGINT},
+            #{item.subjectType,jdbcType=INTEGER},
+            #{item.isDeleted,jdbcType=INTEGER},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createdTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
 </mapper>
 

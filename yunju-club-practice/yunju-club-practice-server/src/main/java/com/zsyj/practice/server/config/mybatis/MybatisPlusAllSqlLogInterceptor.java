@@ -53,7 +53,7 @@ public class MybatisPlusAllSqlLogInterceptor implements InnerInterceptor {
             Configuration configuration = ms.getConfiguration();
             // 获取到最终的sql语句
             String sql = getSql(configuration, boundSql, sqlId);
-            log.info("完整sql语句:{}", sql);
+            log.info("完整sql语句:  {}", sql);
         } catch (Exception e) {
             log.error("异常:{}<<<<<\n", e.getLocalizedMessage(), e);
         }
