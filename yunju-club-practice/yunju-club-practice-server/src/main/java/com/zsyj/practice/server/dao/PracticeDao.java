@@ -18,7 +18,7 @@ public interface PracticeDao {
     int insert(PracticePO practicePO);
 
     /**
-     * 更新练习详情
+     * 更新练习详情记录
      */
     int update(PracticePO practicePO);
 

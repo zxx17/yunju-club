@@ -91,10 +91,12 @@ public class AiModelServiceImpl implements AiModelService {
         if (CollectionUtils.isEmpty(authUserOperLogDOList)) {
             return question;
         }
-        // 只取最近10条
-        authUserOperLogDOList = authUserOperLogDOList.subList(0, Math.min(10, authUserOperLogDOList.size()));
+        // 只取最近100条
+        authUserOperLogDOList = authUserOperLogDOList.subList(0, Math.min(100, authUserOperLogDOList.size()));
         StringBuilder sb = new StringBuilder();
-        sb.append("以下是").append(loginId).append("在物联网技术社区的全部操作记录，请你阅读完之后，回答他的问题，你只要给出结果就行，不管提供的是什么，注意不要md格式。他的问题是：").append(question).append("\n");
+        sb.append("以下是").append(loginId).append("在物联网技术社区的全部操作记录，请你阅读完之后，回答他的问题，" +
+                "你只要给出结果就行，不管提供的是什么，注意不要md格式，如果历史数据为空或者这些历史数据对当前问题而言没有需要，你可以直接忽略。" +
+                "他的问题是：").append(question).append("\n");
         authUserOperLogDOList.forEach(authUserOperLogDO -> {
             sb.append("操作编号：");
             sb.append(authUserOperLogDO.getId());
