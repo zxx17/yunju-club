@@ -40,10 +40,16 @@
             </exclusions>
         </dependency>
 
-        <!--   应用层依赖     -->
+        <!--   应用层控制器依赖     -->
         <dependency>
             <groupId>com.zsyunju</groupId>
             <artifactId>yunju-club-application-controller</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!--    应用层mq依赖    -->
+        <dependency>
+            <groupId>com.zsyunju</groupId>
+            <artifactId>yunju-club-application-mq</artifactId>
             <version>1.0.0</version>
         </dependency>
 

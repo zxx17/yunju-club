@@ -27,7 +27,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 题目点赞表 领域service实现了
+ * 题目点赞表 领域service实现类
+ * XXL-JOB和MQ同步用户点赞内容二选一即可，这里采用了mq方式
+ * TODO 后续做成可配置的形式
  */
 @Service
 @Slf4j

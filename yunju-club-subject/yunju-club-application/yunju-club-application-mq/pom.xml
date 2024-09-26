@@ -16,4 +16,13 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <!--   接收domain层里面的mq     -->
+        <dependency>
+            <groupId>com.zsyunju</groupId>
+            <artifactId>yunju-club-domain</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
 </project>

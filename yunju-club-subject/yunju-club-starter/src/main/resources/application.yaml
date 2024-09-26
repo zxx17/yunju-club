@@ -51,6 +51,12 @@ spring:
 logging:
   config: classpath:log4j2-spring.xml
 
+# TODO xxl和mq 以及public-key，在最后测试完毕后统一使用nacos进行管理
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: yunju-club-group
+
 xxl:
   job:
     admin:

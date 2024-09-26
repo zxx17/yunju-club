@@ -108,6 +108,7 @@ public class SubjectInfoDomainServiceImpl implements ISubjectInfoDomainService {
         });
         subjectMappingService.batchInsert(subjectMappingList);
         // 同步到es
+        // TODO 优化： 异步提交到ES和Redis
         // TODO 补充createUser逻辑 是否这边放昵称、头像等信息，扩展ES文档映射字段
         String loginId = LoginUtil.getLoginId();
         SubjectInfoEs subjectInfoEs = SubjectInfoEs.builder()
