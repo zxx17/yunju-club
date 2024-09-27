@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * xxl-job config
+ * TODO 使用mq的方式进行同步 这边就注释掉了
+ * 使用xxl-job读缓存同步到数据库要考虑redis可靠性的问题
  */
-@Configuration
+//@Configuration
 public class XxlJobConfig {
     private final Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
 
