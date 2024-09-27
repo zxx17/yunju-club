@@ -1,4 +1,4 @@
-package com.zsyj.practice.server.config.mybatis;
+package com.zsyj.circle.server.config.mybatis;
 
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
@@ -24,7 +24,7 @@ import java.util.Properties;
                 Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class})})
 public class SqlStatementInterceptor  implements Interceptor {
 
-    public static final Logger log = LoggerFactory.getLogger("practice-sql");
+    public static final Logger log = LoggerFactory.getLogger("circle-sql");
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {

@@ -1,4 +1,4 @@
-package com.zsyj.practice.server.config.mybatis;
+package com.zsyj.circle.server.config.mybatis;
 
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import org.apache.ibatis.executor.Executor;
@@ -30,7 +30,7 @@ import java.util.regex.Matcher;
  **/
 public class MybatisPlusAllSqlLogInterceptor implements InnerInterceptor {
 
-    public static final Logger log = LoggerFactory.getLogger("practice-sql");
+    public static final Logger log = LoggerFactory.getLogger("circle-sql");
 
     @Override
     public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
