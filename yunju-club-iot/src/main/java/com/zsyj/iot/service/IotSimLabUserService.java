@@ -1,6 +1,7 @@
 package com.zsyj.iot.service;
 
 
+import com.zsyj.iot.controller.request.SimLabRecordRequest;
 import com.zsyj.iot.entity.IotSimLabUser;
 
 
@@ -45,4 +46,6 @@ public interface IotSimLabUserService {
     boolean deleteById(Long id);
 
     Long queryFinishedCount();
+
+    void record(SimLabRecordRequest request);
 }

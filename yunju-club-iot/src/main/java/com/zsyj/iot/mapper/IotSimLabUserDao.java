@@ -71,5 +71,6 @@ public interface IotSimLabUserDao {
      */
     int deleteById(Long id);
 
+    void insertOrUpdate(IotSimLabUser iotSimLabUser);
 }
 

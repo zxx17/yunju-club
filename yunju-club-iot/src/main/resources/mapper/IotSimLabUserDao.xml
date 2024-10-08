@@ -174,5 +174,27 @@
         where id = #{id}
     </delete>
 
+    <update id="insertOrUpdate" parameterType="com.zsyj.iot.entity.IotSimLabUser">
+        <!-- 尝试更新 -->
+        <if test="userId != null">
+            UPDATE iot_sim_lab_user
+            SET
+            user_id = #{userId},
+            sim_lab_id = #{simLabId},
+            is_finished = #{isFinished},
+            update_by = #{updateBy},
+            update_time = #{updateTime}
+            WHERE user_id = #{userId} AND is_deleted = 0
+        </if>
+        <!-- 如果没有更新到任何记录，则插入新记录 -->
+        <if test="_databaseId == null or _databaseId == 'default'">
+            <if test="id == null or id == 0">
+                INSERT INTO iot_sim_lab_user (user_id, sim_lab_id, is_finished, created_by, created_time,is_deleted)
+                VALUES (#{userId}, #{simLabId}, #{isFinished}, #{createdBy}, #{createdTime}, 0)
+            </if>
+        </if>
+    </update>
+
+
 </mapper>
 

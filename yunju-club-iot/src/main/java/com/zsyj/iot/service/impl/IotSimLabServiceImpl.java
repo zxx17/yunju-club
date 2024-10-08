@@ -77,4 +77,9 @@ public class IotSimLabServiceImpl implements IotSimLabService {
     public Long queryProjectCount() {
         return this.iotSimLabDao.count(new IotSimLab());
     }
+
+    @Override
+    public IotSimLab queryByProjectUrl(String projectUrl) {
+        return this.iotSimLabDao.queryByProjectUrl(projectUrl);
+    }
 }

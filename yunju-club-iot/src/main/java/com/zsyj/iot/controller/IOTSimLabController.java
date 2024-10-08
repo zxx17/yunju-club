@@ -1,14 +1,14 @@
 package com.zsyj.iot.controller;
 
+import com.zsyj.iot.controller.request.SimLabRecordRequest;
 import com.zsyj.iot.entity.IotSimLab;
+import com.zsyj.iot.entity.IotSimLabUser;
 import com.zsyj.iot.entity.Result;
 import com.zsyj.iot.entity.dto.SimLabMenuDTO;
 import com.zsyj.iot.service.IotSimLabService;
 import com.zsyj.iot.service.IotSimLabUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -70,6 +70,16 @@ public class IOTSimLabController {
     /**
      * 用户实验记录（点击触发，新增，完成是更新） 异步的保存用户操作数据
      */
+    @PostMapping("/record")
+    public Result<Boolean> record(@RequestBody SimLabRecordRequest request) {
+        try {
+            iotSimLabUserService.record(request);
+            return Result.ok(true);
+        } catch (Exception e) {
+            log.error("保存用户实验记录失败", e);
+            return Result.fail("保存失败");
+        }
+    }
 
 
     /**

@@ -1,12 +1,18 @@
 package com.zsyj.iot.service.impl;
 
+import com.zsyj.iot.controller.request.SimLabRecordRequest;
+import com.zsyj.iot.entity.IotSimLab;
 import com.zsyj.iot.entity.IotSimLabUser;
 import com.zsyj.iot.mapper.IotSimLabUserDao;
+import com.zsyj.iot.service.IotSimLabService;
 import com.zsyj.iot.service.IotSimLabUserService;
+import com.zsyj.iot.util.LoginUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 虚拟仿真实验用户记录表(IotSimLabUser)表服务实现类
@@ -18,6 +24,9 @@ import javax.annotation.Resource;
 public class IotSimLabUserServiceImpl implements IotSimLabUserService {
     @Resource
     private IotSimLabUserDao iotSimLabUserDao;
+
+    @Resource
+    private IotSimLabService iotSimLabService;
 
     /**
      * 通过ID查询单条数据
@@ -72,4 +81,38 @@ public class IotSimLabUserServiceImpl implements IotSimLabUserService {
         iotSimLabUser.setIsFinished(1);
         return this.iotSimLabUserDao.count(iotSimLabUser);
     }
+
+    /**
+     * TODO bug解决和优化（新增或更新不生效 后续重新设计此模块 线程安全问题。。。）
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void record(SimLabRecordRequest request) {
+        String userId = LoginUtil.getLoginId();
+        // 获取实验项目Id
+        IotSimLab iotSimLab = iotSimLabService.queryByProjectUrl(request.getProjectUrl());
+        if (iotSimLab == null){
+            return;
+        }
+        // 插入用户实验表记录
+        IotSimLabUser iotSimLabUser = new IotSimLabUser();
+        iotSimLabUser.setUserId(userId);
+        iotSimLabUser.setIsFinished(request.getIsFinished());
+        iotSimLabUser.setSimLabId(iotSimLab.getId());
+        iotSimLabUser.setCreatedBy(userId);
+        iotSimLabUser.setCreatedTime(new Date());
+        iotSimLabUser.setUpdateBy(userId);
+        iotSimLabUser.setUpdateTime(new Date());
+        iotSimLabUser.setIsDeleted(0);
+//        iotSimLabUserDao.insertOrUpdate(iotSimLabUser);
+        iotSimLabUserDao.insert(iotSimLabUser);
+        // 如果完成，累加实验表完成次数
+        if (request.getIsFinished() == 1) {
+            iotSimLab.setFinishedCount(iotSimLab.getFinishedCount() == null ? 1: iotSimLab.getFinishedCount() + 1);
+            iotSimLabService.update(iotSimLab);
+        }
+
+    }
+
+
 }

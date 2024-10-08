@@ -50,4 +50,6 @@ public interface IotSimLabService {
     List<IotSimLab> queryAllSimLabData();
 
     Long queryProjectCount();
+
+    IotSimLab queryByProjectUrl(String projectUrl);
 }

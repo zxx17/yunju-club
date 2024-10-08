@@ -237,5 +237,12 @@
         where id = #{id}
     </delete>
 
+    <select id="queryByProjectUrl" resultMap="IotSimLabMap">
+        select `id`, finished_count
+        from iot_sim_lab
+        where is_deleted = 0
+          and project_url = #{projectUrl}
+    </select>
+
 </mapper>
 

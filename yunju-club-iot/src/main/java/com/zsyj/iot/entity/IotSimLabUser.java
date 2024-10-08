@@ -18,7 +18,7 @@ public class IotSimLabUser implements Serializable {
     /**
      * 完成用户id
      */
-    private Long userId;
+    private String userId;
     /**
      * 完成的仿真实验id
      */
@@ -57,11 +57,11 @@ public class IotSimLabUser implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

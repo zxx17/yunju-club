@@ -74,5 +74,6 @@ public interface IotSimLabDao {
 
     List<IotSimLab> queryAllByLimit();
 
+    IotSimLab queryByProjectUrl(String projectUrl);
 }
 
