@@ -22,11 +22,17 @@ public class IotSimLabUser extends BaseEntity
 
     /** 完成用户id */
     @Excel(name = "完成用户id")
-    private Long userId;
+    private String userId;
+
+    @Excel(name = "用户昵称")
+    private String nickName;
 
     /** 完成的仿真实验id */
     @Excel(name = "完成的仿真实验id")
     private Long simLabId;
+
+    @Excel(name = "完成的仿真实验名称")
+    private String simLabName;
 
     /** 是否完成 0未完成 1已完成 */
     @Excel(name = "是否完成 0未完成 1已完成")
@@ -42,7 +48,7 @@ public class IotSimLabUser extends BaseEntity
     private Date createdTime;
 
     /** 是否被删除 0为删除 1已删除 */
-    @Excel(name = "是否被删除 0为删除 1已删除")
+    @Excel(name = "是否被删除 0未删除 1已删除")
     private Long isDeleted;
 
     public void setId(Long id) 
@@ -54,12 +60,12 @@ public class IotSimLabUser extends BaseEntity
     {
         return id;
     }
-    public void setUserId(Long userId) 
+    public void setUserId(String userId)
     {
         this.userId = userId;
     }
 
-    public Long getUserId() 
+    public String getUserId()
     {
         return userId;
     }
@@ -109,18 +115,35 @@ public class IotSimLabUser extends BaseEntity
         return isDeleted;
     }
 
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getSimLabName() {
+        return simLabName;
+    }
+
+    public void setSimLabName(String simLabName) {
+        this.simLabName = simLabName;
+    }
+
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("simLabId", getSimLabId())
-            .append("isFinished", getIsFinished())
-            .append("createdBy", getCreatedBy())
-            .append("createdTime", getCreatedTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("isDeleted", getIsDeleted())
-            .toString();
+        return "IotSimLabUser{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", simLabId=" + simLabId +
+                ", simLabName='" + simLabName + '\'' +
+                ", isFinished=" + isFinished +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdTime=" + createdTime +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }

@@ -7,7 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="IotSimLabUser" id="IotSimLabUserResult">
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
+        <result property="nickName"    column="nick_name"    />
         <result property="simLabId"    column="sim_lab_id"    />
+        <result property="simLabName"    column="project_name"    />
         <result property="isFinished"    column="is_finished"    />
         <result property="createdBy"    column="created_by"    />
         <result property="createdTime"    column="created_time"    />
@@ -17,7 +19,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectIotSimLabUserVo">
-        select id, user_id, sim_lab_id, is_finished, created_by, created_time, update_by, update_time, is_deleted from iot_sim_lab_user
+        select a.id,
+               a.user_id,
+               b.nick_name,
+               a.sim_lab_id,
+               c.project_name,
+               a.is_finished,
+               a.created_by,
+               a.created_time,
+               a.update_by,
+               a.update_time,
+               a.is_deleted
+        from iot_sim_lab_user as a
+                 left join auth_user as b on a.user_id = b.user_name
+                 left join iot_sim_lab as c on a.sim_lab_id = c.id
     </sql>
 
     <select id="selectIotSimLabUserList" parameterType="IotSimLabUser" resultMap="IotSimLabUserResult">
