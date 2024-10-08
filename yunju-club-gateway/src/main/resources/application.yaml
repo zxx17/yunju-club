@@ -29,13 +29,13 @@ spring:
           filters:
             - StripPrefix=1
         - id: circle
-          uri: lb://yunju-club-circle
+          uri: lb://yunju-club-circle-dev
           predicates:
             - Path=/circle/**
           filters:
             - StripPrefix=1
         - id: interview
-          uri: lb://yunju-club-interview
+          uri: lb://yunju-club-interview-dev
           predicates:
             - Path=/interview/**
           filters:

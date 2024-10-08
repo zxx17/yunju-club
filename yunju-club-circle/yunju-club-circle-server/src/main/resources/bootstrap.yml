@@ -1,16 +1,16 @@
 spring:
   application:
-    name: jc-club-circle-dev
+    name: yunju-club-circle-dev
   profiles:
     active: dev
   cloud:
     nacos:
       config:
-        server-addr: 192.168.150.101:8848
+        server-addr: 192.168.150.101:9675
         prefix: ${spring.application.name}
         group: DEFAULT_GROUP
         namespace:
         file-extension: yaml
       discovery:
         enabled: true
-        server-addr: 192.168.150.101:8848
+        server-addr: 192.168.150.101:9675
