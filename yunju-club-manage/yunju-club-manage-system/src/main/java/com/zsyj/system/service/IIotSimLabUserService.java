@@ -1,6 +1,10 @@
 package com.zsyj.system.service;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.zsyj.system.domain.IotSimLabUser;
 
 /**
@@ -58,4 +62,8 @@ public interface IIotSimLabUserService
      * @return 结果
      */
     public int deleteIotSimLabUserById(Long id);
+
+    List<HashMap<String, BigDecimal>> userSimLabWeekData();
+
+    Map<String, List<?>> simLabFinishData();
 }

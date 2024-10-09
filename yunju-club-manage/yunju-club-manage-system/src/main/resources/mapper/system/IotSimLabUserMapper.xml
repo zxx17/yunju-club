@@ -101,4 +101,83 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="userSimLabWeekData" parameterType="map" resultType="java.util.Map">
+        SELECT
+            IFNULL(SUM(CASE WHEN DATE(created_time) = #{startOfWeek} THEN 1 ELSE 0 END), 0) AS monday,
+            IFNULL(SUM(CASE WHEN DATE(created_time) = DATE_ADD(#{startOfWeek}, INTERVAL 1 DAY) THEN 1 ELSE 0 END), 0) AS tuesday,
+            IFNULL(SUM(CASE WHEN DATE(created_time) = DATE_ADD(#{startOfWeek}, INTERVAL 2 DAY) THEN 1 ELSE 0 END), 0) AS wednesday,
+            IFNULL(SUM(CASE WHEN DATE(created_time) = DATE_ADD(#{startOfWeek}, INTERVAL 3 DAY) THEN 1 ELSE 0 END), 0) AS thursday,
+            IFNULL(SUM(CASE WHEN DATE(created_time) = DATE_ADD(#{startOfWeek}, INTERVAL 4 DAY) THEN 1 ELSE 0 END), 0) AS friday,
+            IFNULL(SUM(CASE WHEN DATE(created_time) = DATE_ADD(#{startOfWeek}, INTERVAL 5 DAY) THEN 1 ELSE 0 END), 0) AS saturday,
+            IFNULL(SUM(CASE WHEN DATE(created_time) = DATE_ADD(#{startOfWeek}, INTERVAL 6 DAY) THEN 1 ELSE 0 END), 0) AS sunday
+        FROM
+            iot_sim_lab_user
+        WHERE
+            is_finished = 1
+          AND created_time BETWEEN #{startOfWeek} AND #{endOfWeek}
+        UNION ALL
+        SELECT
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = #{startOfWeek}), 0) AS monday,
+            0 AS tuesday,
+            0 AS wednesday,
+            0 AS thursday,
+            0 AS friday,
+            0 AS saturday,
+            0 AS sunday
+        UNION ALL
+        SELECT
+            0 AS monday,
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = DATE_ADD(#{startOfWeek}, INTERVAL 1 DAY)), 0) AS tuesday,
+            0 AS wednesday,
+            0 AS thursday,
+            0 AS friday,
+            0 AS saturday,
+            0 AS sunday
+        UNION ALL
+        SELECT
+            0 AS monday,
+            0 AS tuesday,
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = DATE_ADD(#{startOfWeek}, INTERVAL 2 DAY)), 0) AS wednesday,
+            0 AS thursday,
+            0 AS friday,
+            0 AS saturday,
+            0 AS sunday
+        UNION ALL
+        SELECT
+            0 AS monday,
+            0 AS tuesday,
+            0 AS wednesday,
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = DATE_ADD(#{startOfWeek}, INTERVAL 3 DAY)), 0) AS thursday,
+            0 AS friday,
+            0 AS saturday,
+            0 AS sunday
+        UNION ALL
+        SELECT
+            0 AS monday,
+            0 AS tuesday,
+            0 AS wednesday,
+            0 AS thursday,
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = DATE_ADD(#{startOfWeek}, INTERVAL 4 DAY)), 0) AS friday,
+            0 AS saturday,
+            0 AS sunday
+        UNION ALL
+        SELECT
+            0 AS monday,
+            0 AS tuesday,
+            0 AS wednesday,
+            0 AS thursday,
+            0 AS friday,
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = DATE_ADD(#{startOfWeek}, INTERVAL 5 DAY)), 0) AS saturday,
+            0 AS sunday
+        UNION ALL
+        SELECT
+            0 AS monday,
+            0 AS tuesday,
+            0 AS wednesday,
+            0 AS thursday,
+            0 AS friday,
+            0 AS saturday,
+            IFNULL((SELECT 1 FROM iot_sim_lab_user WHERE is_finished = 1 AND created_time = DATE_ADD(#{startOfWeek}, INTERVAL 6 DAY)), 0) AS sunday
+    </select>
 </mapper>

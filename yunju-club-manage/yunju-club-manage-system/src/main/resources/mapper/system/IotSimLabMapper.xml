@@ -111,4 +111,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="simLabFinishData" resultMap="IotSimLabResult">
+        SELECT project_name, finished_count FROM iot_sim_lab ORDER BY finished_count DESC LIMIT 5
+    </select>
 </mapper>

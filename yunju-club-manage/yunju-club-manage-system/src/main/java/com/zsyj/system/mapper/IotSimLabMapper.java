@@ -58,4 +58,6 @@ public interface IotSimLabMapper
      * @return 结果
      */
     public int deleteIotSimLabByIds(Long[] ids);
+
+    List<IotSimLab> simLabFinishData();
 }

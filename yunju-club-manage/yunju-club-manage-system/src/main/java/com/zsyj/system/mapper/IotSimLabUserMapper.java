@@ -1,7 +1,11 @@
 package com.zsyj.system.mapper;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import com.zsyj.system.domain.IotSimLabUser;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 虚拟仿真实验用户记录Mapper接口
@@ -58,4 +62,6 @@ public interface IotSimLabUserMapper
      * @return 结果
      */
     public int deleteIotSimLabUserByIds(Long[] ids);
+
+    List<HashMap<String, BigDecimal>> userSimLabWeekData(@Param("startOfWeek") LocalDate startOfWeek, @Param("endOfWeek") LocalDate endOfWeek);
 }
