@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsyj.iot.mapper.IotCloudLabDao">
+
+
+    <resultMap id="IotCloudLabResultMap" type="com.zsyj.iot.entity.IotCloudLab">
+        <id column="id" property="id" />
+        <result column="project_name" property="projectName" />
+        <result column="finish_status" property="finishStatus" />
+        <result column="received_data" property="receivedData" />
+        <result column="accessKey" property="accessKey" />
+        <result column="accessSecret" property="accessSecret" />
+        <result column="consumerGroupId" property="consumerGroupId" />
+        <result column="iotInstanceId" property="iotInstanceId" />
+        <result column="clientId" property="clientId" />
+        <result column="connectionCount" property="connectionCount" />
+        <result column="host" property="host" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_time" property="createdTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.zsyj.iot.entity.IotCloudLab">
+        INSERT INTO iot_cloud_lab (project_name,
+                                   finish_status,
+                                   received_data,
+                                   accessKey,
+                                   accessSecret,
+                                   consumerGroupId,
+                                   iotInstanceId,
+                                   clientId,
+                                   connectionCount,
+                                   host,
+                                   created_by,
+                                   created_time,
+                                   update_by,
+                                   update_time,
+                                   is_deleted)
+        VALUES (#{projectName},
+                #{finishStatus},
+                #{receivedData},
+                #{accessKey},
+                #{accessSecret},
+                #{consumerGroupId},
+                #{iotInstanceId},
+                #{clientId},
+                #{connectionCount},
+                #{host},
+                #{createdBy},
+                #{createdTime},
+                #{updateBy},
+                #{updateTime},
+                0)
+    </insert>
+
+</mapper>
+
