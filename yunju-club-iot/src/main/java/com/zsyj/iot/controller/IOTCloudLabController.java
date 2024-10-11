@@ -39,6 +39,7 @@ public class IOTCloudLabController {
 
     /**
      * 用户向物联网设备发送数据，完成此步骤则表示实验完成
+     * TODO <a href="https://www.alibabacloud.com/help/zh/iot/getting-started/send-commands-from-iot-platform-to-devices-1"/>
      */
     @PostMapping("/send")
     public Result<Boolean> sendMessage(@RequestBody CloudLabCurrentSendMessageRequest request) {

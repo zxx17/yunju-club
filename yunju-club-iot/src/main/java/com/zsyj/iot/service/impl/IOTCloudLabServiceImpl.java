@@ -67,13 +67,15 @@ public class IOTCloudLabServiceImpl implements IOTCloudLabService {
     @SneakyThrows
     public Result<CloudLabCurrentDTO> connectionAndReceive(CloudLabCurrentStartRequest request) {
         String loginId = LoginUtil.getLoginId();
+        // 如果缓存里面存在，则直接返回，过期时间为1分钟
         String value = redisUtil.get(redisUtil.buildKey("iot:lab:current:", loginId));
-        if (value != null){
+        if (value != null) {
             CloudLabCurrentDTO dto = new CloudLabCurrentDTO();
             dto.setConnectionStatus(true);
             dto.setReceivedData(value);
             return Result.ok(dto);
         }
+        // 获取参数 建立连接
         String accessKey = request.getAccessKey();
         String accessSecret = request.getAccessSecret();
         String consumerGroupId = request.getConsumerGroupId();
@@ -125,7 +127,7 @@ public class IOTCloudLabServiceImpl implements IOTCloudLabService {
         // 创建Receiver连接。
         MessageConsumer consumer = session.createConsumer(queue);
         // 消费数据
-        // TODO 实际的物联网数据对接应该是持续异步消费（参考官方的demo，编写MessageListener），这里作为实验，先这样
+        // TODO 实际的物联网数据对接应该是持续异步消费（参考官方的demo，编写MessageListener），这里作为实验，循环取5次值
         Double current = null;
         int i = 5;
         while (i != 0) {
@@ -141,18 +143,18 @@ public class IOTCloudLabServiceImpl implements IOTCloudLabService {
         }
 
         // 没有收到数据直接返回失败
-        if (current == null){
+        if (current == null) {
             return Result.fail();
         }
 
         // 持久化数据到redis
-        redisUtil.setNx(redisUtil.buildKey("iot:lab:current:", loginId), String.valueOf(current),60L, TimeUnit.SECONDS);
+        redisUtil.setNx(redisUtil.buildKey("iot:lab:current:", loginId), String.valueOf(current), 60L, TimeUnit.SECONDS);
         // 构造返回值
         CloudLabCurrentDTO dto = new CloudLabCurrentDTO();
         dto.setReceivedData(current.toString());
         dto.setConnectionStatus(true);
         // 如果数据正确，则更新一份到mysql数据库中
-        if (current >= 85){
+        if (current >= 85) {
             IotCloudLab iotCloudLab = new IotCloudLab();
             iotCloudLab.setProjectName(request.getProjectName());
             iotCloudLab.setFinishStatus(1);
@@ -168,12 +170,22 @@ public class IOTCloudLabServiceImpl implements IOTCloudLabService {
             iotCloudLab.setCreatedTime(new Date());
             iotCloudLabDao.insert(iotCloudLab);
         }
+        // 关闭连接
+        connections.forEach(c -> {
+                    try {
+                        c.close();
+                    } catch (JMSException e) {
+                        log.error("failed to close connection", e);
+                        throw new RuntimeException(e);
+                    }
+                }
+        );
         return Result.ok(dto);
     }
 
     @Override
     public Result<Boolean> sendMessage(CloudLabCurrentSendMessageRequest request) {
-        return null;
+        return Result.ok(true);
     }
 
 
