@@ -15,6 +15,6 @@ public class PracticeRankPO implements Serializable {
     /**
      * 创建人
      */
-    private String createBy;
+    private String createdBy;
 
 }

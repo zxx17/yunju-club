@@ -403,7 +403,7 @@ public class PracticeDetailServiceImpl implements PracticeDetailService {
         poList.forEach(e -> {
             RankVO rankVO = new RankVO();
             rankVO.setCount(e.getCount());
-            UserInfo userInfo = authUserServiceRpc.getUserInfo(e.getCreateBy());
+            UserInfo userInfo = authUserServiceRpc.getUserInfo(e.getCreatedBy());
             rankVO.setName(userInfo.getNickName());
             rankVO.setAvatar(userInfo.getAvatar());
             list.add(rankVO);
