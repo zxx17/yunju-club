@@ -77,6 +77,12 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
         </dependency>
+        <!--   自定义用户日志收集starter     -->
+        <dependency>
+            <groupId>com.zsyj</groupId>
+            <artifactId>yunju-club-data-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
 
     </dependencies>
 

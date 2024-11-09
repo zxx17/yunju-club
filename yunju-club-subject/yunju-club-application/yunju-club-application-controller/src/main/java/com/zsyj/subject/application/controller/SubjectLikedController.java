@@ -2,11 +2,11 @@ package com.zsyj.subject.application.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
+import com.zsyj.data.context.LoginUtil;
 import com.zsyj.subject.application.convert.SubjectLikedDTOConverter;
 import com.zsyj.subject.application.dto.SubjectLikedDTO;
 import com.zsyj.subject.common.entity.PageResult;
 import com.zsyj.subject.common.entity.Result;
-import com.zsyj.subject.common.util.LoginUtil;
 import com.zsyj.subject.domian.entity.SubjectLikedBO;
 import com.zsyj.subject.domian.service.SubjectLikedDomainService;
 import lombok.extern.slf4j.Slf4j;

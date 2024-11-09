@@ -1,6 +1,4 @@
-package com.zsyj.subject.common.util;
-
-import com.zsyj.subject.common.context.LoginContextHolder;
+package com.zsyj.data.context;
 
 /**
  * .
