@@ -75,6 +75,12 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+        <!--引入subject-的api模块，远程调用其服务-->
+        <dependency>
+            <groupId>com.zsyunju</groupId>
+            <artifactId>yunju-club-subject-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
     </dependencies>
 
