@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsyj.system.mapper.SubjectCategoryMapper">
+    
+    <resultMap type="SubjectCategory" id="SubjectCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="categoryName"    column="category_name"    />
+        <result property="categoryType"    column="category_type"    />
+        <result property="imageUrl"    column="image_url"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <resultMap id="SubjectCategorySubjectLabelResult" type="SubjectCategory" extends="SubjectCategoryResult">
+        <collection property="subjectLabelList" ofType="SubjectLabel" column="id" select="selectSubjectLabelList" />
+    </resultMap>
+
+    <resultMap type="SubjectLabel" id="SubjectLabelResult">
+        <result property="id"    column="id"    />
+        <result property="labelName"    column="label_name"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="sortNum"    column="sort_num"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectSubjectCategoryVo">
+        select id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time, is_deleted from subject_category
+    </sql>
+
+    <select id="selectSubjectCategoryList" parameterType="SubjectCategory" resultMap="SubjectCategoryResult">
+        <include refid="selectSubjectCategoryVo"/>
+        <where>  
+            <if test="categoryName != null  and categoryName != ''"> and category_name like concat('%', #{categoryName}, '%')</if>
+            <if test="categoryType != null "> and category_type = #{categoryType}</if>
+            <if test="imageUrl != null  and imageUrl != ''"> and image_url = #{imageUrl}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectSubjectCategoryById" parameterType="Long" resultMap="SubjectCategorySubjectLabelResult">
+        select id, category_name, category_type, image_url, parent_id, create_by, create_time, update_by, update_time, is_deleted
+        from subject_category
+        where id = #{id}
+    </select>
+
+    <select id="selectSubjectLabelList" resultMap="SubjectLabelResult">
+        select id, label_name, category_id, sort_num, create_by, create_time, update_by, update_time, is_deleted
+        from subject_label
+        where category_id = #{category_id}
+    </select>
+
+    <insert id="insertSubjectCategory" parameterType="SubjectCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into subject_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryName != null">category_name,</if>
+            <if test="categoryType != null">category_type,</if>
+            <if test="imageUrl != null">image_url,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryName != null">#{categoryName},</if>
+            <if test="categoryType != null">#{categoryType},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSubjectCategory" parameterType="SubjectCategory">
+        update subject_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryName != null">category_name = #{categoryName},</if>
+            <if test="categoryType != null">category_type = #{categoryType},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSubjectCategoryById" parameterType="Long">
+        delete from subject_category where id = #{id}
+    </delete>
+
+    <delete id="deleteSubjectCategoryByIds" parameterType="String">
+        delete from subject_category where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteSubjectLabelByCategoryIds" parameterType="String">
+        delete from subject_label where category_id in 
+        <foreach item="categoryId" collection="array" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSubjectLabelByCategoryId" parameterType="Long">
+        delete from subject_label where category_id = #{categoryId}
+    </delete>
+
+    <insert id="batchSubjectLabel">
+        insert into subject_label( id, label_name, category_id, sort_num, create_by, create_time, update_by, update_time, is_deleted) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.labelName}, #{item.categoryId}, #{item.sortNum}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}, #{item.isDeleted})
+        </foreach>
+    </insert>
+</mapper>

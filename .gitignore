@@ -3,6 +3,10 @@
 
 # Log file
 *.log
+*.log.gz
+
+# uploadPath
+yunju/uploadPath
 
 # BlueJ files
 *.ctxt

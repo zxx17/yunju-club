@@ -1,23 +1,26 @@
 package com.zsyj.system.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
 import com.zsyj.common.core.domain.entity.SysUser;
+import com.zsyj.common.core.redis.RedisCache;
 import com.zsyj.common.utils.DateUtils;
-import com.zsyj.common.utils.SecurityUtils;
 import com.zsyj.common.utils.StringUtils;
-import com.zsyj.system.domain.SysUserPost;
-import com.zsyj.system.domain.SysUserRole;
-import com.zsyj.system.mapper.SysUserMapper;
+import com.zsyj.system.domain.*;
 import com.zsyj.system.mapper.SysUserPostMapper;
 import com.zsyj.system.mapper.SysUserRoleMapper;
-import com.zsyj.system.service.ISysUserService;
+import com.zsyj.system.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zsyj.system.mapper.AuthUserMapper;
-import com.zsyj.system.domain.AuthUser;
-import com.zsyj.system.service.IAuthUserService;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * 用户信息Service业务层处理
@@ -31,13 +34,25 @@ public class AuthUserServiceImpl implements IAuthUserService {
     private AuthUserMapper authUserMapper;
 
     @Autowired
-    private ISysUserService userService;
-
-    @Autowired
     private SysUserRoleMapper userRoleMapper;
 
     @Autowired
     private SysUserPostMapper userPostMapper;
+
+    @Resource
+    private AuthRoleService authRoleService;
+
+    @Resource
+    private AuthUserRoleService authUserRoleService;
+
+    @Resource
+    private AuthPermissionService authPermissionService;
+
+    @Resource
+    private AuthRolePermissionService authRolePermissionService;
+
+    @Resource
+    private RedisCache redisCache;
 
 
     /**
@@ -80,7 +95,47 @@ public class AuthUserServiceImpl implements IAuthUserService {
      * @return 结果
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateAuthUser(AuthUser authUser) {
+        // TODO 目前的录入题目权限控制先这样做，后面再通过c端的rbac来做，数据库已经是完整的模型，目前不做过多页面，且目前只有两个角色，关联2个权限
+
+        //  如果需要更新用户出题权限
+        if (!Objects.isNull(authUser.getRoleKey())){
+            String userName = authUser.getUserName();
+            String roleKey = authUser.getRoleKey();
+            // 1.重建缓存-角色
+            AuthRole authRole = new AuthRole();
+            authRole.setRoleKey(roleKey);
+            List<AuthRole> roleList = new LinkedList<>();
+            roleList.add(authRole);
+            redisCache.setCacheObject("auth.role."+userName, new Gson().toJson(roleList));
+
+
+            // 2.更新数据库表auth_role_user表
+            // 根据前端的roleKey查出roleId
+            AuthRole roleResult = authRoleService.queryByCondition(authRole);
+            Long roleId = roleResult.getId();
+            // 当前用户id
+            Long userId = authUser.getId();
+            // 根据用户id，更新新的roleId
+            authUserRoleService.updateRoleUser(userId, roleId);
+
+
+            // 3.重建缓存-权限
+            // 初始化用户权限
+            AuthRolePermission authRolePermission = new AuthRolePermission();
+            // 根据RoleId查对应的权限ID
+            authRolePermission.setRoleId(roleId);
+            List<AuthRolePermission> rolePermissionList = authRolePermissionService.
+                    queryByCondition(authRolePermission);
+            List<Long> permissionIdList = rolePermissionList.stream()
+                    .map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
+            //根据权限Id查权限
+            List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
+            redisCache.setCacheObject("auth.permission."+userName, new Gson().toJson(permissionList));
+
+        }
+        // 更新auth_user表
         authUser.setUpdateTime(DateUtils.getNowDate());
         return authUserMapper.updateAuthUser(authUser);
     }

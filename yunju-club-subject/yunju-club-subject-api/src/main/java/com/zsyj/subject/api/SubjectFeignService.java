@@ -15,6 +15,11 @@ import java.util.List;
 @FeignClient("yunju-club-subject-dev")
 public interface SubjectFeignService {
 
+    /**
+     * 查询分类大类
+     *
+     * @return json result List<SubjectCategoryDTO>
+     */
     @RequestMapping("/subject/category/queryPrimaryCategory")
     Result<List<SubjectCategoryDTO>> queryPrimaryCategory(@RequestBody SubjectCategoryDTO subjectCategoryDTO);
 

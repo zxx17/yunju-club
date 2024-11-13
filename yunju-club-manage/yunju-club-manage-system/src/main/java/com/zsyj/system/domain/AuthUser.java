@@ -73,6 +73,8 @@ public class AuthUser extends BaseEntity
     @Excel(name = "是否被删除 0未删除 1已删除")
     private Long isDeleted;
 
+    private String  roleKey;
+
 
     public void setId(Long id)
     {
@@ -88,7 +90,15 @@ public class AuthUser extends BaseEntity
         this.userName = userName;
     }
 
-    public String getUserName() 
+    public String getRoleKey() {
+        return roleKey;
+    }
+
+    public void setRoleKey(String roleKey) {
+        this.roleKey = roleKey;
+    }
+
+    public String getUserName()
     {
         return userName;
     }
@@ -203,23 +213,22 @@ public class AuthUser extends BaseEntity
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userName", getUserName())
-            .append("nickName", getNickName())
-            .append("email", getEmail())
-            .append("phone", getPhone())
-            .append("password", getPassword())
-            .append("sex", getSex())
-            .append("avatar", getAvatar())
-            .append("status", getStatus())
-            .append("introduce", getIntroduce())
-            .append("extJson", getExtJson())
-            .append("createdBy", getCreatedBy())
-            .append("createdTime", getCreatedTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("isDeleted", getIsDeleted())
-            .toString();
+        return "AuthUser{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", sex=" + sex +
+                ", avatar='" + avatar + '\'' +
+                ", status=" + status +
+                ", introduce='" + introduce + '\'' +
+                ", extJson='" + extJson + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdTime=" + createdTime +
+                ", isDeleted=" + isDeleted +
+                ", roleKey=" + roleKey +
+                '}';
     }
 }
