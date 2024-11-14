@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsyj.system.mapper.ShareCircleMapper">
+    
+    <resultMap type="ShareCircle" id="ShareCircleResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="circleName"    column="circle_name"    />
+        <result property="icon"    column="icon"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectShareCircleVo">
+        select id, parent_id, circle_name, icon, created_by, created_time, update_by, update_time, is_deleted from share_circle
+    </sql>
+
+    <select id="selectShareCircleList" parameterType="ShareCircle" resultMap="ShareCircleResult">
+        <include refid="selectShareCircleVo"/>
+        <where>  
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="circleName != null  and circleName != ''"> and circle_name like concat('%', #{circleName}, '%')</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="createdBy != null  and createdBy != ''"> and created_by = #{createdBy}</if>
+            <if test="createdTime != null "> and created_time = #{createdTime}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectShareCircleById" parameterType="Long" resultMap="ShareCircleResult">
+        <include refid="selectShareCircleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertShareCircle" parameterType="ShareCircle" useGeneratedKeys="true" keyProperty="id">
+        insert into share_circle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">parent_id,</if>
+            <if test="circleName != null and circleName != ''">circle_name,</if>
+            <if test="icon != null">icon,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">#{parentId},</if>
+            <if test="circleName != null and circleName != ''">#{circleName},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShareCircle" parameterType="ShareCircle">
+        update share_circle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="circleName != null and circleName != ''">circle_name = #{circleName},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteShareCircleById" parameterType="Long">
+        delete from share_circle where id = #{id}
+    </delete>
+
+    <delete id="deleteShareCircleByIds" parameterType="String">
+        delete from share_circle where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

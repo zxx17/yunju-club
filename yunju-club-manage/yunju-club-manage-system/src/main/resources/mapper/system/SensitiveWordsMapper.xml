@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsyj.system.mapper.SensitiveWordsMapper">
+    
+    <resultMap type="SensitiveWords" id="SensitiveWordsResult">
+        <result property="id"    column="id"    />
+        <result property="words"    column="words"    />
+        <result property="type"    column="type"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectSensitiveWordsVo">
+        select id, words, type, is_deleted from sensitive_words
+    </sql>
+
+    <select id="selectSensitiveWordsList" parameterType="SensitiveWords" resultMap="SensitiveWordsResult">
+        <include refid="selectSensitiveWordsVo"/>
+        <where>  
+            <if test="words != null  and words != ''"> and words = #{words}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectSensitiveWordsById" parameterType="Long" resultMap="SensitiveWordsResult">
+        <include refid="selectSensitiveWordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSensitiveWords" parameterType="SensitiveWords" useGeneratedKeys="true" keyProperty="id">
+        insert into sensitive_words
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="words != null">words,</if>
+            <if test="type != null">type,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="words != null">#{words},</if>
+            <if test="type != null">#{type},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSensitiveWords" parameterType="SensitiveWords">
+        update sensitive_words
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="words != null">words = #{words},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSensitiveWordsById" parameterType="Long">
+        delete from sensitive_words where id = #{id}
+    </delete>
+
+    <delete id="deleteSensitiveWordsByIds" parameterType="String">
+        delete from sensitive_words where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
