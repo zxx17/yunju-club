@@ -125,9 +125,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <insert id="batchSubjectLabel">
-        insert into subject_label( id, label_name, category_id, sort_num, create_by, create_time, update_by, update_time, is_deleted) values
+        insert into subject_label( id, label_name, category_id, sort_num, create_by, create_time, update_by, update_time) values
         <foreach item="item" index="index" collection="list" separator=",">
-            ( #{item.id}, #{item.labelName}, #{item.categoryId}, #{item.sortNum}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}, #{item.isDeleted})
+            ( #{item.id}, #{item.labelName}, #{item.categoryId}, #{item.sortNum}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime})
         </foreach>
     </insert>
 </mapper>
